@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Api for bade wangsul app using nodejs and express js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:farhanroy/bade-wangsul.git"
+  },
+  "author": "farhanroy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/farhanroy/bade-wangsul/issues"
+  },
+  "homepage": "https://gitlab.com/farhanroy/bade-wangsul#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
