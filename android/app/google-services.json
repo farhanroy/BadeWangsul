@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "279269233188",
+    "project_id": "bade-wangsul",
+    "storage_bucket": "bade-wangsul.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279269233188:android:6080b69adb0f029bbb7eb1",
+        "android_client_info": {
+          "package_name": "com.bade.wangsul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279269233188-ibats7c5mb8ols24jp5m93j1ej62ltra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe6qzV-zsDrLewFRjWY4pu3bZ-V1NUOUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279269233188-ibats7c5mb8ols24jp5m93j1ej62ltra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

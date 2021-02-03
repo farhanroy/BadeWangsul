@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Bade Wangsul</string>
+    <string name="title_splash">Splash</string>
+    <string name="title_auth">Auth</string>
 </resources>

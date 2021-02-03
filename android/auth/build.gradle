@@ -1,8 +1,6 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
-    id 'com.google.gms.google-services'
-
 }
 
 android {
@@ -10,13 +8,13 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.bade.wangsul"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -40,8 +38,7 @@ android {
 
 dependencies {
 
-    implementation project(':core')
-    implementation project(':auth')
+    implementation project(':app')
 
     // Kotlin
     implementation deps.kotlinStdLib
@@ -56,28 +53,16 @@ dependencies {
     // Constraint Layout
     implementation deps.constraintLayout
 
-    // Coroutine
-    implementation deps.coroutine.core
-
-    // Image loading
-    implementation deps.imageLoading.glideCore
-
     // Material Design
     implementation deps.materialDesign
 
-
-
-    // Firebase
-    implementation platform(deps.firebase.bom)
-    implementation deps.firebase.analytic
-
     // Koin
     implementation deps.koin.core
-    implementation deps.koin.scope
     implementation deps.koin.viewmodel
 
     // Test
     testImplementation deps.test.junit
     androidTestImplementation deps.test.junitImplementation
     androidTestImplementation deps.test.espresso
+
 }
