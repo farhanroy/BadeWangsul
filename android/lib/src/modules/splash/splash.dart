@@ -1,1 +1,1 @@
-export 'splash_screen.dart';
+export 'view/splash_page.dart';
