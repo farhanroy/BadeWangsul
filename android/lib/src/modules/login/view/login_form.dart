@@ -1,4 +1,5 @@
 import 'package:bade_wangsul/src/modules/signup/signup.dart';
+import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +18,10 @@ class LoginForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Authentication Failure')),
             );
+        }
+        if (state.status.isSubmissionSuccess) {
+          UsertypeManager.set(state.usertype);
+          Navigator.pushNamedAndRemoveUntil(context, '/${state.usertype}', (route) => false);
         }
       },
       child: Align(

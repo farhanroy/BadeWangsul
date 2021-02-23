@@ -79,7 +79,7 @@ class AuthenticationRepository {
   /// Signs in with the provided [email] and [password].
   ///
   /// Throws a [LogInWithEmailAndPasswordFailure] if an exception occurs.
-  Future<void> logInWithEmailAndPassword({
+  Future<firebase_auth.UserCredential> logInWithEmailAndPassword({
     @required String email,
     @required String password,
   }) async {
@@ -88,7 +88,10 @@ class AuthenticationRepository {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      );
+      ).then((value) {
+        print(value.user.uid);
+        return value.user.uid;
+      });
     } on Exception {
       throw LogInWithEmailAndPasswordFailure();
     }

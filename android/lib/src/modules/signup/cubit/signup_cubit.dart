@@ -13,13 +13,28 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   final AuthenticationRepository _authenticationRepository;
 
+  void usernameChanged(String value) {
+    final username = Default.dirty(value);
+    emit(state.copyWith(
+      username: username,
+      status: Formz.validate([
+        username,
+        state.email,
+        state.password,
+        state.usertype
+      ]),
+    ));
+  }
+
   void emailChanged(String value) {
     final email = Email.dirty(value);
     emit(state.copyWith(
       email: email,
       status: Formz.validate([
+        state.username,
         email,
         state.password,
+        state.usertype
       ]),
     ));
   }
@@ -29,8 +44,23 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(
       password: password,
       status: Formz.validate([
+        state.username,
         state.email,
         password,
+        state.usertype
+      ]),
+    ));
+  }
+
+  void usertypeChanged(String value) {
+    final usertype = Default.dirty(value);
+    emit(state.copyWith(
+      usertype: usertype,
+      status: Formz.validate([
+        state.username,
+        state.email,
+        state.password,
+        usertype
       ]),
     ));
   }
@@ -44,6 +74,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         email: state.email.value,
         password: state.password.value,
       );
+
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

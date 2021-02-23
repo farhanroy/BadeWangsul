@@ -1,4 +1,6 @@
+import 'package:bade_wangsul/src/modules/pengasuh/dashboard/dashboard.dart';
 import 'package:bade_wangsul/src/modules/signup/cubit/signup_cubit.dart';
+import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -15,20 +17,48 @@ class SignUpForm extends StatelessWidget {
               const SnackBar(content: Text('Sign Up Failure')),
             );
         }
+        if (state.status.isSubmissionSuccess) {
+          Navigator.pushNamedAndRemoveUntil(context, "/${state.usertype.value}", (route) => false);
+        }
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            _UsernameInput(),
+            const SizedBox(height: 8.0),
             _EmailInput(),
             const SizedBox(height: 8.0),
             _PasswordInput(),
+            const SizedBox(height: 8.0),
+            _UsertypeInput(),
             const SizedBox(height: 8.0),
             _SignUpButton(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _UsernameInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignUpCubit, SignUpState>(
+      buildWhen: (previous, current) => previous.username != current.username,
+      builder: (context, state) {
+        return TextField(
+          key: const Key('signUpForm_userNameInput_textField'),
+          onChanged: (username) => context.read<SignUpCubit>().usernameChanged(username),
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            labelText: 'name',
+            helperText: '',
+            errorText: state.username.invalid ? 'nama tidak boleh kosong' : null,
+          ),
+        );
+      },
     );
   }
 }
@@ -70,6 +100,28 @@ class _PasswordInput extends StatelessWidget {
             helperText: '',
             errorText: state.password.invalid ? 'invalid password' : null,
           ),
+        );
+      },
+    );
+  }
+}
+
+class _UsertypeInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignUpCubit, SignUpState>(
+      buildWhen: (previous, current) => previous.usertype != current.usertype,
+      builder: (context, state) {
+        return DropdownButton(
+          key: const Key('signUpForm_userNameInput_textField'),
+          value: state.usertype.value.isEmpty ? "pengasuh" : state.usertype.value ,
+          onChanged: (value) => context.read<SignUpCubit>().usertypeChanged(value),
+          items: Constants.USERTYPE.map((item) {
+            return DropdownMenuItem(
+              value: item,
+              child: Row(children: <Widget>[Text(item),]),
+            );
+          }).toList(),
         );
       },
     );
