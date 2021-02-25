@@ -1,0 +1,1 @@
+export 'create_izin_page.dart';

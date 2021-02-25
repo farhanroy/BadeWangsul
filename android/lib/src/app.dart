@@ -1,23 +1,62 @@
-import 'package:bade_wangsul/src/modules/splash/splash_screen.dart';
-import 'package:bade_wangsul/src/routes/routes.dart';
+import 'package:bade_wangsul/src/modules/pembina/izin/view/create_izin_page.dart';
+import 'package:bade_wangsul/src/modules/pengasuh/dashboard/dashboard.dart';
+import 'package:bade_wangsul/src/modules/signup/signup.dart';
+import 'package:bade_wangsul/src/utils/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'bloc/authentication.dart';
+import 'modules/login/login.dart';
+import 'modules/pembina/pembina.dart';
+import 'modules/splash/splash.dart';
+import 'repository/authentication_repository/authentication_repository.dart';
 
 class App extends StatelessWidget {
-  // This widget is the root of your application.
+  const App({
+    Key key,
+    @required this.authenticationRepository,
+  })  : assert(authenticationRepository != null),
+        super(key: key);
+
+  final AuthenticationRepository authenticationRepository;
+
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return GetMaterialApp(
-      title: 'Bade Wangsul',
-      getPages: routes,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.poppinsTextTheme(textTheme)
+    return RepositoryProvider.value(
+      value: authenticationRepository,
+      child: BlocProvider(
+        create: (_) => AuthenticationBloc(
+          authenticationRepository: authenticationRepository,
+        ),
+        child: AppView(),
       ),
-      home: SplashScreen(),
+    );
+  }
+}
+
+class AppView extends StatefulWidget {
+  @override
+  _AppViewState createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: theme,
+      navigatorKey: _navigatorKey,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashPage(),
+        '/login': (context) => LoginPage(),
+        '/signup': (context) => SignUpPage(),
+        '/pengasuh': (context) => DashboardPengasuhPage(),
+        '/pembina': (context) => DashboardPembinaPage(),
+        '/pembina/izin/create': (context) => CreateIzinPage(),
+        '/pembina/profile': (context) => ProfilePembinaPage(),
+      },
     );
   }
 }
