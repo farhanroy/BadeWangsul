@@ -1,6 +1,6 @@
 import 'package:bade_wangsul/src/bloc/authentication.dart';
 import 'package:bade_wangsul/src/modules/login/login.dart';
-import 'package:bade_wangsul/src/modules/pengasuh/dashboard/dashboard.dart';
+import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +15,9 @@ class SplashPage extends StatelessWidget {
       listener: (context, state) {
         switch (state.status) {
           case AuthenticationStatus.authenticated:
-            print("Langs  ung");
+            UsertypeManager.get().then((usertype) {
+              Navigator.pushNamedAndRemoveUntil(context, "/$usertype", (route) => false);
+            });
             break;
           case AuthenticationStatus.unauthenticated:
             Navigator.pushAndRemoveUntil(context, LoginPage.route(), (route) => false);

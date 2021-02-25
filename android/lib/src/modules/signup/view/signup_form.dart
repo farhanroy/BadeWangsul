@@ -1,6 +1,7 @@
 import 'package:bade_wangsul/src/modules/pengasuh/dashboard/dashboard.dart';
 import 'package:bade_wangsul/src/modules/signup/cubit/signup_cubit.dart';
 import 'package:bade_wangsul/src/utils/constants.dart';
+import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -18,6 +19,7 @@ class SignUpForm extends StatelessWidget {
             );
         }
         if (state.status.isSubmissionSuccess) {
+          UsertypeManager.set(state.usertype.value);
           Navigator.pushNamedAndRemoveUntil(context, "/${state.usertype.value}", (route) => false);
         }
       },

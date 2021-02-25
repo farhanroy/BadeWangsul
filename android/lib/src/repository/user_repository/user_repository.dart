@@ -12,4 +12,17 @@ class UserRepository {
     print("Usertype = $usertype");
     return usertype;
   }
+
+  Future<void> setUserData({String username, String usertype}) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
+        .set({
+          "name": username,
+          "address": "",
+          "age": "",
+          "dormitory": "",
+          "image_url": "",
+          "usertype": usertype
+        });
+  }
 }
