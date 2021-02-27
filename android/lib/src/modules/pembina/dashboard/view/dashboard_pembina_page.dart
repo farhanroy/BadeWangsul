@@ -76,7 +76,7 @@ class DashboardPembinaGrid extends StatelessWidget {
             title: "Manage Santri",
             subtitle: "Manage data santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/santri"),
+            onTap: () => Navigator.pushNamed(context, "/pembina/santri/manage"),
           ),
         ],
       ),

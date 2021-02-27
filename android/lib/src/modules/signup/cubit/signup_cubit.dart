@@ -7,7 +7,7 @@ import 'package:formz/formz.dart';
 
 part 'signup_state.dart';
 
-class SignUpCubit extends Cubit<SignUpState> {
+class   SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._authenticationRepository, this._userRepository)
       : assert(_authenticationRepository != null),
         super(const SignUpState());

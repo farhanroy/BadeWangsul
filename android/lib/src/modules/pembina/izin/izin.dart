@@ -1,1 +1,1 @@
-export 'view/view.dart';
+export '../santri/view/view.dart';
