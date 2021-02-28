@@ -4,10 +4,10 @@ import 'package:bade_wangsul/src/models/santri.dart';
 import 'package:bade_wangsul/src/repository/santri_repository/santri_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/default_validator.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:image_picker/image_picker.dart';
 
 part 'create_santri_state.dart';
 
@@ -88,33 +88,33 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
 
   Future<String> uploadImage() async {
     String imageUrl;
-    Reference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('santri/${state.name.value}}');
-    UploadTask uploadTask = storageReference.putFile(File(state.imagePath.value));
-    uploadTask
-        .then((value){
-      value.ref.getDownloadURL().then((url) {
+    File _file = File(state.imagePath.value);
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref('santri/${state.name.value}')
+          .putFile(_file).snapshot.ref.getDownloadURL().then((url) {
         imageUrl = url;
       });
-          print("Success Upload");
-    })
-        .catchError((e){
-          print(e);
-    });
-
+    } on firebase_core.FirebaseException catch (e) {
+      // e.g, e.code == 'canceled'
+      print(e.code);
+    }
+    print(imageUrl);
     return imageUrl;
   }
 
   Future<void> createSantri() async {
-    //if (!state.status.isValidated) return;
+    if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       String imageUrl;
 
-      uploadImage().then((value) {
+      await uploadImage().then((value) {
         imageUrl = value;
+        print("URL = $value");
       });
+
+      print("IMAGE_PATH = $imageUrl");
 
       await _santriRepository.createSantri(Santri(
           name: state.name.value,
