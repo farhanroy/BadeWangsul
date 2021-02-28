@@ -78,7 +78,7 @@ class   SignUpCubit extends Cubit<SignUpState> {
       );
       await _userRepository.setUserData(
           username: state.username.value,
-          usertype: state.username.value
+          usertype: state.usertype.value
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
