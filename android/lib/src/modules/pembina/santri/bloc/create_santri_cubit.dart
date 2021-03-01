@@ -90,9 +90,10 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
     String imageUrl;
     File _file = File(state.imagePath.value);
     try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref('santri/${state.name.value}')
-          .putFile(_file).snapshot.ref.getDownloadURL().then((url) {
+      var storageRef = firebase_storage
+          .FirebaseStorage.instance.ref('santri/${state.name.value}');
+      await storageRef.putFile(_file);
+      await storageRef.getDownloadURL().then((url) {
         imageUrl = url;
       });
     } on firebase_core.FirebaseException catch (e) {
@@ -104,7 +105,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
   }
 
   Future<void> createSantri() async {
-    if (!state.status.isValidated) return;
+    if (!state.status.isValidated) return;  
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       String imageUrl;
@@ -113,8 +114,6 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         imageUrl = value;
         print("URL = $value");
       });
-
-      print("IMAGE_PATH = $imageUrl");
 
       await _santriRepository.createSantri(Santri(
           name: state.name.value,

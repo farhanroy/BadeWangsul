@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bade_wangsul/src/modules/pembina/santri/bloc/create_santri_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:formz/formz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,7 +10,21 @@ class CreateSantriForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateSantriCubit, CreateSantriState>(
-      listener: (context, state){},
+      listener: (context, state) {
+        if (state.status.isSubmissionFailure) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(content: Text('Authentication Failure')),
+            );
+        }
+        if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
+        }
+        if (state.status.isSubmissionInProgress) {
+          Center(child: CircularProgressIndicator(),);
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

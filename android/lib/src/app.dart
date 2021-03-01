@@ -60,6 +60,7 @@ class _AppViewState extends State<AppView> {
         '/pembina/izin/create': (context) => null,
         '/pembina/santri/create': (context) => CreateSantriPage(),
         '/pembina/santri/manage': (context) => ManageSantriPage(),
+        '/pembina/santri/detail': (context) => DetailSantriPage(),
         '/pembina/profile': (context) => ProfilePembinaPage(),
       },
     );
