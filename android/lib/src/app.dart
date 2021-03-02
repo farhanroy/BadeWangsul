@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +56,7 @@ class _AppViewState extends State<AppView> {
         '/signup': (context) => SignUpPage(),
         '/pengasuh': (context) => DashboardPengasuhPage(),
         '/pembina': (context) => DashboardPembinaPage(),
-        '/pembina/izin/create': (context) => null,
+        '/pembina/izin/create': (context) => ManageIzinPage(),
         '/pembina/santri/create': (context) => CreateSantriPage(),
         '/pembina/santri/manage': (context) => ManageSantriPage(),
         '/pembina/santri/detail': (context) => DetailSantriPage(),
