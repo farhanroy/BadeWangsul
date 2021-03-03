@@ -69,7 +69,7 @@ class DashboardPembinaGrid extends StatelessWidget {
             title: "Buat izin",
             subtitle: "Surat izin santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/izin/create"),
+            onTap: () => Navigator.pushNamed(context, "/pembina/izin/manage"),
           ),
 
           GridDashboard(
