@@ -1,9 +1,10 @@
-import 'package:bade_wangsul/src/modules/signup/cubit/signup_cubit.dart';
-import 'package:bade_wangsul/src/utils/constants.dart';
-import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+
+import '../cubit/signup_cubit.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/usertype_manager.dart';
 
 class SignUpForm extends StatelessWidget {
   @override
@@ -18,8 +19,13 @@ class SignUpForm extends StatelessWidget {
             );
         }
         if (state.status.isSubmissionSuccess) {
+
           UsertypeManager.set(state.usertype.value);
-          Navigator.pushNamedAndRemoveUntil(context, "/${state.usertype.value}", (route) => false);
+
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/${state.usertype.value}/profile/complete",(route) => false
+          );
         }
       },
       child: Align(
@@ -27,8 +33,6 @@ class SignUpForm extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _UsernameInput(),
-            const SizedBox(height: 8.0),
             _EmailInput(),
             const SizedBox(height: 8.0),
             _PasswordInput(),
@@ -39,27 +43,6 @@ class SignUpForm extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _UsernameInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
-      buildWhen: (previous, current) => previous.username != current.username,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_userNameInput_textField'),
-          onChanged: (username) => context.read<SignUpCubit>().usernameChanged(username),
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            labelText: 'name',
-            helperText: '',
-            errorText: state.username.invalid ? 'nama tidak boleh kosong' : null,
-          ),
-        );
-      },
     );
   }
 }
