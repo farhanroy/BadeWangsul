@@ -1,3 +1,4 @@
+import 'package:bade_wangsul/src/modules/pembina/profile/view/complete_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,6 +57,7 @@ class _AppViewState extends State<AppView> {
         '/signup': (context) => SignUpPage(),
         '/pengasuh': (context) => DashboardPengasuhPage(),
         '/pembina': (context) => DashboardPembinaPage(),
+        '/pembina/profile/complete': (context) => CompleteProfilePage(),
         '/pembina/izin/manage': (context) => ManageIzinPage(),
         '/pembina/izin/create': (context) => CreateIzinPage(),
         '/pembina/santri/create': (context) => CreateSantriPage(),

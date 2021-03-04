@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:bade_wangsul/src/models/santri.dart';
-import 'package:bade_wangsul/src/repository/santri_repository/santri_repository.dart';
-import 'package:bade_wangsul/src/utils/validator/default_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+
+import '../../../../models/santri.dart';
+import '../../../../repository/santri_repository/santri_repository.dart';
+import '../../../../utils/validator/default_validator.dart';
 
 part 'create_santri_state.dart';
 
@@ -97,7 +98,6 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         imageUrl = url;
       });
     } on firebase_core.FirebaseException catch (e) {
-      // e.g, e.code == 'canceled'
       print(e.code);
     }
     print(imageUrl);

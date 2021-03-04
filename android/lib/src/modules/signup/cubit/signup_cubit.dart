@@ -1,5 +1,4 @@
 import 'package:bade_wangsul/src/repository/authentication_repository/authentication_repository.dart';
-import 'package:bade_wangsul/src/repository/user_repository/user_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/validator.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -8,32 +7,17 @@ import 'package:formz/formz.dart';
 part 'signup_state.dart';
 
 class   SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._authenticationRepository, this._userRepository)
+  SignUpCubit(this._authenticationRepository)
       : assert(_authenticationRepository != null),
         super(const SignUpState());
 
   final AuthenticationRepository _authenticationRepository;
-  final UserRepository _userRepository;
-
-  void usernameChanged(String value) {
-    final username = Default.dirty(value);
-    emit(state.copyWith(
-      username: username,
-      status: Formz.validate([
-        username,
-        state.email,
-        state.password,
-        state.usertype
-      ]),
-    ));
-  }
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
     emit(state.copyWith(
       email: email,
       status: Formz.validate([
-        state.username,
         email,
         state.password,
         state.usertype
@@ -46,7 +30,6 @@ class   SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(
       password: password,
       status: Formz.validate([
-        state.username,
         state.email,
         password,
         state.usertype
@@ -59,7 +42,6 @@ class   SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(
       usertype: usertype,
       status: Formz.validate([
-        state.username,
         state.email,
         state.password,
         usertype
@@ -75,10 +57,6 @@ class   SignUpCubit extends Cubit<SignUpState> {
       await _authenticationRepository.signUp(
         email: state.email.value,
         password: state.password.value,
-      );
-      await _userRepository.setUserData(
-          username: state.username.value,
-          usertype: state.usertype.value
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
