@@ -21,6 +21,7 @@ class LoginForm extends StatelessWidget {
         }
         if (state.status.isSubmissionSuccess) {
           UsertypeManager.set(state.usertype);
+
           Navigator.pushNamedAndRemoveUntil(context, '/${state.usertype}', (route) => false);
         }
       },

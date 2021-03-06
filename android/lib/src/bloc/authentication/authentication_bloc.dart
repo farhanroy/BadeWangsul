@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';

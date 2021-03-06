@@ -1,4 +1,4 @@
-import 'package:bade_wangsul/src/repository/authentication_repository/authentication_repository.dart';
+import 'file:///C:/Users/farhanroy/Documents/project/Bade%20Wangsul/android/lib/src/services/repository/authentication_repository/authentication_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/validator.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

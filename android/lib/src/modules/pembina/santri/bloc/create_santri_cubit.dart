@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 import '../../../../models/santri.dart';
-import '../../../../repository/santri_repository/santri_repository.dart';
+import '../../../../services/repository/santri_repository/santri_repository.dart';
 import '../../../../utils/validator/default_validator.dart';
 
 part 'create_santri_state.dart';

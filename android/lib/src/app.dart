@@ -10,7 +10,7 @@ import 'modules/pengasuh/dashboard/dashboard.dart';
 import 'modules/pembina/pembina.dart';
 import 'modules/splash/splash.dart';
 
-import 'repository/authentication_repository/authentication_repository.dart';
+import 'services/repository/authentication_repository/authentication_repository.dart';
 
 import 'utils/theme.dart';
 

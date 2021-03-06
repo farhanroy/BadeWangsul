@@ -1,7 +1,40 @@
+import 'package:bade_wangsul/src/models/models.dart';
+import 'package:bade_wangsul/src/services/database/dao/pembina_dao.dart';
+import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:bade_wangsul/src/widgets/griddashboard.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class DashboardPembinaPage extends StatelessWidget {
+class DashboardPembinaPage extends StatefulWidget {
+  @override
+  _DashboardPembinaPageState createState() => _DashboardPembinaPageState();
+}
+
+class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
+  CollectionReference collection;
+  String userId;
+  UsersDao _dao;
+
+  @override
+  void initState() {
+    super.initState();
+    collection = FirebaseFirestore.instance.collection(Constants.USER_COLLECTION);
+    userId = FirebaseAuth.instance.currentUser.uid;
+    _dao = UsersDao();
+    collection.doc(userId).get().then((DocumentSnapshot documentSnapshot) {
+      _dao.insertPembina(Pembina(
+        id: userId,
+        name: documentSnapshot.data()["name"],
+        age: documentSnapshot.data()["age"],
+        address: documentSnapshot.data()["address"],
+        dormitory: documentSnapshot.data()["dormitory"],
+        phoneNumber: documentSnapshot.data()["phoneNumber"],
+        imageUrl: documentSnapshot.data()["imageUrl"]
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +52,7 @@ class DashboardPembinaPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Johny s Family",
+                      ".",
                       style: TextStyle(
                               color: Colors.black87,
                               fontSize: 18,

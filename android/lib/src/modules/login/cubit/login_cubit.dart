@@ -1,5 +1,5 @@
-import 'package:bade_wangsul/src/repository/authentication_repository/authentication_repository.dart';
-import 'package:bade_wangsul/src/repository/user_repository/user_repository.dart';
+import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
+import 'package:bade_wangsul/src/services/repository/user_repository/user_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/validator.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

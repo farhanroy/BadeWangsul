@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/complete_profile_cubit.dart';
-import '../../../../repository/user_repository/user_repository.dart';
+import '../../../../services/repository/user_repository/user_repository.dart';
 import 'complete_profile_form.dart';
 
 class CompleteProfilePage extends StatelessWidget {

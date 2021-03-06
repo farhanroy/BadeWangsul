@@ -20,7 +20,7 @@ class CompleteProfileForm extends StatelessWidget {
 
             Navigator.pushNamedAndRemoveUntil(
                 context,
-                "/pembina/dashboard",(route) => false
+                "/pembina",(route) => false
             );
           }
         },

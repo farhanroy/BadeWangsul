@@ -1,4 +1,4 @@
-import 'package:bade_wangsul/src/repository/izin_repository/izin_repository.dart';
+import 'file:///C:/Users/farhanroy/Documents/project/Bade%20Wangsul/android/lib/src/services/repository/izin_repository/izin_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/default_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

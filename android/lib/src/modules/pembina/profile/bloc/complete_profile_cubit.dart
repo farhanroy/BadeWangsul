@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../models/models.dart';
-import '../../../../repository/user_repository/user_repository.dart';
+import '../../../../services/repository/user_repository/user_repository.dart';
 import '../../../../utils/validator/default_validator.dart';
 
 part 'complete_profile_state.dart';
