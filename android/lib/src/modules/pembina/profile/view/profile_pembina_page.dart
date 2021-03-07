@@ -1,11 +1,11 @@
-import 'package:bade_wangsul/src/bloc/authentication.dart';
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/services/database/dao/pembina_dao.dart';
-import 'package:bade_wangsul/src/utils/theme.dart';
-import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../bloc/authentication.dart';
+import '../../../../models/models.dart';
+import '../../../../services/database/dao/pembina_dao.dart';
+import '../../../../utils/usertype_manager.dart';
 
 class ProfilePembinaPage extends StatefulWidget {
   @override
@@ -36,7 +36,9 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
           actions: [
             IconButton(
                 icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
-                onPressed: null
+                onPressed: (){
+                  Navigator.pushNamed(context, "/pembina/profile/update");
+                }
             )
           ],
         ),

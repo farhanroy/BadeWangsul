@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sembast/sembast.dart';
 
 import '../app_database.dart';
-import '../../../models/models.dart';
 
 class UsersDao{
   static const String folderName = "Users";

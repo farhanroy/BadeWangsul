@@ -1,10 +1,12 @@
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../database/dao/pembina_dao.dart';
+import '../../../models/models.dart';
+import '../../../utils/constants.dart';
+
 class UserRepository {
-  
+  final usersDao = UsersDao();
   Future<String> getUsertype() async {
     var user = FirebaseAuth.instance.currentUser;
     var usertype = (await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION)
@@ -26,6 +28,22 @@ class UserRepository {
           "imageUrl": pembina.imageUrl,
           "usertype": "pembina"
         });
+  }
+
+  Future<void> updatePembina(Pembina pembina) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
+        .update({
+      "name": pembina.name,
+      "address": pembina.address,
+      "age": pembina.age,
+      "dormitory": pembina.dormitory,
+      "phoneNumber": pembina.phoneNumber,
+      "imageUrl": pembina.imageUrl,
+      "usertype": "pembina"
+    });
+
+    await usersDao.updateOrInsertPembina();
   }
 
   Future<void> createPengasuh(Pengasuh pengasuh) async {

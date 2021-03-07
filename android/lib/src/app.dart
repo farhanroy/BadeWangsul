@@ -1,4 +1,3 @@
-import 'package:bade_wangsul/src/modules/pembina/profile/view/complete_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,6 +63,7 @@ class _AppViewState extends State<AppView> {
         '/pembina/santri/manage': (context) => ManageSantriPage(),
         '/pembina/santri/detail': (context) => DetailSantriPage(),
         '/pembina/profile': (context) => ProfilePembinaPage(),
+        '/pembina/profile/update': (context) => UpdateProfilePage(),
       },
     );
   }
