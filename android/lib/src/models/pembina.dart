@@ -18,8 +18,8 @@ class Pembina {
     address: json["address"],
     age: json["age"],
     dormitory: json["dormitory"],
-    imageUrl: json["imageUrl"].toDouble(),
-    phoneNumber: json["phoneNumber"].toDouble(),
+    imageUrl: json["imageUrl"],
+    phoneNumber: json["phoneNumber"],
   );
 
   Map<String, dynamic> toJson() => {

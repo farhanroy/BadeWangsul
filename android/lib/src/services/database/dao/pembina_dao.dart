@@ -1,19 +1,30 @@
-import 'package:bade_wangsul/src/models/models.dart';
+import 'package:bade_wangsul/src/utils/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sembast/sembast.dart';
 
 import '../app_database.dart';
+import '../../../models/models.dart';
 
 class UsersDao{
   static const String folderName = "Users";
   final _userFolder = intMapStoreFactory.store(folderName);
+  final _collection = FirebaseFirestore.instance.collection(Constants.USER_COLLECTION);
+  final _userId = FirebaseAuth.instance.currentUser.uid;
 
 
   Future<Database> get  _db  async => await AppDatabase.instance.database;
 
-  Future insertPembina(Pembina pembina) async{
+  Future updateOrInsertPembina() async{
 
-    await _userFolder.add(await _db, pembina.toJson() );
+    final snapshot = await _collection.doc(_userId).get();
+
+    await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');
+  }
+
+  Future<Map<String, dynamic>> readPembina() async {
+    return _userFolder.record(0).get(await _db);
   }
 
   Future deleteUsers() async{

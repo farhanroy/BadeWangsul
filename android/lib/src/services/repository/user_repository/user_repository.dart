@@ -22,8 +22,8 @@ class UserRepository {
           "address": pembina.address,
           "age": pembina.age,
           "dormitory": pembina.dormitory,
-          "phone_number": pembina.phoneNumber,
-          "image_url": pembina.imageUrl,
+          "phoneNumber": pembina.phoneNumber,
+          "imageUrl": pembina.imageUrl,
           "usertype": "pembina"
         });
   }
