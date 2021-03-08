@@ -56,8 +56,8 @@ class UserRepository {
       "address": pengasuh.address,
       "age": pengasuh.age,
       "dormitory": pengasuh.dormitory,
-      "phone_number": pengasuh.phoneNumber,
-      "image_url": pengasuh.imageUrl,
+      "phoneNumber": pengasuh.phoneNumber,
+      "imageUrl": pengasuh.imageUrl,
       "usertype": "pengasuh"
     });
   }
@@ -88,8 +88,8 @@ class UserRepository {
       "address": security.address,
       "age": security.age,
       "pos": security.pos,
-      "phone_number": security.phoneNumber,
-      "image_url": security.imageUrl,
+      "phoneNumber": security.phoneNumber,
+      "imageUrl": security.imageUrl,
       "usertype": "security"
     });
 
@@ -105,8 +105,8 @@ class UserRepository {
       "address": security.address,
       "age": security.age,
       "pos": security.pos,
-      "phone_number": security.phoneNumber,
-      "image_url": security.imageUrl,
+      "phoneNumber": security.phoneNumber,
+      "imageUrl": security.imageUrl,
       "usertype": "security"
     });
 
@@ -117,25 +117,44 @@ class UserRepository {
     var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
+      "id":user.uid,
       "name": keamanan.name,
       "address": keamanan.address,
       "age": keamanan.age,
-      "phone_number": keamanan.phoneNumber,
-      "image_url": keamanan.imageUrl,
+      "phoneNumber": keamanan.phoneNumber,
+      "imageUrl": keamanan.imageUrl,
       "usertype": "keamanan"
     });
+    await usersDao.updateOrInsertKeamanan();
+  }
+
+  Future<void> updateKeamanan(Keamanan keamanan) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
+        .update({
+      "id":user.uid,
+      "name": keamanan.name,
+      "address": keamanan.address,
+      "age": keamanan.age,
+      "phoneNumber": keamanan.phoneNumber,
+      "imageUrl": keamanan.imageUrl,
+      "usertype": "security"
+    });
+
+    await usersDao.updateOrInsertKeamanan();
   }
 
   Future<void> createOrangtua(Orangtua orangtua) async {
     var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
-      "id_santri": orangtua.idSantri,
+      "id":user.uid,
+      "idSantri": orangtua.idSantri,
       "name": orangtua.name,
       "address": orangtua.address,
       "age": orangtua.age,
-      "image_url": orangtua.imageUrl,
-      "phone_number": orangtua.phoneNumber,
+      "imageUrl": orangtua.imageUrl,
+      "phoneNumber": orangtua.phoneNumber,
       "usertype": "orangtua"
     });
   }

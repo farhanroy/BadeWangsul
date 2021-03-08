@@ -1,8 +1,8 @@
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sembast/sembast.dart';
 
+import '../../../utils/constants.dart';
 import '../app_database.dart';
 
 class UsersDao{
@@ -41,6 +41,26 @@ class UsersDao{
   }
 
   Future<Map<String, dynamic>> readSecurity() async {
+    return _userFolder.record(0).get(await _db);
+  }
+
+  Future updateOrInsertKeamanan() async{
+    final snapshot = await _collection.doc(_userId.uid).get();
+    await _userFolder.record(0).put(await _db, snapshot.data() );
+    print('Student Inserted successfully !!');
+  }
+
+  Future<Map<String, dynamic>> readKeamanan() async {
+    return _userFolder.record(0).get(await _db);
+  }
+
+  Future updateOrInsertOrangtua() async{
+    final snapshot = await _collection.doc(_userId.uid).get();
+    await _userFolder.record(0).put(await _db, snapshot.data() );
+    print('Student Inserted successfully !!');
+  }
+
+  Future<Map<String, dynamic>> readOrangtua() async {
     return _userFolder.record(0).get(await _db);
   }
 

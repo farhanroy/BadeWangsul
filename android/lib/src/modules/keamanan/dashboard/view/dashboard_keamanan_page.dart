@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/models.dart';
+import '../../../../models/keamanan.dart';
 import '../../../../services/database/dao/users_dao.dart';
 import '../../../../widgets/griddashboard.dart';
 
-class DashboardPembinaPage extends StatefulWidget {
+class DashboardKeamananPage extends StatefulWidget {
   @override
-  _DashboardPembinaPageState createState() => _DashboardPembinaPageState();
+  _DashboardKeamananPageState createState() => _DashboardKeamananPageState();
 }
 
-class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
+class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
 
   UsersDao _dao;
 
@@ -17,7 +17,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
   void initState() {
     super.initState();
     _dao = UsersDao();
-    _dao.updateOrInsertPembina();
+    _dao.updateOrInsertKeamanan();
   }
 
   @override
@@ -25,7 +25,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
     return Scaffold(
       body:  SafeArea(
         child: FutureBuilder(
-          future: _dao.readPembina(),
+          future: _dao.readKeamanan(),
           builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot){
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));
@@ -33,7 +33,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
 
             if (snapshot.connectionState == ConnectionState.done){
 
-              return _content(Pembina.fromJson(snapshot.data));
+              return _content(Keamanan.fromJson(snapshot.data));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -43,7 +43,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
     );
   }
 
-  Widget _content(Pembina pembina) {
+  Widget _content(Keamanan keamanan) {
     return Column(
       children: <Widget>[
         SizedBox(
@@ -58,7 +58,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      pembina.name,
+                      keamanan.name,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -79,7 +79,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
                 alignment: Alignment.topCenter,
                 icon: Icon(Icons.person_outline_outlined, size: 32,),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/pembina/profile");
+                  Navigator.pushNamed(context, "/keamanan/profile");
                 },
               )
             ],
@@ -89,13 +89,13 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
           height: 40,
         ),
 
-        DashboardPembinaGrid()
+        DashboardKeamananGrid()
       ],
     );
   }
 }
 
-class DashboardPembinaGrid extends StatelessWidget {
+class DashboardKeamananGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -106,14 +106,14 @@ class DashboardPembinaGrid extends StatelessWidget {
             title: "Buat izin",
             subtitle: "Surat izin santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/izin/manage"),
+            onTap: () => Navigator.pushNamed(context, "/keamanan/izin/manage"),
           ),
 
           GridDashboard(
             title: "Manage Santri",
             subtitle: "Manage data santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/santri/manage"),
+            onTap: () => Navigator.pushNamed(context, "/keamanan/santri/manage"),
           ),
         ],
       ),

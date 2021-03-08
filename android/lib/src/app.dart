@@ -6,6 +6,7 @@ import 'bloc/authentication.dart';
 import 'modules/signup/signup.dart';
 import 'modules/login/login.dart';
 import 'modules/pengasuh/pengasuh.dart' as pengasuh;
+import 'modules/keamanan/keamanan.dart' as keamanan;
 import 'modules/pembina/pembina.dart';
 import 'modules/splash/splash.dart';
 
@@ -54,6 +55,7 @@ class _AppViewState extends State<AppView> {
         '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
+
         '/pembina': (context) => DashboardPembinaPage(),
         '/pembina/profile/complete': (context) => CompleteProfilePage(),
         '/pembina/izin/manage': (context) => ManageIzinPage(),
@@ -63,10 +65,16 @@ class _AppViewState extends State<AppView> {
         '/pembina/santri/detail': (context) => DetailSantriPage(),
         '/pembina/profile': (context) => ProfilePembinaPage(),
         '/pembina/profile/update': (context) => UpdateProfilePage(),
+
         '/pengasuh': (context) => pengasuh.DashboardPengasuhPage(),
         '/pengasuh/profile/complete': (context) => pengasuh.CompleteProfilePage(),
         '/pengasuh/profile': (context) => pengasuh.ProfilePengasuhPage(),
         '/pengasuh/profile/update': (context) => pengasuh.UpdateProfilePage(),
+
+        '/keamanan': (context) => keamanan.DashboardKeamananPage(),
+        '/keamanan/profile/complete': (context) => keamanan.CompleteProfilePage(),
+        '/keamanan/profile': (context) => keamanan.ProfileKeamananPage(),
+        '/keamanan/profile/update': (context) => keamanan.UpdateProfilePage(),
       },
     );
   }

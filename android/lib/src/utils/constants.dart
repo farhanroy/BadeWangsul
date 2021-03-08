@@ -6,6 +6,9 @@ class Constants {
   static const List<String> USERTYPE = [
     "pengasuh",
     "pembina",
+    "security",
+    "keamanan",
+    "orangtua"
   ];
 
   static const List<int> POS = [
