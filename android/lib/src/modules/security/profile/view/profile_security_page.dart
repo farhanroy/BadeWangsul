@@ -1,18 +1,18 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../bloc/authentication.dart';
-import '../../../../models/models.dart';
+import '../../../../models/security.dart';
 import '../../../../services/database/dao/users_dao.dart';
 import '../../../../utils/usertype_manager.dart';
 
-class ProfilePembinaPage extends StatefulWidget {
+class ProfileSecurityPage extends StatefulWidget {
   @override
-  _ProfilePembinaPageState createState() => _ProfilePembinaPageState();
+  _ProfileSecurityPageState createState() => _ProfileSecurityPageState();
 }
 
-class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
+class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
   UsersDao _dao;
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
             IconButton(
                 icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
                 onPressed: (){
-                  Navigator.pushNamed(context, "/pembina/profile/update");
+                  Navigator.pushNamed(context, "/security/profile/update");
                 }
             )
           ],
@@ -51,7 +51,7 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.done){
-              return _content(Pembina.fromJson(snapshot.data));
+              return _content(Security.fromJson(snapshot.data));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -61,47 +61,46 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
     );
   }
 
-  Widget _content(Pembina pembina) {
+  Widget _content(Security security) {
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: pembina.imageUrl != null ? CircleAvatar(
+            child: security.imageUrl != null ? CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(pembina.imageUrl),
+              backgroundImage: NetworkImage(security.imageUrl),
             ) : CircleAvatar(
-              radius: 70,
-              backgroundImage: AssetImage('assets/img/default-profile.png')),
+                radius: 70,
+                backgroundImage: AssetImage('assets/img/default-profile.png')),
           ),
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(pembina.name),
+          Text(security.name),
           SizedBox(height: 16,),
 
           Text("Umur"),
-          Text(pembina.age),
+          Text(security.age.toString()),
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(pembina.address),
+          Text(security.address),
           SizedBox(height: 16,),
 
-          Text("Asrama"),
-          Text(pembina.dormitory),
+          Text("Pos"),
+          Text(security.pos.toString()),
           SizedBox(height: 16,),
 
           Text("Nomor Telepon"),
-          Text(pembina.phoneNumber ?? ""),
+          Text(security.phoneNumber ?? ""),
           SizedBox(height: 16,),
 
           Center(
             child: MaterialButton(
               onPressed: (){
-                context.read<AuthenticationBloc>()
-                    .add(AuthenticationLogoutRequested());
+                context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested());
                 UsertypeManager.delete();
                 deleteUser();
                 Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);

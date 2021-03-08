@@ -1,15 +1,15 @@
-import 'package:bade_wangsul/src/models/models.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../models/security.dart';
 import '../../../../services/database/dao/users_dao.dart';
 import '../../../../widgets/griddashboard.dart';
 
-class DashboardPengasuhPage extends StatefulWidget {
+class DashboardSecurityPage extends StatefulWidget {
   @override
-  _DashboardPengasuhPageState createState() => _DashboardPengasuhPageState();
+  _DashboardSecurityPageState createState() => _DashboardSecurityPageState();
 }
 
-class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
+class _DashboardSecurityPageState extends State<DashboardSecurityPage> {
 
   UsersDao _dao;
 
@@ -17,7 +17,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
   void initState() {
     super.initState();
     _dao = UsersDao();
-    _dao.updateOrInsertPengasuh();
+    _dao.updateOrInsertPembina();
   }
 
   @override
@@ -25,7 +25,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
     return Scaffold(
       body:  SafeArea(
         child: FutureBuilder(
-          future: _dao.readPengasuh(),
+          future: _dao.readPembina(),
           builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot){
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));
@@ -33,7 +33,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
 
             if (snapshot.connectionState == ConnectionState.done){
 
-              return _content(Pengasuh.fromJson(snapshot.data));
+              return _content(Security.fromJson(snapshot.data));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -43,7 +43,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
     );
   }
 
-  Widget _content(Pengasuh pengasuh) {
+  Widget _content(Security security) {
     return Column(
       children: <Widget>[
         SizedBox(
@@ -58,7 +58,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      pengasuh.name,
+                      security.name,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -79,7 +79,7 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
                 alignment: Alignment.topCenter,
                 icon: Icon(Icons.person_outline_outlined, size: 32,),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/pengasuh/profile");
+                  Navigator.pushNamed(context, "/security/profile");
                 },
               )
             ],
@@ -89,13 +89,13 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
           height: 40,
         ),
 
-        DashboardPengasuhGrid()
+        DashboardSecurityGrid()
       ],
     );
   }
 }
 
-class DashboardPengasuhGrid extends StatelessWidget {
+class DashboardSecurityGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -103,17 +103,17 @@ class DashboardPengasuhGrid extends StatelessWidget {
         crossAxisCount: 2,
         children: [
           GridDashboard(
-            title: "Daftar perizinan",
+            title: "Buat izin",
             subtitle: "Surat izin santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pengasuh/izin/manage"),
+            onTap: () => Navigator.pushNamed(context, "/pembina/izin/manage"),
           ),
 
           GridDashboard(
-            title: "Daftar pembina",
-            subtitle: "List pembina asrama",
+            title: "Manage Santri",
+            subtitle: "Manage data santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pengasuh/pembina/"),
+            onTap: () => Navigator.pushNamed(context, "/pembina/santri/manage"),
           ),
         ],
       ),

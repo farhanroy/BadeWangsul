@@ -1,10 +1,10 @@
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/services/database/dao/users_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../bloc/update_profile_cubit.dart';
+import '../../../../models/pengasuh.dart';
+import '../../../../services/database/dao/users_dao.dart';
+import '../cubit/update_profile_cubit.dart';
 
 class UpdateProfileForm extends StatelessWidget {
   final TextEditingController _inputName = TextEditingController();
@@ -58,15 +58,15 @@ class UpdateProfileForm extends StatelessWidget {
   }
 
   void setInitialValue(BuildContext context) async {
-    final snapshot = await _usersDao.readPembina();
-    final pembina = Pembina.fromJson(snapshot);
+    final snapshot = await _usersDao.readPengasuh();
+    final pengasuh = Pengasuh.fromJson(snapshot);
 
-    _inputName.text = pembina.name;
-    _inputAge.text = pembina.age;
-    _inputAddress.text = pembina.address;
-    _inputDormitory.text = pembina.dormitory;
-    _inputPhoneNumber.text = pembina.phoneNumber;
-    context.read<UpdateProfileCubit>().setInitialImage(pembina.imageUrl);
+    _inputName.text = pengasuh.name;
+    _inputAge.text = pengasuh.age.toString();
+    _inputAddress.text = pengasuh.address;
+    _inputDormitory.text = pengasuh.dormitory;
+    _inputPhoneNumber.text = pengasuh.phoneNumber;
+    context.read<UpdateProfileCubit>().setInitialImage(pengasuh.imageUrl);
   }
 }
 

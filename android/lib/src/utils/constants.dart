@@ -7,4 +7,9 @@ class Constants {
     "pengasuh",
     "pembina",
   ];
+
+  static const List<int> POS = [
+    1,
+    2
+  ];
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../database/dao/pembina_dao.dart';
+import '../../database/dao/users_dao.dart';
 import '../../../models/models.dart';
 import '../../../utils/constants.dart';
 
@@ -20,6 +20,7 @@ class UserRepository {
     var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
+          "id":user.uid,
           "name": pembina.name,
           "address": pembina.address,
           "age": pembina.age,
@@ -34,6 +35,7 @@ class UserRepository {
     var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .update({
+      "id":user.uid,
       "name": pembina.name,
       "address": pembina.address,
       "age": pembina.age,
@@ -60,10 +62,28 @@ class UserRepository {
     });
   }
 
+  Future<void> updatePengasuh(Pengasuh pengasuh) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
+        .update({
+      "id":user.uid,
+      "name": pengasuh.name,
+      "address": pengasuh.address,
+      "age": pengasuh.age,
+      "dormitory": pengasuh.dormitory,
+      "phoneNumber": pengasuh.phoneNumber,
+      "imageUrl": pengasuh.imageUrl,
+      "usertype": "pengasuh"
+    });
+
+    await usersDao.updateOrInsertPengasuh();
+  }
+
   Future<void> createSecurity(Security security) async {
     var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
+      "id":user.uid,
       "name": security.name,
       "address": security.address,
       "age": security.age,
@@ -72,6 +92,25 @@ class UserRepository {
       "image_url": security.imageUrl,
       "usertype": "security"
     });
+
+    await usersDao.updateOrInsertSecurity();
+  }
+
+  Future<void> updateSecurity(Security security) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
+        .update({
+      "id":user.uid,
+      "name": security.name,
+      "address": security.address,
+      "age": security.age,
+      "pos": security.pos,
+      "phone_number": security.phoneNumber,
+      "image_url": security.imageUrl,
+      "usertype": "security"
+    });
+
+    await usersDao.updateOrInsertPembina();
   }
 
   Future<void> createKemanan(Keamanan keamanan) async {

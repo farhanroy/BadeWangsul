@@ -1,32 +1,28 @@
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/services/database/dao/users_dao.dart';
+import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../bloc/update_profile_cubit.dart';
+import '../cubit/complete_profile_cubit.dart';
 
-class UpdateProfileForm extends StatelessWidget {
-  final TextEditingController _inputName = TextEditingController();
-  final TextEditingController _inputAge = TextEditingController();
-  final TextEditingController _inputAddress = TextEditingController();
-  final TextEditingController _inputDormitory = TextEditingController();
-  final TextEditingController _inputPhoneNumber = TextEditingController();
-  final UsersDao _usersDao = UsersDao();
+class CompleteProfileForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    setInitialValue(context);
-    return BlocListener<UpdateProfileCubit, UpdateProfileState>(
+    return BlocListener<CompleteProfileCubit, CompleteProfileState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           Scaffold.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign Up Failure')),
+              const SnackBar(content: Text('Complete Profile Failure')),
             );
         }
         if (state.status.isSubmissionSuccess) {
-          Navigator.pop(context);
+
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/security",(route) => false
+          );
         }
       },
       child: SafeArea(
@@ -38,17 +34,17 @@ class UpdateProfileForm extends StatelessWidget {
                 SizedBox(height: 20,),
                 _SelectImage(),
                 SizedBox(height: 10,),
-                _UsernameInput(inputName: _inputName,),
+                _UsernameInput(),
                 SizedBox(height: 10,),
-                _AddressInput(inputAddress: _inputAddress,),
+                _AddressInput(),
                 SizedBox(height: 10,),
-                _AgeInput(inputAge: _inputAge,),
+                _AgeInput(),
                 SizedBox(height: 10,),
-                _DormitoryInput(inputDormitory: _inputDormitory,),
+                _PosInput(),
                 SizedBox(height: 10,),
-                _PhoneNumberInput(inputPhoneNumber: _inputPhoneNumber,),
+                _PhoneNumberInput(),
                 SizedBox(height: 10,),
-                _UpdateButton()
+                _SubmitButton()
               ],
             ),
           ),
@@ -56,32 +52,16 @@ class UpdateProfileForm extends StatelessWidget {
       ),
     );
   }
-
-  void setInitialValue(BuildContext context) async {
-    final snapshot = await _usersDao.readPembina();
-    final pembina = Pembina.fromJson(snapshot);
-
-    _inputName.text = pembina.name;
-    _inputAge.text = pembina.age;
-    _inputAddress.text = pembina.address;
-    _inputDormitory.text = pembina.dormitory;
-    _inputPhoneNumber.text = pembina.phoneNumber;
-    context.read<UpdateProfileCubit>().setInitialImage(pembina.imageUrl);
-  }
 }
 
 class _UsernameInput extends StatelessWidget {
-  final TextEditingController inputName;
-
-  _UsernameInput({Key key, this.inputName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
         return TextField(
-          controller: inputName,
-          onChanged: (username) => context.read<UpdateProfileCubit>().usernameChanged(username),
+          onChanged: (username) => context.read<CompleteProfileCubit>().usernameChanged(username),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Nama',
@@ -95,17 +75,13 @@ class _UsernameInput extends StatelessWidget {
 }
 
 class _AddressInput extends StatelessWidget {
-  final TextEditingController inputAddress;
-
-  const _AddressInput({Key key, this.inputAddress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.address != current.address,
       builder: (context, state) {
         return TextField(
-          controller: inputAddress,
-          onChanged: (address) => context.read<UpdateProfileCubit>().addressChanged(address),
+          onChanged: (address) => context.read<CompleteProfileCubit>().addressChanged(address),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Alamat',
@@ -119,17 +95,13 @@ class _AddressInput extends StatelessWidget {
 }
 
 class _AgeInput extends StatelessWidget {
-  final TextEditingController inputAge;
-
-  const _AgeInput({Key key, this.inputAge}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.age != current.age,
       builder: (context, state) {
         return TextField(
-          controller: inputAge,
-          onChanged: (age) => context.read<UpdateProfileCubit>().ageChanged(age),
+          onChanged: (age) => context.read<CompleteProfileCubit>().ageChanged(age),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Umur',
@@ -142,24 +114,25 @@ class _AgeInput extends StatelessWidget {
   }
 }
 
-class _DormitoryInput extends StatelessWidget {
-  final TextEditingController inputDormitory;
-
-  const _DormitoryInput({Key key, this.inputDormitory}) : super(key: key);
+class _PosInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      buildWhen: (previous, current) => previous.dormitory != current.dormitory,
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
+      buildWhen: (previous, current) => previous.pos != current.pos,
       builder: (context, state) {
-        return TextField(
-          controller: inputDormitory,
-          onChanged: (dormitory) => context.read<UpdateProfileCubit>().dormitoryChanged(dormitory),
-          keyboardType: TextInputType.name,
+        return DropdownButtonFormField(
+          key: const Key('signUpForm_userNameInput_textField'),
+          value: state.pos.value.isEmpty ? "0" : state.pos.value ,
+          onChanged: (pos) => context.read<CompleteProfileCubit>().posChanged(pos),
           decoration: InputDecoration(
-            labelText: 'Asrama',
-            helperText: '',
-            errorText: state.address.invalid ? 'asrama tidak boleh kosong' : null,
+              border: OutlineInputBorder()
           ),
+          items: Constants.POS.map((item) {
+            return DropdownMenuItem(
+              value: item,
+              child: Row(children: <Widget>[Text(item.toString()),]),
+            );
+          }).toList(),
         );
       },
     );
@@ -167,17 +140,13 @@ class _DormitoryInput extends StatelessWidget {
 }
 
 class _PhoneNumberInput extends StatelessWidget {
-  final TextEditingController inputPhoneNumber;
-
-  const _PhoneNumberInput({Key key, this.inputPhoneNumber}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      //buildWhen: (previous, current) => previous.phoneNumber != current.phoneNumber,
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
+      buildWhen: (previous, current) => previous.phoneNumber != current.phoneNumber,
       builder: (context, state) {
         return TextField(
-          controller: inputPhoneNumber,
-          onChanged: (phoneNumber) => context.read<UpdateProfileCubit>().phoneNumberChanged(phoneNumber),
+          onChanged: (phoneNumber) => context.read<CompleteProfileCubit>().phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             labelText: 'Nomor telpon',
@@ -193,7 +162,7 @@ class _PhoneNumberInput extends StatelessWidget {
 class _SelectImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
         builder: (context, state) {
           switch (state.storageStatus) {
             case ImageStorageStatus.unknown:
@@ -217,7 +186,7 @@ class _SelectImage extends StatelessWidget {
 
   Widget _unknown(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
+      onTap: () => context.read<CompleteProfileCubit>().chooseFile(),
       child: Container(
         width: 100,
         height: 100,
@@ -256,23 +225,23 @@ class _SelectImage extends StatelessWidget {
   }
 }
 
-class _UpdateButton extends StatelessWidget {
+class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+    return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : RaisedButton(
           key: const Key('signUpForm_continue_raisedButton'),
-          child: const Text('Update'),
+          child: const Text('Kirim'),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
           color: Colors.orangeAccent,
           onPressed: state.status.isValidated
-              ? () => context.read<UpdateProfileCubit>().updateData()
+              ? () => context.read<CompleteProfileCubit>().submitForm()
               : null,
         );
       },

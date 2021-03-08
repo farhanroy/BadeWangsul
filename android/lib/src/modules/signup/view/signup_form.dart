@@ -96,10 +96,13 @@ class _UsertypeInput extends StatelessWidget {
     return BlocBuilder<SignUpCubit, SignUpState>(
       buildWhen: (previous, current) => previous.usertype != current.usertype,
       builder: (context, state) {
-        return DropdownButton(
+        return DropdownButtonFormField(
           key: const Key('signUpForm_userNameInput_textField'),
           value: state.usertype.value.isEmpty ? "pengasuh" : state.usertype.value ,
           onChanged: (value) => context.read<SignUpCubit>().usertypeChanged(value),
+          decoration: InputDecoration(
+            border: OutlineInputBorder()
+          ),
           items: Constants.USERTYPE.map((item) {
             return DropdownMenuItem(
               value: item,
