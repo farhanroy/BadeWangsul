@@ -1,3 +1,4 @@
+import 'package:bade_wangsul/src/modules/pembina/izin/izin.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
@@ -89,13 +90,16 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
           height: 40,
         ),
 
-        DashboardPembinaGrid()
+        DashboardPembinaGrid(pembina: pembina,)
       ],
     );
   }
 }
 
 class DashboardPembinaGrid extends StatelessWidget {
+  final Pembina pembina;
+
+  const DashboardPembinaGrid({Key key, this.pembina}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -106,7 +110,10 @@ class DashboardPembinaGrid extends StatelessWidget {
             title: "Buat izin",
             subtitle: "Surat izin santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/izin/manage"),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => CreateIzinPage(pembina: pembina,))
+            ),
           ),
 
           GridDashboard(

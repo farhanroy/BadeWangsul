@@ -29,6 +29,7 @@ class UserRepository {
           "imageUrl": pembina.imageUrl,
           "usertype": "pembina"
         });
+    await usersDao.updateOrInsertPembina();
   }
 
   Future<void> updatePembina(Pembina pembina) async {

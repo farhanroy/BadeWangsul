@@ -17,7 +17,7 @@ class _DashboardSecurityPageState extends State<DashboardSecurityPage> {
   void initState() {
     super.initState();
     _dao = UsersDao();
-    _dao.updateOrInsertPembina();
+    _dao.updateOrInsertSecurity();
   }
 
   @override

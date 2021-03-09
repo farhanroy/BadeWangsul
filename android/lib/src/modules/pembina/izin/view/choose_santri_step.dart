@@ -1,8 +1,14 @@
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/create_izin_cubit.dart';
+import '../../../../utils/constants.dart';
 
 class ChooseSantriStep extends StatefulWidget {
+  final String dormitory;
+
+  const ChooseSantriStep({Key key, this.dormitory}) : super(key: key);
   @override
   _ChooseSantriStepState createState() => _ChooseSantriStepState();
 }
@@ -12,56 +18,74 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
   String searchKey;
   Stream streamQuery;
   TextEditingController searchController;
-  String dormitory;
 
   @override
   void initState() {
     super.initState();
-    streamQuery =
-        FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION).snapshots();
+
+    streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
+        .where('dormitory', isEqualTo: widget.dormitory)
+        .snapshots();
     searchController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _searchInput(searchController),
-        SizedBox(height: 16,),
-        StreamBuilder<QuerySnapshot>(
-          stream: streamQuery,
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            }
+    return BlocListener<CreateIzinCubit, CreateIzinState>(
+      listener: (context, state) {
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
+      },
+      child: Column(
+        children: [
+          _searchInput(searchController),
+          SizedBox(height: 16,),
+          StreamBuilder<QuerySnapshot>(
+            stream: streamQuery,
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
 
-            return _content(context, snapshot.data);
-          },
-        ),
-      ],
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              return _content(snapshot.data);
+            },
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _content(BuildContext context, QuerySnapshot snapshot) {
-    return SingleChildScrollView(
-      child: Column(
-        children: snapshot.docs.map((DocumentSnapshot document) {
-          print(document.data()["name"]);
-          return new ListTile(
-            leading: CircleAvatar(
-              backgroundImage:
-              NetworkImage("${document.data()["imageUrl"]}"),
-              backgroundColor: Colors.transparent,
-            ),
-            title: new Text(document.data()['name']),
-            subtitle: new Text(document.data()['dormitory']),
-          );
-        }).toList(),
-      ),
+  Widget _content(QuerySnapshot querySnapshot) {
+    return BlocBuilder<CreateIzinCubit, CreateIzinState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            children: querySnapshot.docs.map((DocumentSnapshot document) {
+              return new ListTile(
+                onTap: () {
+                  if (state.idSantri != document.id) {
+                    context.read<CreateIzinCubit>().idSantriChanged(document.id);
+                  } else {
+                    context.read<CreateIzinCubit>().idSantriChanged("");
+                  }
+                },
+                selected: state.idSantri == document.id,
+                selectedTileColor: Theme.of(context).primaryColor,
+                leading: CircleAvatar(
+                  backgroundImage:
+                  NetworkImage("${document.data()["imageUrl"]}"),
+                  backgroundColor: Colors.transparent,
+                ),
+                title: new Text(document.data()['name']),
+                subtitle: new Text(document.data()['dormitory']),
+              );
+            }).toList(),
+          ),
+        );
+      }
     );
   }
 
@@ -75,6 +99,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
             streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
                 .where('name', isLessThan: searchKey +'z')
+                .where('dormitory', isEqualTo: widget.dormitory)
                 .snapshots();
           });
         },
