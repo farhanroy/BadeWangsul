@@ -32,13 +32,11 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateIzinCubit, CreateIzinState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       child: Column(
         children: [
           _searchInput(searchController),
-          SizedBox(height: 16,),
+          SizedBox(height: 8.0,),
           StreamBuilder<QuerySnapshot>(
             stream: streamQuery,
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -69,7 +67,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
                   if (state.idSantri != document.id) {
                     context.read<CreateIzinCubit>().idSantriChanged(document.id);
                   } else {
-                    context.read<CreateIzinCubit>().idSantriChanged("");
+                    context.read<CreateIzinCubit>().idSantriChanged('');
                   }
                 },
                 selected: state.idSantri == document.id,
@@ -91,7 +89,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
 
   Widget _searchInput(TextEditingController controller) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(0),
       child: TextField(
         onChanged: (value) {
           setState(() {
