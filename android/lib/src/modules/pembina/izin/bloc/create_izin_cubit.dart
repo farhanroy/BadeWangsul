@@ -1,13 +1,19 @@
+import 'package:bade_wangsul/src/utils/validator/date_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 import '../../../../utils/validator/default_validator.dart';
+import '../../../../models/santri.dart';
+import '../../../../services/repository/santri_repository/santri_repository.dart';
 
 part 'create_izin_state.dart';
 
 class CreateIzinCubit extends Cubit<CreateIzinState> {
-  CreateIzinCubit() : super(CreateIzinState());
+
+  final SantriRepository santriRepository;
+
+  CreateIzinCubit(this.santriRepository) : super(CreateIzinState());
 
   void idSantriChanged(String value) {
     emit(state.copyWith(idSantri: value));
@@ -15,6 +21,12 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
 
   void currentStepChanged(int value) {
     emit(state.copyWith(currentStep: value));
+  }
+
+  void santriChanged() {
+    santriRepository.getSantriById(state.idSantri).then((documentSnapshot) {
+      emit(state.copyWith(santri: Santri.fromJson(documentSnapshot.data())));
+    });
   }
   
   void titleChanged(String value) {
@@ -48,8 +60,8 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
         ])
     ));
   }
-  void fromDateChanged(String value) {
-    final fromDate = Default.dirty(value);
+  void fromDateChanged(DateTime value) {
+    final fromDate = Date.dirty(value);
     emit(state.copyWith(
         title: state.title,
         information: state.information,
@@ -63,8 +75,8 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
         ])
     ));
   }
-  void toDateChanged(String value) {
-    final toDate = Default.dirty(value);
+  void toDateChanged(DateTime value) {
+    final toDate = Date.dirty(value);
     emit(state.copyWith(
         title: state.title,
         information: state.information,

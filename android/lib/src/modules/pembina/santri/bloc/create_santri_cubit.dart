@@ -120,7 +120,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
           age: state.age.value,
           address: state.address.value,
           dormitory: state.dormitory.value,
-          imagePath: imageUrl
+          imageUrl: imageUrl
       ));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {

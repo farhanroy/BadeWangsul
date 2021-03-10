@@ -1,7 +1,9 @@
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
+import '../../../../services/repository/santri_repository/santri_repository.dart';
 import '../bloc/create_izin_cubit.dart';
 import '../../../../models/pembina.dart';
 import 'choose_santri_step.dart';
@@ -17,7 +19,9 @@ class CreateIzinPage extends StatelessWidget{
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
-          create: (_) => CreateIzinCubit(),
+          create: (_) => CreateIzinCubit(
+            SantriRepository()
+          ),
           child: CreateIzinStepper(pembina: pembina,),
         ),
       ),
@@ -58,7 +62,12 @@ class CreateIzinStepper extends StatelessWidget {
                   CoolStep(
                     title: "Form izin",
                     subtitle: "",
-                    validation: (){},
+                    validation: (){
+                      if (state.status.isSubmissionFailure){
+                        return "Isi form dengan lengkap";
+                      }
+                      return null;
+                    },
                     content: IzinFormStep(),
                   ),
                   CoolStep(

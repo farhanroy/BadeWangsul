@@ -12,8 +12,13 @@ class SantriRepository {
             "age": santri.age,
             "address": santri.address,
             "dormitory": santri.dormitory,
-            "imageUrl": santri.imagePath
+            "imageUrl": santri.imageUrl
         });
   }
 
+  Future<DocumentSnapshot> getSantriById(String id) async {
+    var santri = await FirebaseFirestore.instance
+        .collection(Constants.SANTRI_COLLECTION).doc(id).get();
+    return santri;
+  }
 }
