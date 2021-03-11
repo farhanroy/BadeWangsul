@@ -19,8 +19,8 @@ class Izin {
     idPembina: json["idPembina"],
     title: json["title"],
     information: json["information"],
-    fromDate: json["fromDate"],
-    toDate: json["toDate"],
+    fromDate: json["fromDate"].toDate(),
+    toDate: json["toDate"].toDate(),
   );
 
   Map<String, dynamic> toJson(Izin izin) => {

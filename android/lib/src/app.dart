@@ -67,6 +67,7 @@ class _AppViewState extends State<AppView> {
         '/pembina/profile/update': (context) => UpdateProfilePage(),
 
         '/pengasuh': (context) => pengasuh.DashboardPengasuhPage(),
+        '/pengasuh/izin/manage': (context) => pengasuh.ListIzinPage(),
         '/pengasuh/profile/complete': (context) => pengasuh.CompleteProfilePage(),
         '/pengasuh/profile': (context) => pengasuh.ProfilePengasuhPage(),
         '/pengasuh/profile/update': (context) => pengasuh.UpdateProfilePage(),
