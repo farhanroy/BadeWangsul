@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../services/repository/izin_repository/izin_repository.dart';
 import '../../../../services/repository/santri_repository/santri_repository.dart';
 import '../bloc/create_izin_cubit.dart';
 import '../../../../models/pembina.dart';
@@ -20,7 +21,8 @@ class CreateIzinPage extends StatelessWidget{
       body: SafeArea(
         child: BlocProvider(
           create: (_) => CreateIzinCubit(
-            SantriRepository()
+            SantriRepository(),
+            IzinRepository()
           ),
           child: CreateIzinStepper(pembina: pembina,),
         ),
@@ -41,7 +43,18 @@ class CreateIzinStepper extends StatelessWidget {
           return Container(
             height: height,
             child: CoolStepper(
-                onCompleted: () {},
+                onCompleted: () {
+                  context.read<CreateIzinCubit>().createIzin(pembina.id).then((value) {
+                    Navigator.pop(context);
+                  }).catchError((e) {
+                    print(e.toString());
+                    Scaffold.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(content: Text('Buat surat gagal')),
+                      );
+                  });
+                },
                 showErrorSnackbar: true,
                 config: CoolStepperConfig(
                   finalText: "Kirim",
@@ -63,7 +76,7 @@ class CreateIzinStepper extends StatelessWidget {
                     title: "Form izin",
                     subtitle: "",
                     validation: (){
-                      if (state.status.isSubmissionFailure){
+                      if (!state.status.isValidated){
                         return "Isi form dengan lengkap";
                       }
                       return null;

@@ -8,7 +8,9 @@ class IzinFormStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateIzinCubit, CreateIzinState>(
-      listener: (context, state){},
+      listener: (context, state){
+        context.read<CreateIzinCubit>().santriChanged();
+      },
       child: Align(
         alignment: const Alignment(0, -1 / 3),
         child: SingleChildScrollView(
@@ -63,7 +65,7 @@ class _SantriNameInput extends StatelessWidget {
             decoration: InputDecoration(
               labelText: 'Nama santri',
               helperText: '',
-              hintText: state.santri.name
+              //hintText: state.santri.name
             ),
           );
         },
@@ -94,7 +96,7 @@ class _InformationInput extends StatelessWidget {
 class _FromDateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
+    return BlocBuilder<CreateIzinCubit, CreateIzinState>(
         builder: (context, state){
           return DateTextField(
             labelText: "Dari tanggal",

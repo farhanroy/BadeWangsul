@@ -15,20 +15,47 @@ class FinalIzinStep extends StatelessWidget {
 class ConfirmationIzin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Text("Santri"),
-          SizedBox(height: 32,),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(),
+    return BlocBuilder<CreateIzinCubit, CreateIzinState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Flexible(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Nama"),
+                    Text(state.santri.name),
+                    SizedBox(height: 8.0,),
+
+                    Text("Alamat"),
+                    Text(state.santri.address),
+                    SizedBox(height: 8.0,),
+
+                    Text("Tujuan pulang"),
+                    Text(state.title.value),
+                    SizedBox(height: 8.0,),
+
+                    Text("Detail kepulangan"),
+                    Text(state.information.value),
+                    SizedBox(height: 8.0,),
+
+                    Text("Dari tanggal"),
+                    Text(state.fromDate.value.toString()),
+                    SizedBox(height: 8.0,),
+
+                    Text("Sampai tanggal"),
+                    Text(state.toDate.value.toString()),
+                    SizedBox(height: 8.0,),
+                  ],
+                ),
+              )
             ),
-          )
-        ],
-      ),
+          ),
+        );
+      }
     );
   }
 }

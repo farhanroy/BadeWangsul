@@ -1,3 +1,5 @@
+import 'package:bade_wangsul/src/models/izin.dart';
+import 'package:bade_wangsul/src/services/repository/izin_repository/izin_repository.dart';
 import 'package:bade_wangsul/src/utils/validator/date_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +14,9 @@ part 'create_izin_state.dart';
 class CreateIzinCubit extends Cubit<CreateIzinState> {
 
   final SantriRepository santriRepository;
+  final IzinRepository izinRepository;
 
-  CreateIzinCubit(this.santriRepository) : super(CreateIzinState());
+  CreateIzinCubit(this.santriRepository, this.izinRepository) : super(CreateIzinState());
 
   void idSantriChanged(String value) {
     emit(state.copyWith(idSantri: value));
@@ -88,6 +91,17 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
           state.fromDate,
           toDate
         ])
+    ));
+  }
+
+  Future<void> createIzin(String idPembina) async {
+    await izinRepository.createIzin(Izin(
+      idSantri: state.idSantri,
+      idPembina: idPembina,
+      title: state.title.value,
+      information: state.information.value,
+      fromDate: state.fromDate.value,
+      toDate: state.toDate.value,
     ));
   }
 }

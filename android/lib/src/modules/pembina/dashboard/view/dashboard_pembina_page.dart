@@ -1,6 +1,6 @@
-import 'package:bade_wangsul/src/modules/pembina/izin/izin.dart';
 import 'package:flutter/material.dart';
 
+import '../../izin/view/manage_izin_page.dart';
 import '../../../../models/models.dart';
 import '../../../../services/database/dao/users_dao.dart';
 import '../../../../widgets/griddashboard.dart';
@@ -112,7 +112,7 @@ class DashboardPembinaGrid extends StatelessWidget {
             img: "",
             onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => CreateIzinPage(pembina: pembina,))
+                MaterialPageRoute(builder: (_) => ManageIzinPage(pembina: pembina,))
             ),
           ),
 
