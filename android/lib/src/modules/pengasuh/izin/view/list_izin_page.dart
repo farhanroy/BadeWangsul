@@ -29,7 +29,7 @@ class ListIzinPage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(builder: (_) =>
-                                  DetailIzinPage(izin: Izin.fromJson(document.data()),))
+                                  DetailIzinPage(idIzin: document.id,))
                           );
                         },
                         child: _ItemIzinSantri(idSantri: document.data()['idSantri'],)

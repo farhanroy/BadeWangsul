@@ -5,14 +5,19 @@ class Izin {
   final String information;
   final DateTime fromDate;
   final DateTime toDate;
+  final bool isPermissioned;
+  final bool isPulang;
 
-  Izin(
-      {this.idSantri,
-      this.idPembina,
-      this.title,
-      this.information,
-      this.fromDate,
-      this.toDate});
+  Izin({
+    this.idSantri,
+    this.idPembina,
+    this.title,
+    this.information,
+    this.fromDate,
+    this.toDate,
+    this.isPermissioned,
+    this.isPulang,
+  });
 
   factory Izin.fromJson(Map<String, dynamic> json) => Izin(
     idSantri: json["idSantri"],
@@ -21,6 +26,8 @@ class Izin {
     information: json["information"],
     fromDate: json["fromDate"].toDate(),
     toDate: json["toDate"].toDate(),
+    isPermissioned: json["isPermissioned"],
+    isPulang: json["isPulang"]
   );
 
   Map<String, dynamic> toJson(Izin izin) => {
@@ -30,5 +37,7 @@ class Izin {
     "information": izin.information,
     "fromDate": izin.fromDate,
     "toDate": izin.toDate,
+    "isPermissioned": izin.isPermissioned,
+    "isPulang": izin.isPulang
   };
 }

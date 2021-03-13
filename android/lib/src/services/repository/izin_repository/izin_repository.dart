@@ -9,4 +9,10 @@ class IzinRepository {
         .doc()
         .set(Izin().toJson(izin));
   }
+
+  Future<void> updateIzin(Izin izin, String idIzin) async {
+    await FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION)
+        .doc(idIzin)
+        .update(Izin().toJson(izin));
+  }
 }

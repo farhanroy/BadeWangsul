@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/constants.dart';
-import '../../../../models/izin.dart';
+import '../../../../widgets/appdialog.dart';
+import '../cubit/detail_izin_cubit.dart';
+import '../../../../services/repository/izin_repository/izin_repository.dart';
 
 class DetailIzinPage extends StatelessWidget {
-  final Izin izin;
+  final String idIzin;
 
-  const DetailIzinPage({Key key, this.izin}) : super(key: key);
+  const DetailIzinPage({Key key, this.idIzin}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final ref = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION);
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -22,66 +20,121 @@ class DetailIzinPage extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: ref.doc(izin.idSantri).get(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              child: Column(
-                children: [
-                  Flexible(
-                    child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Nama"),
-                              Text(snapshot.data.data()["name"]),
-                              SizedBox(height: 8.0,),
-
-                              Text("Alamat"),
-                              Text(snapshot.data.data()["address"]),
-                              SizedBox(height: 8.0,),
-
-                              Text("Tujuan pulang"),
-                              Text(izin.title),
-                              SizedBox(height: 8.0,),
-
-                              Text("Detail kepulangan"),
-                              Text(izin.information),
-                              SizedBox(height: 8.0,),
-
-                              Text("Dari tanggal"),
-                              Text(izin.fromDate.toString()),
-                              SizedBox(height: 8.0,),
-
-                              Text("Sampai tanggal"),
-                              Text(izin.toDate.toString()),
-                              SizedBox(height: 8.0,),
-                            ],
-                          ),
-                        )
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      child: Row(
-                        children: [
-                          RaisedButton(
-
-                              onPressed: (){},
-                          )
-                        ],
-                      )
-                  )
-                ],
-              ),
-            ),
-          );
-        }
-      ),
+      body: BlocProvider(
+        create: (_) => DetailIzinCubit(IzinRepository(), idIzin: idIzin),
+        child:  _DetailIzinComponent(),
+      )
     );
   }
 }
+
+class _DetailIzinComponent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<DetailIzinCubit, DetailIzinState>(
+        listener: (context, state) {
+          if(state.status == DetailIzinStatus.success) {
+
+          }
+          if(state.status == DetailIzinStatus.loading) {
+            //showLoadingDialog(context);
+          }
+          if(state.status == DetailIzinStatus.failure) {
+            print("Error");
+          }
+        },
+        child: _DetailIzinCard(),
+    );
+  }
+}
+
+
+class _DetailIzinCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return BlocBuilder<DetailIzinCubit, DetailIzinState>(
+      builder: (context, state) {
+        if(state.santri == null || state.izin == null) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+        else {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Stack(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      width: width,
+                      child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Nama"),
+                                Text(state.santri.name),
+                                SizedBox(height: 8.0,),
+
+                                Text("Alamat"),
+                                Text(state.santri.address),
+                                SizedBox(height: 8.0,),
+
+                                Text("Tujuan pulang"),
+                                Text(state.izin.title),
+                                SizedBox(height: 8.0,),
+
+                                Text("Detail kepulangan"),
+                                Text(state.izin.information),
+                                SizedBox(height: 8.0,),
+
+                                Text("Dari tanggal"),
+                                Text(state.izin.fromDate.toString()),
+                                SizedBox(height: 8.0,),
+
+                                Text("Sampai tanggal"),
+                                Text(state.izin.toDate.toString()),
+                                SizedBox(height: 8.0,),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+                _ButtonVerification()
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+class _ButtonVerification extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DetailIzinCubit, DetailIzinState>(
+        builder: (context, state) {
+          return Positioned(
+              bottom: 0,
+              child: Row(
+                children: [
+                  RaisedButton(
+                    onPressed: (){
+                      context.read<DetailIzinCubit>().verificationIzin();
+                    },
+                    child: Text("Izinkan"),
+                  )
+                ],
+              )
+          );
+        }
+    );
+  }
+}
+
+
