@@ -5,7 +5,7 @@ class Security {
   final int age;
   final String imageUrl;
   final String phoneNumber;
-  final int pos;
+  final String pos;
 
   Security({
     this.id,

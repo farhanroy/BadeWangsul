@@ -114,14 +114,15 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
     try {
       await _userRepository.createSecurity(Security(
           name: state.username.value,
-          age: state.age.value as int,
+          age: int.parse(state.age.value),
           address: state.address.value,
-          pos: state.pos.value as int,
+          pos: state.pos.value,
           imageUrl: state.imageUrl.value,
           phoneNumber: state.phoneNumber.value
       ));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
+      print(e);
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }

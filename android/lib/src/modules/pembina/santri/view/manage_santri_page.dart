@@ -24,8 +24,6 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

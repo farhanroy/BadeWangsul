@@ -120,9 +120,10 @@ class _PosInput extends StatelessWidget {
     return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.pos != current.pos,
       builder: (context, state) {
+
         return DropdownButtonFormField(
           key: const Key('signUpForm_userNameInput_textField'),
-          value: state.pos.value.isEmpty ? "0" : state.pos.value ,
+          value: "1",
           onChanged: (pos) => context.read<CompleteProfileCubit>().posChanged(pos),
           decoration: InputDecoration(
               border: OutlineInputBorder()

@@ -103,10 +103,10 @@ class DashboardSecurityGrid extends StatelessWidget {
         crossAxisCount: 2,
         children: [
           GridDashboard(
-            title: "Buat izin",
-            subtitle: "Surat izin santri",
+            title: "Verval santri",
+            subtitle: "Verifikasi kepulangan santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/izin/manage"),
+            onTap: () => Navigator.pushNamed(context, "/security/izin/manage"),
           ),
 
           GridDashboard(

@@ -12,8 +12,8 @@ class Constants {
     "orangtua"
   ];
 
-  static const List<int> POS = [
-    1,
-    2
+  static const List<String> POS = [
+    "1",
+    "2"
   ];
 }
