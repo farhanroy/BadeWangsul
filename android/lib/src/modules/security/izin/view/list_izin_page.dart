@@ -37,7 +37,10 @@ class _ListIzinPageState extends State<ListIzinPage> {
                 stream: streamQuery,
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong');
+                    return Center(child: Text('Maaf ada masalah'));
+                  }
+                  if(snapshot.data.size == 0) {
+                    return Center(child: Text('Data santri tidak ada'));
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());

@@ -120,7 +120,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           name: state.username.value,
           age: state.age.value as int,
           address: state.address.value,
-          pos: state.pos.value as int,
+          pos: state.pos.value,
           imageUrl: state.imageUrl.value,
           phoneNumber: state.phoneNumber.value
       ));

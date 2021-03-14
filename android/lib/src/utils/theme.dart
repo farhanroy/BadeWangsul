@@ -8,7 +8,10 @@ final theme = ThemeData(
   primaryColor: const Color(0xFF31326F),
   accentColor: const Color(0xFF28527A),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-  buttonColor: const Color(0xFF31326F),
+  buttonTheme: ButtonThemeData(
+    buttonColor: const Color(0xFF31326F),
+    textTheme: ButtonTextTheme.normal
+  ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),

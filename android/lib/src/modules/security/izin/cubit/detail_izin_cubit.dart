@@ -35,7 +35,7 @@ class DetailIzinCubit extends Cubit<DetailIzinState>{
     });
   }
 
-  Future<void> verificationIzin() async {
+  Future<void> verificationKeluar() async {
     emit(state.copyWith(status: DetailIzinStatus.loading));
     try {
       await _izinRepository.updateIzin(Izin(
@@ -46,7 +46,7 @@ class DetailIzinCubit extends Cubit<DetailIzinState>{
           fromDate: state.izin.fromDate,
           toDate: state.izin.toDate,
           isPermissioned: true,
-          isPulang: false,
+          isPulang: true,
       ), idIzin);
       emit(state.copyWith(status: DetailIzinStatus.success));
     } on Exception {

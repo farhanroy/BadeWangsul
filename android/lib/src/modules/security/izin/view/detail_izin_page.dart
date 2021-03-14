@@ -125,9 +125,9 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      context.read<DetailIzinCubit>().verificationIzin();
+                      context.read<DetailIzinCubit>().verificationKeluar();
                     },
-                    child: Text("Izinkan"),
+                    child: Text("Verval Keluar"),
                   )
                 ],
               )
