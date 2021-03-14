@@ -5,6 +5,7 @@ import 'bloc/authentication.dart';
 
 import 'modules/signup/signup.dart';
 import 'modules/login/login.dart';
+import 'modules/forgot/forgot.dart';
 import 'modules/pengasuh/pengasuh.dart' as pengasuh;
 import 'modules/keamanan/keamanan.dart' as keamanan;
 import 'modules/pembina/pembina.dart' as pembina;
@@ -56,6 +57,7 @@ class _AppViewState extends State<AppView> {
         '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
+        '/forgot': (context) => ForgotPassword(),
 
         '/pembina': (context) => pembina.DashboardPembinaPage(),
         '/pembina/profile/complete': (context) => pembina.CompleteProfilePage(),

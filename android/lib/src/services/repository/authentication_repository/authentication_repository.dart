@@ -17,6 +17,9 @@ class LogInWithGoogleFailure implements Exception {}
 /// Thrown during the logout process if a failure occurs.
 class LogOutFailure implements Exception {}
 
+/// Thrown during the forgot password process if a failure occurs.
+class ForgotPasswordFailure implements Exception {}
+
 /// {@template authentication_repository}
 /// Repository which manages user authentication.
 /// {@endtemplate}
@@ -111,6 +114,20 @@ class AuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+
+  /// Reset user password and send email to reset it
+  /// [User.empty] from the [user] Stream.
+  ///
+  /// Throws a [ForgotPasswordFailure] if an exception occurs.
+  Future<void> resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on Exception {
+      throw ForgotPasswordFailure();
+    }
+  }
+
 }
 
 extension on firebase_auth.User {

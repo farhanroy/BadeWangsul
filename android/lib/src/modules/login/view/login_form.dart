@@ -41,6 +41,8 @@ class LoginForm extends StatelessWidget {
               _PasswordInput(),
               const SizedBox(height: 8.0),
               _LoginButton(),
+              const SizedBox(height: 8.0),
+              _ForgotPasswordButton(),
               const SizedBox(height: 4.0),
               _SignUpButton(),
             ],
@@ -117,6 +119,20 @@ class _LoginButton extends StatelessWidget {
     );
   }
 }
+
+class _ForgotPasswordButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: Text(
+        'Forgot password',
+        style: TextStyle(color: Theme.of(context).primaryColor),
+      ),
+      onPressed: () => Navigator.of(context).pushNamed('/forgot'),
+    );
+  }
+}
+
 
 class _SignUpButton extends StatelessWidget {
   @override
