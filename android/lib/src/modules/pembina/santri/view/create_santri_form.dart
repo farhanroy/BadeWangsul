@@ -1,10 +1,12 @@
 import 'dart:io';
 
-import 'package:bade_wangsul/src/modules/pembina/santri/bloc/create_santri_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../bloc/create_santri_cubit.dart';
+import '../../../../widgets/datetextfield.dart';
 
 class CreateSantriForm extends StatelessWidget {
   @override
@@ -29,17 +31,19 @@ class CreateSantriForm extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 64,),
+            const SizedBox(height: 64,),
             _SelectImage(),
-            SizedBox(height: 8.0,),
+            const SizedBox(height: 8.0,),
             _NameSantriInput(),
-            SizedBox(height: 8.0,),
+            const SizedBox(height: 8.0,),
             _AgeSantriInput(),
-            SizedBox(height: 8.0,),
+            const SizedBox(height: 8.0,),
             _AddressSantriInput(),
-            SizedBox(height: 8.0,),
+            const SizedBox(height: 8.0,),
             _DormitorySantriInput(),
-            SizedBox(height: 8.0,),
+            const SizedBox(height: 8.0,),
+            _BirthDateInput(),
+            const SizedBox(height: 8.0,),
             _CreateSantriButton()
           ],
         ),
@@ -177,6 +181,27 @@ class _DormitorySantriInput extends StatelessWidget {
     );
   }
 }
+
+class _BirthDateInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CreateSantriCubit, CreateSantriState>(
+        builder: (context, state) {
+          return DateTextField(
+            labelText: "Tanggal lahir",
+            prefixIcon: Icon(Icons.date_range),
+            suffixIcon: Icon(Icons.arrow_drop_down),
+            lastDate: DateTime.now().add(Duration(days: 366)),
+            firstDate: DateTime.now(),
+            initialDate: DateTime.now().add(Duration(days: 1)),
+            onDateChanged: (selectedDate) =>
+                context.read<CreateSantriCubit>().birthDateChanged(selectedDate),
+          );
+        }
+    );
+  }
+}
+
 
 class _CreateSantriButton extends StatelessWidget {
   @override

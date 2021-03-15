@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bade_wangsul/src/utils/make_id.dart';
+import 'package:bade_wangsul/src/utils/validator/date_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -26,6 +28,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         state.age,
         state.address,
         state.dormitory,
+        state.birthDate,
         state.imagePath
       ]),
     ));
@@ -40,6 +43,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         age,
         state.address,
         state.dormitory,
+        state.birthDate,
         state.imagePath
       ]),
     ));
@@ -54,6 +58,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         state.age,
         address,
         state.dormitory,
+        state.birthDate,
         state.imagePath
       ]),
     ));
@@ -68,6 +73,22 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         state.age,
         state.address,
         dormitory,
+        state.birthDate,
+        state.imagePath
+      ]),
+    ));
+  }
+
+  void birthDateChanged(DateTime value) {
+    final birthDate = Date.dirty(value);
+    emit(state.copyWith(
+      birthDate: birthDate,
+      status: Formz.validate([
+        state.name,
+        state.age,
+        state.address,
+        state.dormitory,
+        birthDate,
         state.imagePath
       ]),
     ));
@@ -82,6 +103,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
         state.age,
         state.address,
         state.dormitory,
+        state.birthDate,
         imagePath
       ]),
     ));
@@ -116,10 +138,12 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
       });
 
       await _santriRepository.createSantri(Santri(
+          id: makeIdSantri(name: state.name.value, birthDate: state.birthDate.value),
           name: state.name.value,
           age: state.age.value,
           address: state.address.value,
           dormitory: state.dormitory.value,
+          birthDate: state.birthDate.value,
           imageUrl: imageUrl
       ));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));

@@ -82,6 +82,10 @@ class DetailSantriPage extends StatelessWidget {
           Text("Asrama"),
           Text(data['dormitory']),
           SizedBox(height: 16,),
+
+          Text("Tanggal lahir"),
+          Text(data['birthDate']),
+          SizedBox(height: 16,),
         ],
       ),
     );

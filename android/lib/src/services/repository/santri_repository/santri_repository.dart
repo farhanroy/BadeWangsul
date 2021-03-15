@@ -8,10 +8,12 @@ class SantriRepository {
     await FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
         .doc()
         .set({
+            "id": santri.id,
             "name": santri.name,
             "age": santri.age,
             "address": santri.address,
             "dormitory": santri.dormitory,
+            "birthDate": santri.birthDate,
             "imageUrl": santri.imageUrl
         });
   }

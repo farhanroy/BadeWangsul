@@ -6,6 +6,7 @@ class CreateSantriState extends Equatable {
     this.age = const Default.pure(),
     this.address = const Default.pure(),
     this.dormitory = const Default.pure(),
+    this.birthDate = const Date.pure(),
     this.imagePath = const Default.pure(),
     this.status = FormzStatus.pure,
 });
@@ -14,17 +15,19 @@ class CreateSantriState extends Equatable {
   final Default age;
   final Default address;
   final Default dormitory;
+  final Date birthDate;
   final Default imagePath;
   final FormzStatus status;
 
   @override
-  List<Object> get props => [name, age, address, dormitory, imagePath, status];
+  List<Object> get props => [name, age, address, dormitory, birthDate, imagePath, status];
 
   CreateSantriState copyWith({
     Default name,
     Default age,
     Default address,
     Default dormitory,
+    Date birthDate,
     Default imagePath,
     FormzStatus status
   }) {
@@ -33,6 +36,7 @@ class CreateSantriState extends Equatable {
       age: age ?? this.age,
       address: address ?? this.address,
       dormitory: dormitory ?? this.dormitory,
+      birthDate: birthDate ?? this.birthDate,
       imagePath: imagePath ?? this.imagePath,
       status: status ?? this.status
     );
