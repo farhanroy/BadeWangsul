@@ -1,7 +1,8 @@
-import 'package:bade_wangsul/src/modules/pembina/santri/bloc/create_santri_cubit.dart';
-import 'package:bade_wangsul/src/services/repository/santri_repository/santri_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/create_santri_cubit.dart';
+import '../../../../services/repository/santri_repository/santri_repository.dart';
 
 import 'create_santri_form.dart';
 class CreateSantriPage extends StatelessWidget {

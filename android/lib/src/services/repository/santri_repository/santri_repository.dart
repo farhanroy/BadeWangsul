@@ -1,6 +1,7 @@
-import 'package:bade_wangsul/src/models/santri.dart';
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../models/santri.dart';
+import '../../../utils/constants.dart';
 
 class SantriRepository {
 
@@ -16,6 +17,19 @@ class SantriRepository {
             "birthDate": santri.birthDate,
             "imageUrl": santri.imageUrl
         });
+  }
+
+  Future<void> updateSantri(Santri santri) async {
+    await FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
+        .doc(santri.id)
+        .update({
+      "name": santri.name,
+      "age": santri.age,
+      "address": santri.address,
+      "dormitory": santri.dormitory,
+      "birthDate": santri.birthDate,
+      "imageUrl": santri.imageUrl
+    });
   }
 
   Future<DocumentSnapshot> getSantriById(String id) async {
