@@ -79,7 +79,6 @@ class _AppViewState extends State<AppView> {
         '/security/profile': (context) => security.ProfileSecurityPage(),
         '/security/profile/complete': (context) => security.CompleteProfilePage(),
         '/security/profile/update': (context) => security.UpdateSecurityPage(),
-        '/security/izin/manage': (context) => security.ListIzinPage(),
 
         '/keamanan': (context) => keamanan.DashboardKeamananPage(),
         '/keamanan/profile/complete': (context) => keamanan.CompleteProfilePage(),

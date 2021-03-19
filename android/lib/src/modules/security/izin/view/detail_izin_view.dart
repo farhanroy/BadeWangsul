@@ -1,59 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../widgets/appdialog.dart';
-import '../cubit/detail_izin_cubit.dart';
-import '../../../../services/repository/izin_repository/izin_repository.dart';
+import '../cubit/verval_izin_cubit.dart';
 
-class DetailIzinPage extends StatelessWidget {
-  final String idIzin;
-
-  const DetailIzinPage({Key key, this.idIzin}) : super(key: key);
+class DetailIzinView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black87,),
-          onPressed: () => Navigator.pop(context),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: BlocProvider(
-        create: (_) => DetailIzinCubit(IzinRepository(), idIzin: idIzin),
-        child:  _DetailIzinComponent(),
-      )
-    );
-  }
-}
-
-class _DetailIzinComponent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<DetailIzinCubit, DetailIzinState>(
+    return BlocListener<VervalIzinCubit, VervalIzinState>(
         listener: (context, state) {
-          if(state.status == DetailIzinStatus.success) {
+          if(state.izinStatus == IzinStatus.success) {
 
           }
-          if(state.status == DetailIzinStatus.loading) {
-            //showLoadingDialog(context);
+          if(state.izinStatus == IzinStatus.loading) {
+
           }
-          if(state.status == DetailIzinStatus.failure) {
+          if(state.izinStatus == IzinStatus.failure) {
             print("Error");
           }
         },
-        child: _DetailIzinCard(),
+        child: _VervalIzinCard(),
     );
   }
 }
 
 
-class _DetailIzinCard extends StatelessWidget {
+class _VervalIzinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return BlocBuilder<DetailIzinCubit, DetailIzinState>(
+    return BlocBuilder<VervalIzinCubit, VervalIzinState>(
       builder: (context, state) {
         if(state.santri == null || state.izin == null) {
           return Center(child: CircularProgressIndicator(),);
@@ -117,7 +92,7 @@ class _DetailIzinCard extends StatelessWidget {
 class _ButtonVerification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailIzinCubit, DetailIzinState>(
+    return BlocBuilder<VervalIzinCubit, VervalIzinState>(
         builder: (context, state) {
           return Positioned(
               bottom: 0,
@@ -125,7 +100,7 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      context.read<DetailIzinCubit>().verificationKeluar();
+                      //context.read<VervalIzinCubit>().verificationKeluar();
                     },
                     child: Text("Verval Keluar"),
                   )

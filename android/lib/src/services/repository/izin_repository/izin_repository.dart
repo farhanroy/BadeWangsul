@@ -15,4 +15,12 @@ class IzinRepository {
         .doc(idIzin)
         .update(Izin().toJson(izin));
   }
+
+  Future<QuerySnapshot> getIzinByIdSantri(String id) async {
+    var snapshot = await FirebaseFirestore.instance
+        .collection(Constants.IZIN_COLLECTION)
+        .where("idSantri", isEqualTo: id)
+        .get();
+    return snapshot;
+  }
 }
