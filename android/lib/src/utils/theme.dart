@@ -10,7 +10,6 @@ final theme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
   buttonTheme: ButtonThemeData(
     buttonColor: const Color(0xFF31326F),
-    textTheme: ButtonTextTheme.normal
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(

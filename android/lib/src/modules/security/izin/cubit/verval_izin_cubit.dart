@@ -29,8 +29,9 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
     _izinRepository.getIzinByIdSantri(state.idSantri.value).then((value) {
       emit(state.copyWith(izin: Izin.fromJson(value.docs.single.data())));
       getSantri();
+      emit(state.copyWith(izinStatus: IzinStatus.success));
     }).catchError((error){
-      print(error);
+      print("Error ");
       emit(state.copyWith(izinStatus: IzinStatus.failure));
     });
   }
@@ -42,6 +43,32 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
   }
 
   Future<void> setKepulanganSantri() async {
-    await _izinRepository.updateIzin(Izin(), state.izin.id);
+    await _izinRepository.updateIzin(Izin(
+      id: state.izin.id,
+      idSantri: state.izin.idSantri,
+      idPembina: state.izin.idPembina,
+      title: state.izin.title,
+      information: state.izin.information,
+      fromDate: state.izin.fromDate,
+      toDate: state.izin.toDate,
+      isPermissioned: state.izin.isPermissioned,
+      isPulang: true,
+      isKembali: false
+    ), state.izin.id);
+  }
+
+  Future<void> setKedatanganSantri() async {
+    await _izinRepository.updateIzin(Izin(
+        id: state.izin.id,
+        idSantri: state.izin.idSantri,
+        idPembina: state.izin.idPembina,
+        title: state.izin.title,
+        information: state.izin.information,
+        fromDate: state.izin.fromDate,
+        toDate: state.izin.toDate,
+        isPermissioned: state.izin.isPermissioned,
+        isPulang: state.izin.isPulang,
+        isKembali: true
+    ), state.izin.id);
   }
 }

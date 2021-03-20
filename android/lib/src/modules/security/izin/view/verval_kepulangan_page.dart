@@ -12,28 +12,27 @@ class VervalKepulanganPage extends StatelessWidget {
     return BlocProvider(
         create: (_) => VervalIzinCubit(
             IzinRepository(),
-          SantriRepository()
+            SantriRepository()
         ),
-      child: VervalKepulanganComponent(),
+      child: _VervalKepulanganComponent(),
     );
   }
 }
 
-class VervalKepulanganComponent extends StatelessWidget {
+class _VervalKepulanganComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                _InputIdSantri(),
-                _SubmitButton(),
-              ],
-            ),
-            DetailIzinView()
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              _InputIdSantri(),
+              _SubmitButton(),
+              DetailIzinView()
+            ],
+          ),
         ),
       ),
     );

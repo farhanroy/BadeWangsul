@@ -106,14 +106,14 @@ class DashboardSecurityGrid extends StatelessWidget {
             title: "Verval santri",
             subtitle: "Verifikasi kepulangan santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/security/izin/manage"),
+            onTap: () => Navigator.pushNamed(context, "/security/verval/kepulangan"),
           ),
 
           GridDashboard(
-            title: "Manage Santri",
-            subtitle: "Manage data santri",
+            title: "Verval Santri",
+            subtitle: "Verifikasi kedatangan santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/santri/manage"),
+            onTap: () => Navigator.pushNamed(context, "/pembina/verval/kedatangan"),
           ),
         ],
       ),
