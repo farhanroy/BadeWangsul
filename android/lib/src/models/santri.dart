@@ -15,7 +15,7 @@ class Santri{
     address: json["address"],
     age: json["age"],
     dormitory: json["dormitory"],
-    birthDate: json["birthDate"],
+    birthDate: json["birthDate"].toDate(),
     imageUrl: json["imageUrl"],
   );
 

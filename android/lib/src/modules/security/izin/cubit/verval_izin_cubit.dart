@@ -1,9 +1,8 @@
-import 'package:bade_wangsul/src/models/izin.dart';
-import 'package:bade_wangsul/src/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../models/models.dart';
 import '../../../../utils/validator/default_validator.dart';
 import '../../../../services/repository/izin_repository/izin_repository.dart';
 import '../../../../services/repository/santri_repository/santri_repository.dart';
@@ -28,6 +27,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
   Future<void> searchIzinById() async {
     emit(state.copyWith(izinStatus: IzinStatus.loading));
     _izinRepository.getIzinByIdSantri(state.idSantri.value).then((value) {
+      emit(state.copyWith(izin: Izin.fromJson(value.docs.single.data())));
       getSantri();
     }).catchError((error){
       print(error);
@@ -36,6 +36,12 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
   }
 
   Future<void> getSantri() async {
-    await _santriRepository.getSantriById(state.idSantri.value).then((value) => );
+    await _santriRepository.getSantriById(state.idSantri.value).then((value){
+      emit(state.copyWith(santri: Santri.fromJson(value.data())));
+    });
+  }
+
+  Future<void> setKepulanganSantri() async {
+    await _izinRepository.updateIzin(Izin(), state.izin.id);
   }
 }

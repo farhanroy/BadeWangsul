@@ -1,3 +1,4 @@
+import 'package:bade_wangsul/src/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,13 +65,13 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
             children: querySnapshot.docs.map((DocumentSnapshot document) {
               return new ListTile(
                 onTap: () {
-                  if (state.idSantri != document.id) {
-                    context.read<CreateIzinCubit>().idSantriChanged(document.id);
+                  if (state.santri.id != document.id) {
+                    context.read<CreateIzinCubit>().santriChanged(Santri.fromJson(document.data()));
                   } else {
-                    context.read<CreateIzinCubit>().idSantriChanged('');
+                    context.read<CreateIzinCubit>().santriChanged(Santri(id: ''));
                   }
                 },
-                selected: state.idSantri == document.id,
+                selected: state.santri.id == document.id,
                 selectedTileColor: Theme.of(context).primaryColor,
                 leading: CircleAvatar(
                   backgroundImage:

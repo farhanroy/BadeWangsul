@@ -7,7 +7,7 @@ class SantriRepository {
 
   Future<void> createSantri(Santri santri) async {
     await FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
-        .doc()
+        .doc(santri.id)
         .set({
             "id": santri.id,
             "name": santri.name,

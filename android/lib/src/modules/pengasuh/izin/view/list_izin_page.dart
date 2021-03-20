@@ -20,7 +20,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
     super.initState();
     streamQuery = FirebaseFirestore.instance
         .collection(Constants.IZIN_COLLECTION)
-        .where("isPermissioned",isEqualTo: true)
+        .where("isPermissioned",isEqualTo: false)
         .snapshots();
     searchController = TextEditingController();
   }
@@ -43,7 +43,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                   children: [
                     _searchInput(searchController),
                     SizedBox(height: 8,),
-                    ListView(
+                    Column(
                       children: snapshot.data.docs.map((DocumentSnapshot document) {
                         return GestureDetector(
                             onTap: (){

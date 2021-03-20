@@ -64,8 +64,7 @@ class CreateIzinStepper extends StatelessWidget {
                     title: "Pilih santri",
                     subtitle: "",
                     validation: (){
-                      if (state.idSantri == null || state.idSantri == '') {
-                        print(state.idSantri);
+                      if (state.santri.id == null || state.santri.id == '') {
                         return "Santri belum dipilih";
                       }
                       return null;

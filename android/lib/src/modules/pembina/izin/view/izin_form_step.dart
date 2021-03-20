@@ -9,7 +9,7 @@ class IzinFormStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CreateIzinCubit, CreateIzinState>(
       listener: (context, state){
-        context.read<CreateIzinCubit>().santriChanged();
+        //context.read<CreateIzinCubit>().santriChanged();
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),

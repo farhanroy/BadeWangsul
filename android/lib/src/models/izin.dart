@@ -1,4 +1,5 @@
 class Izin {
+  final String id;
   final String idSantri;
   final String idPembina;
   final String title;
@@ -9,6 +10,7 @@ class Izin {
   final bool isPulang;
 
   Izin({
+    this.id,
     this.idSantri,
     this.idPembina,
     this.title,
@@ -20,6 +22,7 @@ class Izin {
   });
 
   factory Izin.fromJson(Map<String, dynamic> json) => Izin(
+    id: json["id"],
     idSantri: json["idSantri"],
     idPembina: json["idPembina"],
     title: json["title"],
@@ -31,6 +34,7 @@ class Izin {
   );
 
   Map<String, dynamic> toJson(Izin izin) => {
+    "id": izin.id,
     "idSantri": izin.idSantri,
     "idPembina": izin.idPembina,
     "title": izin.title,

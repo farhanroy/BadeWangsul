@@ -4,6 +4,7 @@ import 'package:bade_wangsul/src/utils/validator/date_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../utils/validator/default_validator.dart';
 import '../../../../models/santri.dart';
@@ -26,10 +27,8 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
     emit(state.copyWith(currentStep: value));
   }
 
-  void santriChanged() {
-    santriRepository.getSantriById(state.idSantri).then((documentSnapshot) {
-      emit(state.copyWith(santri: Santri.fromJson(documentSnapshot.data())));
-    });
+  void santriChanged(Santri santri) {
+    emit(state.copyWith(santri: santri));
   }
   
   void titleChanged(String value) {
@@ -95,8 +94,10 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
   }
 
   Future<void> createIzin(String idPembina) async {
+    final id = Uuid().v1();
     await izinRepository.createIzin(Izin(
-      idSantri: state.idSantri,
+      id: id,
+      idSantri: state.santri.id,
       idPembina: idPembina,
       title: state.title.value,
       information: state.information.value,
