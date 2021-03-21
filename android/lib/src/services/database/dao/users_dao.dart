@@ -9,12 +9,12 @@ class UsersDao{
   static const String folderName = "Users";
   final _userFolder = intMapStoreFactory.store(folderName);
   final _collection = FirebaseFirestore.instance.collection(Constants.USER_COLLECTION);
-  final _userId = FirebaseAuth.instance.currentUser;
 
 
   Future<Database> get  _db  async => await AppDatabase.instance.database;
 
   Future updateOrInsertPembina() async{
+    final _userId = FirebaseAuth.instance.currentUser;
     final snapshot = await _collection.doc(_userId.uid).get();
     await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');
@@ -25,6 +25,7 @@ class UsersDao{
   }
 
   Future updateOrInsertPengasuh() async{
+    final _userId = FirebaseAuth.instance.currentUser;
     final snapshot = await _collection.doc(_userId.uid).get();
     await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');
@@ -35,6 +36,7 @@ class UsersDao{
   }
 
   Future updateOrInsertSecurity() async{
+    final _userId = FirebaseAuth.instance.currentUser;
     final snapshot = await _collection.doc(_userId.uid).get();
     await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');
@@ -45,6 +47,7 @@ class UsersDao{
   }
 
   Future updateOrInsertKeamanan() async{
+    final _userId = FirebaseAuth.instance.currentUser;
     final snapshot = await _collection.doc(_userId.uid).get();
     await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');
@@ -55,6 +58,7 @@ class UsersDao{
   }
 
   Future updateOrInsertOrangtua() async{
+    final _userId = FirebaseAuth.instance.currentUser;
     final snapshot = await _collection.doc(_userId.uid).get();
     await _userFolder.record(0).put(await _db, snapshot.data() );
     print('Student Inserted successfully !!');

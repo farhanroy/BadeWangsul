@@ -1,9 +1,10 @@
-import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
-import 'package:bade_wangsul/src/services/repository/user_repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../login.dart';
+import '../../../services/repository/authentication_repository/authentication_repository.dart';
+import '../../../services/repository/user_repository/user_repository.dart';
+import '../../../services/database/dao/users_dao.dart';
 
 class LoginPage extends StatelessWidget {
   static Route route() {
@@ -19,7 +20,8 @@ class LoginPage extends StatelessWidget {
         child: BlocProvider(
           create: (_) => LoginCubit(
               context.read<AuthenticationRepository>(),
-              UserRepository()
+              UserRepository(),
+              UsersDao()
           ),
           child: LoginForm(),
         ),
