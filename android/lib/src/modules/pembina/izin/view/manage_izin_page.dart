@@ -43,7 +43,14 @@ class _ListIzinSantri extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: snapshot.data.docs.map((DocumentSnapshot document) {
-              return _ItemIzinSantri(idSantri: document.data()['idSantri'],);
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => DetailIzinPage(idIzin: document.id,)
+                    ));
+                  },
+                  child: _ItemIzinSantri(idSantri: document.data()['idSantri'],)
+              );
             }).toList(),
           ),
         );
@@ -73,11 +80,6 @@ class _ItemIzinSantri extends StatelessWidget {
           }
 
           return new ListTile(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DetailIzinPage()
-              ));
-            },
             leading: CircleAvatar(
               backgroundImage:
               NetworkImage("${snapshot.data.data()["imageUrl"]}"),

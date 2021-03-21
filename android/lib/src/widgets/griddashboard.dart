@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GridDashboard extends StatelessWidget {
@@ -42,6 +43,7 @@ class GridDashboard extends StatelessWidget {
                     color: Colors.white38,
                     fontSize: 10,
                     fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: 14,

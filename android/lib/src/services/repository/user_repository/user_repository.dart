@@ -61,6 +61,8 @@ class UserRepository {
       "imageUrl": pengasuh.imageUrl,
       "usertype": "pengasuh"
     });
+
+    await usersDao.updateOrInsertPengasuh();
   }
 
   Future<void> updatePengasuh(Pengasuh pengasuh) async {

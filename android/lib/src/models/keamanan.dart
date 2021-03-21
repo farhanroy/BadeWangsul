@@ -2,7 +2,7 @@ class Keamanan {
   final String id;
   final String name;
   final String address;
-  final int age;
+  final String age;
   final String imageUrl;
   final String phoneNumber;
 

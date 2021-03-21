@@ -95,13 +95,14 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
     try {
       await _userRepository.createKemanan(Keamanan(
           name: state.username.value,
-          age: state.age.value as int,
+          age: state.age.value,
           address: state.address.value,
           imageUrl: state.imageUrl.value,
           phoneNumber: state.phoneNumber.value
       ));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
+      print(e);
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }

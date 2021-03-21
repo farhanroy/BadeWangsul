@@ -100,7 +100,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     try {
       await _userRepository.updateKeamanan(Keamanan(
           name: state.username.value,
-          age: state.age.value as int,
+          age: state.age.value,
           address: state.address.value,
           imageUrl: state.imageUrl.value,
           phoneNumber: state.phoneNumber.value

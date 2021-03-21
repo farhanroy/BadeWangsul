@@ -79,7 +79,7 @@ class DetailSantriPage extends StatelessWidget {
           SizedBox(height: 16,),
 
           Text("Tanggal lahir"),
-          Text(data['birthDate']),
+          Text(data['birthDate'].toString()),
           SizedBox(height: 16,),
         ],
       ),

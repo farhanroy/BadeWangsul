@@ -21,13 +21,13 @@ class _MonitorSantriPageState extends State<MonitorSantriPage> {
 }
 
 class _ListIzinSantri extends StatelessWidget {
-  final CollectionReference _ref = FirebaseFirestore.instance
+  final ref = FirebaseFirestore.instance
       .collection(Constants.IZIN_COLLECTION)
       .where("isKembali", isEqualTo: true);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: _ref.snapshots(),
+        stream: ref.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');

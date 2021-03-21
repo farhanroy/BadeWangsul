@@ -103,17 +103,10 @@ class DashboardKeamananGrid extends StatelessWidget {
         crossAxisCount: 2,
         children: [
           GridDashboard(
-            title: "Buat izin",
-            subtitle: "Surat izin santri",
+            title: "Monitor Santri",
+            subtitle: "Siapa saja santri yang telat kembali",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/keamanan/izin/manage"),
-          ),
-
-          GridDashboard(
-            title: "Manage Santri",
-            subtitle: "Manage data santri",
-            img: "",
-            onTap: () => Navigator.pushNamed(context, "/keamanan/santri/manage"),
+            onTap: () => Navigator.pushNamed(context, "/keamanan/izin/monitor"),
           ),
         ],
       ),
