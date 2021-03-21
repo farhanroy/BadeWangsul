@@ -86,6 +86,7 @@ class _AppViewState extends State<AppView> {
         '/keamanan/profile/complete': (context) => keamanan.CompleteProfilePage(),
         '/keamanan/profile': (context) => keamanan.ProfileKeamananPage(),
         '/keamanan/profile/update': (context) => keamanan.UpdateProfilePage(),
+        '/keamanan/izin/monitor': (context) => keamanan.MonitorSantriPage(),
       },
     );
   }
