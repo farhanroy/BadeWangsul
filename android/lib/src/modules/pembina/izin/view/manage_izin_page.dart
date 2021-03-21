@@ -3,25 +3,20 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants.dart';
 import '../../../../models/pembina.dart';
+import 'detail_izin_page.dart';
 import 'create_izin_page.dart';
 
-class ManageIzinPage extends StatefulWidget {
+class ManageIzinPage extends StatelessWidget {
   final Pembina pembina;
 
   const ManageIzinPage({Key key, this.pembina}) : super(key: key);
-
-  @override
-  _ManageIzinPageState createState() => _ManageIzinPageState();
-}
-
-class _ManageIzinPageState extends State<ManageIzinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) => CreateIzinPage(pembina: widget.pembina,))
+            MaterialPageRoute(builder: (_) => CreateIzinPage(pembina: pembina,))
         ),
       ),
       body: SafeArea(
@@ -78,6 +73,11 @@ class _ItemIzinSantri extends StatelessWidget {
           }
 
           return new ListTile(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => DetailIzinPage()
+              ));
+            },
             leading: CircleAvatar(
               backgroundImage:
               NetworkImage("${snapshot.data.data()["imageUrl"]}"),

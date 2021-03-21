@@ -4,18 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/verval_izin_cubit.dart';
 
 class DetailIzinView extends StatelessWidget {
+  const DetailIzinView({Key key, this.isPulang}) : super(key: key);
+
+  final bool isPulang;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VervalIzinCubit, VervalIzinState>(
       builder: (context, state){
         if(state.izinStatus == IzinStatus.success) {
-         return _VervalIzinCard();
+         return _VervalIzinCard(isPulang: isPulang);
         }
         if(state.izinStatus == IzinStatus.loading) {
           return Center(child: CircularProgressIndicator());
         }
         if(state.izinStatus == IzinStatus.failure) {
-          print("Error");
           return Container();
         }
         return Container();
@@ -26,6 +29,10 @@ class DetailIzinView extends StatelessWidget {
 
 
 class _VervalIzinCard extends StatelessWidget {
+  const _VervalIzinCard({Key key, this.isPulang}) : super(key: key);
+
+  final bool isPulang;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -76,7 +83,7 @@ class _VervalIzinCard extends StatelessWidget {
                   ),
                 ],
               ),
-              _ButtonVerification()
+              _ButtonVerification(isPulang: isPulang,)
             ],
           ),
         );
@@ -86,6 +93,10 @@ class _VervalIzinCard extends StatelessWidget {
 }
 
 class _ButtonVerification extends StatelessWidget {
+  const _ButtonVerification({Key key, this.isPulang}) : super(key: key);
+
+  final bool isPulang;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VervalIzinCubit, VervalIzinState>(
@@ -96,7 +107,11 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      //context.read<VervalIzinCubit>().verificationKeluar();
+                      if (isPulang) {
+                        context.read<VervalIzinCubit>().setKepulanganSantri();
+                      } else {
+                        context.read<VervalIzinCubit>().setKedatanganSantri();
+                      }
                     },
                     child: Text("Verval Keluar"),
                   )

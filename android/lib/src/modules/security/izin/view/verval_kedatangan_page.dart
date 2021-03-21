@@ -1,9 +1,9 @@
-import 'package:bade_wangsul/src/services/repository/santri_repository/santri_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/verval_izin_cubit.dart';
 import '../../../../services/repository/izin_repository/izin_repository.dart';
+import '../../../../services/repository/santri_repository/santri_repository.dart';
 import 'detail_izin_view.dart';
 
 class VervalKedatanganPage extends StatelessWidget {
@@ -26,13 +26,9 @@ class VervalKedatanganComponent extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                _InputIdSantri(),
-                _SubmitButton(),
-              ],
-            ),
-            DetailIzinView()
+            _InputIdSantri(),
+            _SubmitButton(),
+            DetailIzinView(isPulang: false,)
           ],
         ),
       ),

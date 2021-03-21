@@ -1,7 +1,8 @@
-import 'package:bade_wangsul/src/modules/pembina/izin/izin.dart';
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../../izin/izin.dart';
+import '../../../../utils/constants.dart';
 
 class ManageSantriPage extends StatefulWidget {
   @override

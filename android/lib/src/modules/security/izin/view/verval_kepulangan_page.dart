@@ -30,7 +30,7 @@ class _VervalKepulanganComponent extends StatelessWidget {
             children: [
               _InputIdSantri(),
               _SubmitButton(),
-              DetailIzinView()
+              DetailIzinView(isPulang: true,)
             ],
           ),
         ),
