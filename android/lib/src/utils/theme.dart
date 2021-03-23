@@ -8,6 +8,11 @@ final theme = ThemeData(
   primaryColor: const Color(0xFF31326F),
   accentColor: const Color(0xFF28527A),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      primary: Colors.white,
+    ),
+  ),
   buttonTheme: ButtonThemeData(
     buttonColor: const Color(0xFF31326F),
   ),
