@@ -23,13 +23,13 @@ class CreateSantriState extends Equatable {
   List<Object> get props => [name, age, address, dormitory, birthDate, imagePath, status];
 
   CreateSantriState copyWith({
-    Default name,
-    Default age,
-    Default address,
-    Default dormitory,
-    Date birthDate,
-    Default imagePath,
-    FormzStatus status
+    Default? name,
+    Default? age,
+    Default? address,
+    Default? dormitory,
+    Date? birthDate,
+    Default? imagePath,
+    FormzStatus? status
   }) {
     return CreateSantriState(
       name: name ?? this.name,

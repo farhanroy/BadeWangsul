@@ -37,7 +37,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     ));
   }
 
-  void usertypeChanged(String value) {
+  void usertypeChanged(String? value) {
     final usertype = Default.dirty(value);
     emit(state.copyWith(
       usertype: usertype,

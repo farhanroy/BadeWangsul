@@ -27,13 +27,13 @@ class CompleteProfileState extends Equatable {
       [username, address, age, imageUrl, phoneNumber, status, storageStatus];
 
   CompleteProfileState copyWith ({
-    Default username,
-    Default address,
-    Default age,
-    Default imageUrl,
-    Default phoneNumber,
-    FormzStatus status,
-    ImageStorageStatus storageStatus
+    Default? username,
+    Default? address,
+    Default? age,
+    Default? imageUrl,
+    Default? phoneNumber,
+    FormzStatus? status,
+    ImageStorageStatus? storageStatus
   }) {
     return CompleteProfileState(
       username:  username ?? this.username,

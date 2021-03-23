@@ -10,13 +10,13 @@ class IzinRepository {
         .set(Izin().toJson(izin));
   }
 
-  Future<void> updateIzin(Izin izin, String idIzin) async {
+  Future<void> updateIzin(Izin izin, String? idIzin) async {
     await FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION)
         .doc(idIzin)
         .update(Izin().toJson(izin));
   }
 
-  Future<QuerySnapshot> getIzinByIdSantri(String id) async {
+  Future<QuerySnapshot> getIzinByIdSantri(String? id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection(Constants.IZIN_COLLECTION)
         .where("idSantri", isEqualTo: id)

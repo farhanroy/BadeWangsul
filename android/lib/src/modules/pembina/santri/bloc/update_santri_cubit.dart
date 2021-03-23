@@ -17,11 +17,11 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
   UpdateSantriCubit(this._santriRepository, this.idSantri) : super(UpdateSantriState());
 
   final SantriRepository _santriRepository;
-  final String idSantri;
+  final String? idSantri;
 
-  File _file;
+  File? _file;
 
-  void setInitialImage(String url) {
+  void setInitialImage(String? url) {
     imageUrlChanged(url);
     emit(state.copyWith(storageStatus: ImageStorageStatus.success));
   }
@@ -86,7 +86,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
     ));
   }
 
-  void birthDateChanged(DateTime value) {
+  void birthDateChanged(DateTime? value) {
     final birthDate = Date.dirty(value);
     emit(state.copyWith(
       birthDate: birthDate,
@@ -101,7 +101,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
     ));
   }
 
-  void imageUrlChanged(String value) {
+  void imageUrlChanged(String? value) {
     final imagePath = Default.dirty(value);
     emit(state.copyWith(
       imagePath: imagePath,
@@ -116,9 +116,9 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
     ));
   }
 
-  Future<String> uploadImage() async {
-    String imageUrl;
-    File _file = File(state.imagePath.value);
+  Future<String?> uploadImage() async {
+    String? imageUrl;
+    File _file = File(state.imagePath.value!);
     try {
       var storageRef = firebase_storage
           .FirebaseStorage.instance.ref('santri/${state.name.value}');
@@ -137,7 +137,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      String imageUrl;
+      String? imageUrl;
 
       await uploadImage().then((value) {
         imageUrl = value;

@@ -18,7 +18,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
   void usernameChanged(String value) {
     final username = Default.dirty(value);

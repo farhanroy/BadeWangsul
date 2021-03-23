@@ -18,7 +18,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
   void setInitialImage(String url) {
     imageUrlChanged(url);
@@ -118,7 +118,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     try {
       await _userRepository.updateSecurity(Security(
           name: state.username.value,
-          age: state.age.value as int,
+          age: state.age.value as int?,
           address: state.address.value,
           pos: state.pos.value,
           imageUrl: state.imageUrl.value,

@@ -27,14 +27,14 @@ class UpdateSantriState extends Equatable {
   List<Object> get props => [name, age, address, dormitory, birthDate, imagePath, storageStatus, status];
 
   UpdateSantriState copyWith({
-    Default name,
-    Default age,
-    Default address,
-    Default dormitory,
-    Date birthDate,
-    Default imagePath,
-    ImageStorageStatus storageStatus,
-    FormzStatus status,
+    Default? name,
+    Default? age,
+    Default? address,
+    Default? dormitory,
+    Date? birthDate,
+    Default? imagePath,
+    ImageStorageStatus? storageStatus,
+    FormzStatus? status,
   }){
     return UpdateSantriState(
       name: name ?? this.name,

@@ -13,7 +13,7 @@ class ProfilePengasuhPage extends StatefulWidget {
 }
 
 class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
-  UsersDao _dao;
+  late UsersDao _dao;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.done){
-              return _content(Pengasuh.fromJson(snapshot.data));
+              return _content(Pengasuh.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -72,7 +72,7 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
           Center(
             child: pengasuh.imageUrl != null ? CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(pengasuh.imageUrl),
+              backgroundImage: NetworkImage(pengasuh.imageUrl!),
             ) : CircleAvatar(
                 radius: 70,
                 backgroundImage: AssetImage('assets/img/default-profile.png')),
@@ -80,7 +80,7 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(pengasuh.name),
+          Text(pengasuh.name!),
           SizedBox(height: 16,),
 
           Text("Umur"),
@@ -88,11 +88,11 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(pengasuh.address),
+          Text(pengasuh.address!),
           SizedBox(height: 16,),
 
           Text("Asrama"),
-          Text(pengasuh.dormitory),
+          Text(pengasuh.dormitory!),
           SizedBox(height: 16,),
 
           Text("Nomor Telepon"),

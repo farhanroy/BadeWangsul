@@ -27,19 +27,19 @@ class ConfirmationIzin extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Nama"),
-                    Text(state.santri.name),
+                    Text(state.santri!.name!),
                     SizedBox(height: 8.0,),
 
                     Text("Alamat"),
-                    Text(state.santri.address),
+                    Text(state.santri!.address!),
                     SizedBox(height: 8.0,),
 
                     Text("Tujuan pulang"),
-                    Text(state.title.value),
+                    Text(state.title.value!),
                     SizedBox(height: 8.0,),
 
                     Text("Detail kepulangan"),
-                    Text(state.information.value),
+                    Text(state.information.value!),
                     SizedBox(height: 8.0,),
 
                     Text("Dari tanggal"),

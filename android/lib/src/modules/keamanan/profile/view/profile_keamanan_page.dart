@@ -13,7 +13,7 @@ class ProfileKeamananPage extends StatefulWidget {
 }
 
 class _ProfileKeamananPageState extends State<ProfileKeamananPage> {
-  UsersDao _dao;
+  late UsersDao _dao;
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _ProfileKeamananPageState extends State<ProfileKeamananPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.done){
-              return _content(Keamanan.fromJson(snapshot.data));
+              return _content(Keamanan.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -70,7 +70,7 @@ class _ProfileKeamananPageState extends State<ProfileKeamananPage> {
           Center(
             child: keamanan.imageUrl != null ? CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(keamanan.imageUrl),
+              backgroundImage: NetworkImage(keamanan.imageUrl!),
             ) : CircleAvatar(
               radius: 70,
               backgroundImage: AssetImage('assets/img/default-profile.png')),
@@ -78,7 +78,7 @@ class _ProfileKeamananPageState extends State<ProfileKeamananPage> {
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(keamanan.name),
+          Text(keamanan.name!),
           SizedBox(height: 16,),
 
           Text("Umur"),
@@ -86,7 +86,7 @@ class _ProfileKeamananPageState extends State<ProfileKeamananPage> {
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(keamanan.address),
+          Text(keamanan.address!),
           SizedBox(height: 16,),
 
           Text("Nomor Telepon"),

@@ -28,14 +28,14 @@ class UpdateProfileState extends Equatable {
       [username, address, age, dormitory, imageUrl, phoneNumber, status, storageStatus];
 
   UpdateProfileState copyWith ({
-    Default username,
-    Default address,
-    Default age,
-    Default dormitory,
-    Default imageUrl,
-    Default phoneNumber,
-    FormzStatus status,
-    ImageStorageStatus storageStatus
+    Default? username,
+    Default? address,
+    Default? age,
+    Default? dormitory,
+    Default? imageUrl,
+    Default? phoneNumber,
+    FormzStatus? status,
+    ImageStorageStatus? storageStatus
   }) {
     return UpdateProfileState(
         username:  username ?? this.username,

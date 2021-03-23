@@ -11,9 +11,9 @@ class ListIzinPage extends StatefulWidget {
 
 class _ListIzinPageState extends State<ListIzinPage> {
 
-  String searchKey;
-  Stream streamQuery;
-  TextEditingController searchController;
+  String? searchKey;
+  Stream? streamQuery;
+  TextEditingController? searchController;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
     return Scaffold(
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-            stream: streamQuery,
+            stream: streamQuery as Stream<QuerySnapshot>?,
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
@@ -44,7 +44,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                     _searchInput(searchController),
                     SizedBox(height: 8,),
                     Column(
-                      children: snapshot.data.docs.map((DocumentSnapshot document) {
+                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
                         return GestureDetector(
                             onTap: (){
                               Navigator.push(
@@ -53,7 +53,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                                       DetailIzinPage(idIzin: document.id,))
                               );
                             },
-                            child: _ItemIzinSantri(idSantri: document.data()['idSantri'],)
+                            child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
                         );
                       }).toList(),
                     )
@@ -66,7 +66,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
     );
   }
 
-  Widget _searchInput(TextEditingController controller) {
+  Widget _searchInput(TextEditingController? controller) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -75,7 +75,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
             searchKey = value;
             streamQuery = FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey +'z')
+                .where('name', isLessThan: searchKey! +'z')
                 .where("isPermissioned",isEqualTo: true)
                 .snapshots();
           });
@@ -93,9 +93,9 @@ class _ListIzinPageState extends State<ListIzinPage> {
 }
 
 class _ItemIzinSantri extends StatelessWidget {
-  _ItemIzinSantri({Key key, this.idSantri}) : super(key: key);
+  _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
-  final String idSantri;
+  final String? idSantri;
   final CollectionReference ref = FirebaseFirestore.instance
       .collection(Constants.SANTRI_COLLECTION);
 
@@ -115,11 +115,11 @@ class _ItemIzinSantri extends StatelessWidget {
         return new ListTile(
           leading: CircleAvatar(
             backgroundImage:
-            NetworkImage("${snapshot.data.data()["imageUrl"]}"),
+            NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
             backgroundColor: Colors.transparent,
           ),
-          title: new Text(snapshot.data.data()['name']),
-          subtitle: new Text(snapshot.data.data()['dormitory']),
+          title: new Text(snapshot.data!.data()!['name']),
+          subtitle: new Text(snapshot.data!.data()!['dormitory']),
         );
       },
     );

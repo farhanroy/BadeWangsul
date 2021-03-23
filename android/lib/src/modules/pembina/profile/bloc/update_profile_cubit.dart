@@ -18,9 +18,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
-  void setInitialImage(String url) {
+  void setInitialImage(String? url) {
     imageUrlChanged(url);
     emit(state.copyWith(storageStatus: ImageStorageStatus.success));
   }
@@ -82,7 +82,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ]),
     ));
   }
-  void imageUrlChanged(String value) {
+  void imageUrlChanged(String? value) {
     final imageUrl = Default.dirty(value);
     emit(state.copyWith(
       imageUrl: imageUrl,

@@ -13,7 +13,7 @@ class ProfilePembinaPage extends StatefulWidget {
 }
 
 class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
-  UsersDao _dao;
+  late UsersDao _dao;
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.done){
-              return _content(Pembina.fromJson(snapshot.data));
+              return _content(Pembina.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -70,7 +70,7 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
           Center(
             child: pembina.imageUrl != null ? CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(pembina.imageUrl),
+              backgroundImage: NetworkImage(pembina.imageUrl!),
             ) : CircleAvatar(
               radius: 70,
               backgroundImage: AssetImage('assets/img/default-profile.png')),
@@ -78,19 +78,19 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(pembina.name),
+          Text(pembina.name!),
           SizedBox(height: 16,),
 
           Text("Umur"),
-          Text(pembina.age),
+          Text(pembina.age!),
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(pembina.address),
+          Text(pembina.address!),
           SizedBox(height: 16,),
 
           Text("Asrama"),
-          Text(pembina.dormitory),
+          Text(pembina.dormitory!),
           SizedBox(height: 16,),
 
           Text("Nomor Telepon"),

@@ -1,15 +1,16 @@
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/modules/pembina/santri/bloc/update_santri_cubit.dart';
-import 'package:bade_wangsul/src/services/repository/santri_repository/santri_repository.dart';
-import 'package:bade_wangsul/src/widgets/datetextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../models/models.dart';
+import '../bloc/update_santri_cubit.dart';
+import '../../../../services/repository/santri_repository/santri_repository.dart';
+import '../../../../widgets/datetextfield.dart';
+
 class UpdateSantriForm extends StatelessWidget {
-  UpdateSantriForm({Key key, this.idSantri}) : super(key: key);
+  UpdateSantriForm({Key? key, this.idSantri}) : super(key: key);
   
-  final String idSantri;
+  final String? idSantri;
   
   final TextEditingController _inputName = TextEditingController();
   final TextEditingController _inputAge = TextEditingController();
@@ -63,21 +64,21 @@ class UpdateSantriForm extends StatelessWidget {
 
   void setInitialValue(BuildContext context) async {
     final snapshot = await _santriRepository.getSantriById(idSantri);
-    final santri = Santri.fromJson(snapshot.data());
+    final santri = Santri.fromJson(snapshot.data()!);
 
-    _inputName.text = santri.name;
-    _inputAge.text = santri.age;
-    _inputAddress.text = santri.address;
-    _inputDormitory.text = santri.dormitory;
+    _inputName.text = santri.name!;
+    _inputAge.text = santri.age!;
+    _inputAddress.text = santri.address!;
+    _inputDormitory.text = santri.dormitory!;
     context.read<UpdateSantriCubit>().birthDateChanged(santri.birthDate);
     context.read<UpdateSantriCubit>().setInitialImage(santri.imageUrl);
   }
 }
 
 class _NameInput extends StatelessWidget {
-  final TextEditingController inputName;
+  final TextEditingController? inputName;
 
-  _NameInput({Key key, this.inputName}) : super(key: key);
+  _NameInput({Key? key, this.inputName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -99,9 +100,9 @@ class _NameInput extends StatelessWidget {
 }
 
 class _AddressInput extends StatelessWidget {
-  final TextEditingController inputAddress;
+  final TextEditingController? inputAddress;
 
-  const _AddressInput({Key key, this.inputAddress}) : super(key: key);
+  const _AddressInput({Key? key, this.inputAddress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -123,9 +124,9 @@ class _AddressInput extends StatelessWidget {
 }
 
 class _AgeInput extends StatelessWidget {
-  final TextEditingController inputAge;
+  final TextEditingController? inputAge;
 
-  const _AgeInput({Key key, this.inputAge}) : super(key: key);
+  const _AgeInput({Key? key, this.inputAge}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -147,9 +148,9 @@ class _AgeInput extends StatelessWidget {
 }
 
 class _DormitoryInput extends StatelessWidget {
-  final TextEditingController inputDormitory;
+  final TextEditingController? inputDormitory;
 
-  const _DormitoryInput({Key key, this.inputDormitory}) : super(key: key);
+  const _DormitoryInput({Key? key, this.inputDormitory}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -181,7 +182,7 @@ class _BirthDateInput extends StatelessWidget {
             suffixIcon: Icon(Icons.arrow_drop_down),
             lastDate: DateTime.now().add(Duration(days: 366)),
             firstDate: DateTime.now(),
-            initialDate: state.birthDate.value,
+            initialDate: state.birthDate.value!,
             onDateChanged: (selectedDate) =>
                 context.read<UpdateSantriCubit>().birthDateChanged(selectedDate),
           );
@@ -198,18 +199,18 @@ class _SelectImage extends StatelessWidget {
           switch (state.storageStatus) {
             case ImageStorageStatus.unknown:
               return _unknown(context);
-              break;
+              
             case ImageStorageStatus.loading:
               return _loading();
-              break;
+              
             case ImageStorageStatus.success:
-              return _success(state.imagePath.value);
-              break;
+              return _success(state.imagePath.value!);
+              
             case ImageStorageStatus.failed:
               return _failed();
             default:
               return _unknown(context);
-              break;
+              
           }
         }
     );

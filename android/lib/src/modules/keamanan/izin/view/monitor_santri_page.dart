@@ -37,8 +37,8 @@ class _ListIzinSantri extends StatelessWidget {
           }
           return SingleChildScrollView(
             child: Column(
-              children: snapshot.data.docs.map((DocumentSnapshot document) {
-                return _ItemIzinSantri(idSantri: document.data()['idSantri'],);
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                return _ItemIzinSantri(idSantri: document.data()!['idSantri'],);
               }).toList(),
             ),
           );
@@ -48,9 +48,9 @@ class _ListIzinSantri extends StatelessWidget {
 }
 
 class _ItemIzinSantri extends StatelessWidget {
-  _ItemIzinSantri({Key key, this.idSantri}) : super(key: key);
+  _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
-  final String idSantri;
+  final String? idSantri;
   final CollectionReference ref = FirebaseFirestore.instance
       .collection(Constants.SANTRI_COLLECTION);
 
@@ -70,16 +70,16 @@ class _ItemIzinSantri extends StatelessWidget {
         return new ListTile(
           onTap: (){
             Navigator.push(context, MaterialPageRoute(
-                builder: (context) => DetailSantriPage(idSantri: snapshot.data.data()["id"],)
+                builder: (context) => DetailSantriPage(idSantri: snapshot.data!.data()!["id"],)
             ));
           },
           leading: CircleAvatar(
             backgroundImage:
-            NetworkImage("${snapshot.data.data()["imageUrl"]}"),
+            NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
             backgroundColor: Colors.transparent,
           ),
-          title: new Text(snapshot.data.data()['name']),
-          subtitle: new Text(snapshot.data.data()['dormitory']),
+          title: new Text(snapshot.data!.data()!['name']),
+          subtitle: new Text(snapshot.data!.data()!['dormitory']),
         );
       },
     );

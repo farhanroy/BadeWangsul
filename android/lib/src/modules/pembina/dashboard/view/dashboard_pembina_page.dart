@@ -12,7 +12,7 @@ class DashboardPembinaPage extends StatefulWidget {
 
 class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
 
-  UsersDao _dao;
+  late UsersDao _dao;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
 
             if (snapshot.connectionState == ConnectionState.done){
 
-              return _content(Pembina.fromJson(snapshot.data));
+              return _content(Pembina.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -59,7 +59,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      pembina.name,
+                      pembina.name!,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -97,9 +97,9 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
 }
 
 class DashboardPembinaGrid extends StatelessWidget {
-  final Pembina pembina;
+  final Pembina? pembina;
 
-  const DashboardPembinaGrid({Key key, this.pembina}) : super(key: key);
+  const DashboardPembinaGrid({Key? key, this.pembina}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Flexible(

@@ -19,7 +19,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
   void usernameChanged(String value) {
     final username = Default.dirty(value);
@@ -109,7 +109,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
 
   // Upload image chosen to firebase storage bucket
   Future<void> uploadImage() async {
-    String userId = FirebaseAuth.instance.currentUser.uid;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
     try {
       var storageRef = firebase_storage
           .FirebaseStorage.instance.ref('user/image/$userId');

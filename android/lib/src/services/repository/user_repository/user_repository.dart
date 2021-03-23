@@ -8,16 +8,16 @@ import '../../../utils/constants.dart';
 class UserRepository {
   final usersDao = UsersDao();
   Future<String> getUsertype() async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     var usertype = (await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION)
         .doc(user.uid)
-        .get()).data()["usertype"].toString();
+        .get()).data()!["usertype"].toString();
     print("Usertype = $usertype");
     return usertype;
   }
 
   Future<void> createPembina(Pembina pembina) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
           "id":user.uid,
@@ -33,7 +33,7 @@ class UserRepository {
   }
 
   Future<void> updatePembina(Pembina pembina) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .update({
       "id":user.uid,
@@ -50,7 +50,7 @@ class UserRepository {
   }
 
   Future<void> createPengasuh(Pengasuh pengasuh) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
       "name": pengasuh.name,
@@ -66,7 +66,7 @@ class UserRepository {
   }
 
   Future<void> updatePengasuh(Pengasuh pengasuh) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .update({
       "id":user.uid,
@@ -83,7 +83,7 @@ class UserRepository {
   }
 
   Future<void> createSecurity(Security security) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
       "id":user.uid,
@@ -100,7 +100,7 @@ class UserRepository {
   }
 
   Future<void> updateSecurity(Security security) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .update({
       "id":user.uid,
@@ -117,7 +117,7 @@ class UserRepository {
   }
 
   Future<void> createKemanan(Keamanan keamanan) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
       "id":user.uid,
@@ -132,7 +132,7 @@ class UserRepository {
   }
 
   Future<void> updateKeamanan(Keamanan keamanan) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .update({
       "id":user.uid,
@@ -148,7 +148,7 @@ class UserRepository {
   }
 
   Future<void> createOrangtua(Orangtua orangtua) async {
-    var user = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
         .set({
       "id":user.uid,

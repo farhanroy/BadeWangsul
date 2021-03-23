@@ -32,7 +32,7 @@ class SantriRepository {
     });
   }
 
-  Future<DocumentSnapshot> getSantriById(String id) async {
+  Future<DocumentSnapshot> getSantriById(String? id) async {
     var santri = await FirebaseFirestore.instance
         .collection(Constants.SANTRI_COLLECTION).doc(id).get();
     return santri;

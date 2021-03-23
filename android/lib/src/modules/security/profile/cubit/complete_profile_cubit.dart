@@ -19,7 +19,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
   void usernameChanged(String value) {
     final username = Default.dirty(value);
@@ -64,7 +64,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
       ]),
     ));
   }
-  void posChanged(String value) {
+  void posChanged(String? value) {
     final pos = Default.dirty(value);
     emit(state.copyWith(
       pos: pos,
@@ -114,7 +114,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
     try {
       await _userRepository.createSecurity(Security(
           name: state.username.value,
-          age: int.parse(state.age.value),
+          age: int.parse(state.age.value!),
           address: state.address.value,
           pos: state.pos.value,
           imageUrl: state.imageUrl.value,
@@ -129,7 +129,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
 
   // Upload image chosen to firebase storage bucket
   Future<void> uploadImage() async {
-    String userId = FirebaseAuth.instance.currentUser.uid;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
     try {
       var storageRef = firebase_storage
           .FirebaseStorage.instance.ref('user/image/$userId');

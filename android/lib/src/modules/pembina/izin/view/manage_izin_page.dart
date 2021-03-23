@@ -7,9 +7,9 @@ import 'detail_izin_page.dart';
 import 'create_izin_page.dart';
 
 class ManageIzinPage extends StatelessWidget {
-  final Pembina pembina;
+  final Pembina? pembina;
 
-  const ManageIzinPage({Key key, this.pembina}) : super(key: key);
+  const ManageIzinPage({Key? key, this.pembina}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +42,14 @@ class _ListIzinSantri extends StatelessWidget {
         }
         return SingleChildScrollView(
           child: Column(
-            children: snapshot.data.docs.map((DocumentSnapshot document) {
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
               return GestureDetector(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) => DetailIzinPage(idIzin: document.id,)
                     ));
                   },
-                  child: _ItemIzinSantri(idSantri: document.data()['idSantri'],)
+                  child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
               );
             }).toList(),
           ),
@@ -60,9 +60,9 @@ class _ListIzinSantri extends StatelessWidget {
 }
 
 class _ItemIzinSantri extends StatelessWidget {
-  _ItemIzinSantri({Key key, this.idSantri}) : super(key: key);
+  _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
-  final String idSantri;
+  final String? idSantri;
   final CollectionReference ref = FirebaseFirestore.instance
       .collection(Constants.SANTRI_COLLECTION);
 
@@ -82,11 +82,11 @@ class _ItemIzinSantri extends StatelessWidget {
           return new ListTile(
             leading: CircleAvatar(
               backgroundImage:
-              NetworkImage("${snapshot.data.data()["imageUrl"]}"),
+              NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
               backgroundColor: Colors.transparent,
             ),
-            title: new Text(snapshot.data.data()['name']),
-            subtitle: new Text(snapshot.data.data()['dormitory']),
+            title: new Text(snapshot.data!.data()!['name']),
+            subtitle: new Text(snapshot.data!.data()!['dormitory']),
           );
         },
     );

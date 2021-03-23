@@ -106,7 +106,7 @@ class _FromDateInput extends StatelessWidget {
             firstDate: DateTime.now(),
             initialDate: DateTime.now().add(Duration(days: 1)),
             onDateChanged: (selectedDate) =>
-                context.read<CreateIzinCubit>().fromDateChanged(selectedDate),
+                context.read<CreateIzinCubit>().fromDateChanged(selectedDate!),
           );
         }
     );
@@ -126,7 +126,7 @@ class _ToDateInput extends StatelessWidget {
             firstDate: DateTime.now(),
             initialDate: DateTime.now().add(Duration(days: 1)),
             onDateChanged: (selectedDate) =>
-                context.read<CreateIzinCubit>().toDateChanged(selectedDate),
+                context.read<CreateIzinCubit>().toDateChanged(selectedDate!),
           );
         }
     );

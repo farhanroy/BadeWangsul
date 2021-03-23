@@ -5,10 +5,10 @@ enum IzinStatus{success, loading, failure, unknown}
 class VervalIzinState extends Equatable {
 
   final Default idSantri;
-  final Izin izin;
-  final Santri santri;
+  final Izin? izin;
+  final Santri? santri;
   final FormzStatus status;
-  final IzinStatus izinStatus;
+  final IzinStatus? izinStatus;
 
   VervalIzinState({
     this.idSantri = const Default.pure(),
@@ -19,14 +19,14 @@ class VervalIzinState extends Equatable {
   });
 
   @override
-  List<Object> get props => [this.idSantri, this.santri, this.izin, this.status, izinStatus];
+  List<Object?> get props => [this.idSantri, this.santri, this.izin, this.status, izinStatus];
 
   VervalIzinState copyWith({
-    Default idSantri,
-    Izin izin,
-    Santri santri,
-    FormzStatus status,
-    IzinStatus izinStatus
+    Default? idSantri,
+    Izin? izin,
+    Santri? santri,
+    FormzStatus? status,
+    IzinStatus? izinStatus
   }){
     return VervalIzinState(
       idSantri: idSantri ?? this.idSantri,

@@ -6,7 +6,7 @@ import 'signup_form.dart';
 import '../../../services/repository/authentication_repository/authentication_repository.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const SignUpPage());

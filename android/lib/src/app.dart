@@ -18,8 +18,8 @@ import 'utils/theme.dart';
 
 class App extends StatelessWidget {
   const App({
-    Key key,
-    @required this.authenticationRepository,
+    Key? key,
+    required this.authenticationRepository,
   })  : assert(authenticationRepository != null),
         super(key: key);
 

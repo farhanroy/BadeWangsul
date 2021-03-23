@@ -1,14 +1,14 @@
 class Izin {
-  final String id;
-  final String idSantri;
-  final String idPembina;
-  final String title;
-  final String information;
-  final DateTime fromDate;
-  final DateTime toDate;
-  final bool isPermissioned;
-  final bool isPulang;
-  final bool isKembali;
+  final String? id;
+  final String? idSantri;
+  final String? idPembina;
+  final String? title;
+  final String? information;
+  final DateTime? fromDate;
+  final DateTime? toDate;
+  final bool? isPermissioned;
+  final bool? isPulang;
+  final bool? isKembali;
 
   Izin({
     this.id,

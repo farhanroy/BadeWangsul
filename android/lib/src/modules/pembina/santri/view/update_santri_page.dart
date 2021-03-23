@@ -6,9 +6,9 @@ import '../bloc/update_santri_cubit.dart';
 import '../../../../services/repository/santri_repository/santri_repository.dart';
 
 class UpdateSantriPage extends StatelessWidget {
-  final String idSantri;
+  final String? idSantri;
 
-  const UpdateSantriPage({Key key, this.idSantri}) : super(key: key);
+  const UpdateSantriPage({Key? key, this.idSantri}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

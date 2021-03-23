@@ -7,18 +7,18 @@ import '../bloc/create_izin_cubit.dart';
 import '../../../../utils/constants.dart';
 
 class ChooseSantriStep extends StatefulWidget {
-  final String dormitory;
+  final String? dormitory;
 
-  const ChooseSantriStep({Key key, this.dormitory}) : super(key: key);
+  const ChooseSantriStep({Key? key, this.dormitory}) : super(key: key);
   @override
   _ChooseSantriStepState createState() => _ChooseSantriStepState();
 }
 
 class _ChooseSantriStepState extends State<ChooseSantriStep> {
 
-  String searchKey;
-  Stream streamQuery;
-  TextEditingController searchController;
+  String? searchKey;
+  Stream? streamQuery;
+  TextEditingController? searchController;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
           _searchInput(searchController),
           SizedBox(height: 8.0,),
           StreamBuilder<QuerySnapshot>(
-            stream: streamQuery,
+            stream: streamQuery as Stream<QuerySnapshot>?,
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
@@ -57,29 +57,29 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
     );
   }
 
-  Widget _content(QuerySnapshot querySnapshot) {
+  Widget _content(QuerySnapshot? querySnapshot) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
       builder: (context, state) {
         return SingleChildScrollView(
           child: Column(
-            children: querySnapshot.docs.map((DocumentSnapshot document) {
+            children: querySnapshot!.docs.map((DocumentSnapshot document) {
               return new ListTile(
                 onTap: () {
-                  if (state.santri.id != document.id) {
-                    context.read<CreateIzinCubit>().santriChanged(Santri.fromJson(document.data()));
+                  if (state.santri!.id != document.id) {
+                    context.read<CreateIzinCubit>().santriChanged(Santri.fromJson(document.data()!));
                   } else {
                     context.read<CreateIzinCubit>().santriChanged(Santri(id: ''));
                   }
                 },
-                selected: state.santri.id == document.id,
+                selected: state.santri!.id == document.id,
                 selectedTileColor: Theme.of(context).primaryColor,
                 leading: CircleAvatar(
                   backgroundImage:
-                  NetworkImage("${document.data()["imageUrl"]}"),
+                  NetworkImage("${document.data()!["imageUrl"]}"),
                   backgroundColor: Colors.transparent,
                 ),
-                title: new Text(document.data()['name']),
-                subtitle: new Text(document.data()['dormitory']),
+                title: new Text(document.data()!['name']),
+                subtitle: new Text(document.data()!['dormitory']),
               );
             }).toList(),
           ),
@@ -88,7 +88,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
     );
   }
 
-  Widget _searchInput(TextEditingController controller) {
+  Widget _searchInput(TextEditingController? controller) {
     return Padding(
       padding: const EdgeInsets.all(0),
       child: TextField(
@@ -97,7 +97,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
             searchKey = value;
             streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey +'z')
+                .where('name', isLessThan: searchKey! +'z')
                 .where('dormitory', isEqualTo: widget.dormitory)
                 .snapshots();
           });

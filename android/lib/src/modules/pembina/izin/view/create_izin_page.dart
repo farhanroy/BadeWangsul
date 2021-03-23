@@ -12,9 +12,9 @@ import 'final_izin_step.dart';
 import 'izin_form_step.dart';
 
 class CreateIzinPage extends StatelessWidget{
-  final Pembina pembina;
+  final Pembina? pembina;
 
-  const CreateIzinPage({Key key, this.pembina}) : super(key: key);
+  const CreateIzinPage({Key? key, this.pembina}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +32,9 @@ class CreateIzinPage extends StatelessWidget{
 }
 
 class CreateIzinStepper extends StatelessWidget {
-  final Pembina pembina;
+  final Pembina? pembina;
 
-  const CreateIzinStepper({Key key, this.pembina}) : super(key: key);
+  const CreateIzinStepper({Key? key, this.pembina}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -44,7 +44,7 @@ class CreateIzinStepper extends StatelessWidget {
             height: height,
             child: CoolStepper(
                 onCompleted: () {
-                  context.read<CreateIzinCubit>().createIzin(pembina.id).then((value) {
+                  context.read<CreateIzinCubit>().createIzin(pembina!.id).then((value) {
                     Navigator.pop(context);
                   }).catchError((e) {
                     print(e.toString());
@@ -64,12 +64,12 @@ class CreateIzinStepper extends StatelessWidget {
                     title: "Pilih santri",
                     subtitle: "",
                     validation: (){
-                      if (state.santri.id == null || state.santri.id == '') {
+                      if (state.santri!.id == null || state.santri!.id == '') {
                         return "Santri belum dipilih";
                       }
                       return null;
                     },
-                    content: ChooseSantriStep(dormitory: pembina.dormitory),
+                    content: ChooseSantriStep(dormitory: pembina!.dormitory),
                   ),
                   CoolStep(
                     title: "Form izin",
@@ -85,7 +85,7 @@ class CreateIzinStepper extends StatelessWidget {
                   CoolStep(
                     title: "Final",
                     subtitle: "",
-                    validation: (){},
+                    validation: (){} as String Function(),
                     content: FinalIzinStep(),
                   ),
               ],

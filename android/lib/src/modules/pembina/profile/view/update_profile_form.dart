@@ -1,9 +1,9 @@
-import 'package:bade_wangsul/src/models/models.dart';
-import 'package:bade_wangsul/src/services/database/dao/users_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../models/models.dart';
+import '../../../../services/database/dao/users_dao.dart';
 import '../bloc/update_profile_cubit.dart';
 
 class UpdateProfileForm extends StatelessWidget {
@@ -61,19 +61,19 @@ class UpdateProfileForm extends StatelessWidget {
     final snapshot = await _usersDao.readPembina();
     final pembina = Pembina.fromJson(snapshot);
 
-    _inputName.text = pembina.name;
-    _inputAge.text = pembina.age;
-    _inputAddress.text = pembina.address;
-    _inputDormitory.text = pembina.dormitory;
-    _inputPhoneNumber.text = pembina.phoneNumber;
+    _inputName.text = pembina.name!;
+    _inputAge.text = pembina.age!;
+    _inputAddress.text = pembina.address!;
+    _inputDormitory.text = pembina.dormitory!;
+    _inputPhoneNumber.text = pembina.phoneNumber!;
     context.read<UpdateProfileCubit>().setInitialImage(pembina.imageUrl);
   }
 }
 
 class _UsernameInput extends StatelessWidget {
-  final TextEditingController inputName;
+  final TextEditingController? inputName;
 
-  _UsernameInput({Key key, this.inputName}) : super(key: key);
+  _UsernameInput({Key? key, this.inputName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -95,9 +95,9 @@ class _UsernameInput extends StatelessWidget {
 }
 
 class _AddressInput extends StatelessWidget {
-  final TextEditingController inputAddress;
+  final TextEditingController? inputAddress;
 
-  const _AddressInput({Key key, this.inputAddress}) : super(key: key);
+  const _AddressInput({Key? key, this.inputAddress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -119,9 +119,9 @@ class _AddressInput extends StatelessWidget {
 }
 
 class _AgeInput extends StatelessWidget {
-  final TextEditingController inputAge;
+  final TextEditingController? inputAge;
 
-  const _AgeInput({Key key, this.inputAge}) : super(key: key);
+  const _AgeInput({Key? key, this.inputAge}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -143,9 +143,9 @@ class _AgeInput extends StatelessWidget {
 }
 
 class _DormitoryInput extends StatelessWidget {
-  final TextEditingController inputDormitory;
+  final TextEditingController? inputDormitory;
 
-  const _DormitoryInput({Key key, this.inputDormitory}) : super(key: key);
+  const _DormitoryInput({Key? key, this.inputDormitory}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -167,9 +167,9 @@ class _DormitoryInput extends StatelessWidget {
 }
 
 class _PhoneNumberInput extends StatelessWidget {
-  final TextEditingController inputPhoneNumber;
+  final TextEditingController? inputPhoneNumber;
 
-  const _PhoneNumberInput({Key key, this.inputPhoneNumber}) : super(key: key);
+  const _PhoneNumberInput({Key? key, this.inputPhoneNumber}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -198,18 +198,18 @@ class _SelectImage extends StatelessWidget {
           switch (state.storageStatus) {
             case ImageStorageStatus.unknown:
               return _unknown(context);
-              break;
+              
             case ImageStorageStatus.loading:
               return _loading();
-              break;
+              
             case ImageStorageStatus.success:
-              return _success(state.imageUrl.value);
-              break;
+              return _success(state.imageUrl.value!);
+              
             case ImageStorageStatus.failed:
               return _failed();
             default:
               return _unknown(context);
-              break;
+              
           }
         }
     );
@@ -264,7 +264,7 @@ class _UpdateButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : RaisedButton(
+            : MaterialButton(
           key: const Key('signUpForm_continue_raisedButton'),
           child: const Text('Update'),
           shape: RoundedRectangleBorder(

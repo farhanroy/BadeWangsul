@@ -19,9 +19,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   final UserRepository _userRepository;
 
-  File _file;
+  late File _file;
 
-  void setInitialImage(String url) {
+  void setInitialImage(String? url) {
     imageUrlChanged(url);
     emit(state.copyWith(storageStatus: ImageStorageStatus.success));
   }
@@ -83,7 +83,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ]),
     ));
   }
-  void imageUrlChanged(String value) {
+  void imageUrlChanged(String? value) {
     final imageUrl = Default.dirty(value);
     emit(state.copyWith(
       imageUrl: imageUrl,
@@ -133,7 +133,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   // Upload image chosen to firebase storage bucket
   Future<void> uploadImage() async {
-    String userId = FirebaseAuth.instance.currentUser.uid;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
     try {
       var storageRef = firebase_storage
           .FirebaseStorage.instance.ref('user/image/$userId');

@@ -11,7 +11,7 @@ class DashboardSecurityPage extends StatefulWidget {
 
 class _DashboardSecurityPageState extends State<DashboardSecurityPage> {
 
-  UsersDao _dao;
+  late UsersDao _dao;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _DashboardSecurityPageState extends State<DashboardSecurityPage> {
 
             if (snapshot.connectionState == ConnectionState.done){
 
-              return _content(Security.fromJson(snapshot.data));
+              return _content(Security.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -58,7 +58,7 @@ class _DashboardSecurityPageState extends State<DashboardSecurityPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      security.name,
+                      security.name!,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,

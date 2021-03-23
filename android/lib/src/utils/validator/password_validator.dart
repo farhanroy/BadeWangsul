@@ -10,8 +10,8 @@ class Password extends FormzInput<String, PasswordValidationError> {
   RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
 
   @override
-  PasswordValidationError validator(String value) {
-    return value.length >= 6
+  PasswordValidationError? validator(String? value) {
+    return value!.length >= 6
         ? null
         : PasswordValidationError.invalid;
   }

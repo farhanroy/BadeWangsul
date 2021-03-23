@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 void showConfirmationDialog({
-  BuildContext context,
-  String title,
-  String content,
-  VoidCallback onAccept,
+  required BuildContext context,
+  String? title,
+  String? content,
+  VoidCallback? onAccept,
 }) {
   showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
+        title: Text(title!),
+        content: Text(content!),
         actions: <Widget>[
           FlatButton(
             textColor: Theme.of(context).primaryColor,

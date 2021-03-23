@@ -8,9 +8,9 @@ class UsertypeManager {
     await preferences.setString(Constants.APP_NAME, usertype);
   }
 
-  static Future<String> get() async {
+  static Future<String?> get() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String usertype =  preferences.getString(Constants.APP_NAME);
+    String? usertype =  preferences.getString(Constants.APP_NAME);
     print(usertype);
     return usertype;
   }

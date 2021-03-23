@@ -11,9 +11,9 @@ class ManageSantriPage extends StatefulWidget {
 
 class _ManageSantriPageState extends State<ManageSantriPage> {
 
-  String searchKey;
-  Stream streamQuery;
-  TextEditingController searchController;
+  String? searchKey;
+  Stream? streamQuery;
+  TextEditingController? searchController;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
             _searchInput(searchController),
             SizedBox(height: 10,),
             StreamBuilder<QuerySnapshot>(
-              stream: streamQuery,
+              stream: streamQuery as Stream<QuerySnapshot>?,
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return Text('Something went wrong');
@@ -49,7 +49,7 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
                   return Center(child: CircularProgressIndicator());
                 }
 
-                return _content(context, snapshot.data);
+                return _content(context, snapshot.data!);
               },
             ),
           ],
@@ -62,7 +62,7 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
     return SingleChildScrollView(
       child: Column(
         children: snapshot.docs.map((DocumentSnapshot document) {
-          print(document.data()["name"]);
+          print(document.data()!["name"]);
           return new ListTile(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(
@@ -71,18 +71,18 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
             },
             leading: CircleAvatar(
               backgroundImage:
-              NetworkImage("${document.data()["imageUrl"]}"),
+              NetworkImage("${document.data()!["imageUrl"]}"),
               backgroundColor: Colors.transparent,
             ),
-            title: new Text(document.data()['name']),
-            subtitle: new Text(document.data()['dormitory']),
+            title: new Text(document.data()!['name']),
+            subtitle: new Text(document.data()!['dormitory']),
           );
         }).toList(),
       ),
     );
   }
 
-  Widget _searchInput(TextEditingController controller) {
+  Widget _searchInput(TextEditingController? controller) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -91,7 +91,7 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
             searchKey = value;
             streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey +'z')
+                .where('name', isLessThan: searchKey! +'z')
                 .snapshots();
           });
         },

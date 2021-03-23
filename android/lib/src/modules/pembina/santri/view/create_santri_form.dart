@@ -58,7 +58,7 @@ class _SelectImage extends StatefulWidget {
 }
 
 class __SelectImageState extends State<_SelectImage> {
-  File _image;
+  File? _image;
   final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
@@ -80,12 +80,12 @@ class __SelectImageState extends State<_SelectImage> {
         ),
       );
     } else {
-      context.read<CreateSantriCubit>().imagePathChanged(_image.path);
+      context.read<CreateSantriCubit>().imagePathChanged(_image!.path);
       return Container(
         width: 100,
         height: 100,
         child: Image.file(
-          _image
+          _image!
         )
       );
     }
@@ -195,7 +195,7 @@ class _BirthDateInput extends StatelessWidget {
             firstDate: DateTime.now(),
             initialDate: DateTime.now().add(Duration(days: 1)),
             onDateChanged: (selectedDate) =>
-                context.read<CreateSantriCubit>().birthDateChanged(selectedDate),
+                context.read<CreateSantriCubit>().birthDateChanged(selectedDate!),
           );
         }
     );

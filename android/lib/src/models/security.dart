@@ -1,11 +1,11 @@
 class Security {
-  final String id;
-  final String name;
-  final String address;
-  final int age;
-  final String imageUrl;
-  final String phoneNumber;
-  final String pos;
+  final String? id;
+  final String? name;
+  final String? address;
+  final int? age;
+  final String? imageUrl;
+  final String? phoneNumber;
+  final String? pos;
 
   Security({
     this.id,

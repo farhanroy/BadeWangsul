@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTextField extends StatefulWidget {
-  final ValueChanged<DateTime> onDateChanged;
+  final ValueChanged<DateTime?> onDateChanged;
   final DateTime initialDate;
   final DateTime firstDate;
   final DateTime lastDate;
-  final DateFormat dateFormat;
-  final FocusNode focusNode;
-  final String labelText;
-  final Icon prefixIcon;
-  final Icon suffixIcon;
+  final DateFormat? dateFormat;
+  final FocusNode? focusNode;
+  final String? labelText;
+  final Icon? prefixIcon;
+  final Icon? suffixIcon;
 
   DateTextField({
-    Key key,
+    Key? key,
     this.labelText,
     this.prefixIcon,
     this.suffixIcon,
     this.focusNode,
     this.dateFormat,
-    @required this.lastDate,
-    @required this.firstDate,
-    @required this.initialDate,
-    @required this.onDateChanged,
+    required this.lastDate,
+    required this.firstDate,
+    required this.initialDate,
+    required this.onDateChanged,
   })  : assert(initialDate != null),
         assert(firstDate != null),
         assert(lastDate != null),
@@ -40,9 +40,9 @@ class DateTextField extends StatefulWidget {
 }
 
 class _DateTextField extends State<DateTextField> {
-  TextEditingController _controllerDate;
-  DateFormat _dateFormat;
-  DateTime _selectedDate;
+  TextEditingController? _controllerDate;
+  DateFormat? _dateFormat;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _DateTextField extends State<DateTextField> {
     _selectedDate = widget.initialDate;
 
     _controllerDate = TextEditingController();
-    _controllerDate.text = _dateFormat.format(_selectedDate);
+    _controllerDate!.text = _dateFormat!.format(_selectedDate!);
   }
 
   @override
@@ -78,26 +78,26 @@ class _DateTextField extends State<DateTextField> {
 
   @override
   void dispose() {
-    _controllerDate.dispose();
+    _controllerDate!.dispose();
     super.dispose();
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: _selectedDate,
+      initialDate: _selectedDate!,
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
     );
 
     if (pickedDate != null && pickedDate != _selectedDate) {
       _selectedDate = pickedDate;
-      _controllerDate.text = _dateFormat.format(_selectedDate);
+      _controllerDate!.text = _dateFormat!.format(_selectedDate!);
       widget.onDateChanged(_selectedDate);
     }
 
     if (widget.focusNode != null) {
-      widget.focusNode.nextFocus();
+      widget.focusNode!.nextFocus();
     }
   }
 }

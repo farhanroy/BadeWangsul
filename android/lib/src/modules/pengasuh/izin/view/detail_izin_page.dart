@@ -5,9 +5,9 @@ import '../cubit/detail_izin_cubit.dart';
 import '../../../../services/repository/izin_repository/izin_repository.dart';
 
 class DetailIzinPage extends StatelessWidget {
-  final String idIzin;
+  final String? idIzin;
 
-  const DetailIzinPage({Key key, this.idIzin}) : super(key: key);
+  const DetailIzinPage({Key? key, this.idIzin}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,27 +74,27 @@ class _DetailIzinCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Nama"),
-                                Text(state.santri.name),
+                                Text(state.santri!.name!),
                                 SizedBox(height: 8.0,),
 
                                 Text("Alamat"),
-                                Text(state.santri.address),
+                                Text(state.santri!.address!),
                                 SizedBox(height: 8.0,),
 
                                 Text("Tujuan pulang"),
-                                Text(state.izin.title),
+                                Text(state.izin!.title!),
                                 SizedBox(height: 8.0,),
 
                                 Text("Detail kepulangan"),
-                                Text(state.izin.information),
+                                Text(state.izin!.information!),
                                 SizedBox(height: 8.0,),
 
                                 Text("Dari tanggal"),
-                                Text(state.izin.fromDate.toString()),
+                                Text(state.izin!.fromDate.toString()),
                                 SizedBox(height: 8.0,),
 
                                 Text("Sampai tanggal"),
-                                Text(state.izin.toDate.toString()),
+                                Text(state.izin!.toDate.toString()),
                                 SizedBox(height: 8.0,),
                               ],
                             ),

@@ -20,7 +20,7 @@ class SignUpForm extends StatelessWidget {
         }
         if (state.status.isSubmissionSuccess) {
 
-          UsertypeManager.set(state.usertype.value);
+          UsertypeManager.set(state.usertype.value!);
 
           Navigator.pushNamedAndRemoveUntil(
               context,
@@ -98,8 +98,8 @@ class _UsertypeInput extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField(
           key: const Key('signUpForm_userNameInput_textField'),
-          value: state.usertype.value.isEmpty ? "pengasuh" : state.usertype.value ,
-          onChanged: (value) => context.read<SignUpCubit>().usertypeChanged(value),
+          value: state.usertype.value!.isEmpty ? "pengasuh" : state.usertype.value ,
+          onChanged: (dynamic value) => context.read<SignUpCubit>().usertypeChanged(value),
           decoration: InputDecoration(
             border: OutlineInputBorder()
           ),
@@ -123,7 +123,7 @@ class _SignUpButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : RaisedButton(
+            : MaterialButton(
           key: const Key('signUpForm_continue_raisedButton'),
           child: const Text('SIGN UP'),
           shape: RoundedRectangleBorder(

@@ -109,9 +109,9 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
     ));
   }
 
-  Future<String> uploadImage() async {
-    String imageUrl;
-    File _file = File(state.imagePath.value);
+  Future<String?> uploadImage() async {
+    String? imageUrl;
+    File _file = File(state.imagePath.value!);
     try {
       var storageRef = firebase_storage
           .FirebaseStorage.instance.ref('santri/${state.name.value}');
@@ -130,7 +130,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
     if (!state.status.isValidated) return;  
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      String imageUrl;
+      String? imageUrl;
 
       await uploadImage().then((value) {
         imageUrl = value;
@@ -138,7 +138,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
       });
 
       await _santriRepository.createSantri(Santri(
-          id: makeIdSantri(name: state.name.value, birthDate: state.birthDate.value),
+          id: makeIdSantri(name: state.name.value, birthDate: state.birthDate.value!),
           name: state.name.value,
           age: state.age.value,
           address: state.address.value,

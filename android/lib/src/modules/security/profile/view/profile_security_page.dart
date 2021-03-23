@@ -13,7 +13,7 @@ class ProfileSecurityPage extends StatefulWidget {
 }
 
 class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
-  UsersDao _dao;
+  late UsersDao _dao;
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.done){
-              return _content(Security.fromJson(snapshot.data));
+              return _content(Security.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -70,7 +70,7 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
           Center(
             child: security.imageUrl != null ? CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(security.imageUrl),
+              backgroundImage: NetworkImage(security.imageUrl!),
             ) : CircleAvatar(
                 radius: 70,
                 backgroundImage: AssetImage('assets/img/default-profile.png')),
@@ -78,7 +78,7 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(security.name),
+          Text(security.name!),
           SizedBox(height: 16,),
 
           Text("Umur"),
@@ -86,7 +86,7 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(security.address),
+          Text(security.address!),
           SizedBox(height: 16,),
 
           Text("Pos"),

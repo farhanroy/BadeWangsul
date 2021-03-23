@@ -11,7 +11,7 @@ class DashboardKeamananPage extends StatefulWidget {
 
 class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
 
-  UsersDao _dao;
+  late UsersDao _dao;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
 
             if (snapshot.connectionState == ConnectionState.done){
 
-              return _content(Keamanan.fromJson(snapshot.data));
+              return _content(Keamanan.fromJson(snapshot.data!));
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -58,7 +58,7 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      keamanan.name,
+                      keamanan.name!,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,

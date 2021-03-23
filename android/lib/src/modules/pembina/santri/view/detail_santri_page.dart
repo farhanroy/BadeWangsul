@@ -5,9 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DetailSantriPage extends StatelessWidget {
 
-  final String documentID;
+  final String? documentID;
 
-  const DetailSantriPage({Key key, this.documentID}) : super(key: key);
+  const DetailSantriPage({Key? key, this.documentID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class DetailSantriPage extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              return _content(snapshot.data);
+              return _content(snapshot.data!);
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -52,7 +52,7 @@ class DetailSantriPage extends StatelessWidget {
   }
 
   Widget _content(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data();
+    Map<String, dynamic> data = snapshot.data()!;
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(

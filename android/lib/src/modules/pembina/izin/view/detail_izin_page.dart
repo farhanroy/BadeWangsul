@@ -5,9 +5,9 @@ import '../../../../models/izin.dart';
 import '../../../../utils/constants.dart';
 
 class DetailIzinPage extends StatelessWidget {
-  const DetailIzinPage({Key key, this.idIzin}) : super(key: key);
+  const DetailIzinPage({Key? key, this.idIzin}) : super(key: key);
   
-  final String idIzin;
+  final String? idIzin;
   
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class DetailIzinPage extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              print(snapshot.data.data());
+              print(snapshot.data!.data());
               return _DetailIzinCard(snapshot: snapshot.data);
             }
 
@@ -33,12 +33,12 @@ class DetailIzinPage extends StatelessWidget {
 }
 
 class _DetailIzinCard extends StatelessWidget {
-  const _DetailIzinCard({Key key, this.snapshot}) : super(key: key);
-  final DocumentSnapshot snapshot;
+  const _DetailIzinCard({Key? key, this.snapshot}) : super(key: key);
+  final DocumentSnapshot? snapshot;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final izin = Izin.fromJson(snapshot.data());
+    final izin = Izin.fromJson(snapshot!.data()!);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -50,11 +50,11 @@ class _DetailIzinCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Tujuan pulang"),
-                  Text(izin.title),
+                  Text(izin.title!),
                   SizedBox(height: 8.0,),
 
                   Text("Detail kepulangan"),
-                  Text(izin.information),
+                  Text(izin.information!),
                   SizedBox(height: 8.0,),
 
                   Text("Dari tanggal"),

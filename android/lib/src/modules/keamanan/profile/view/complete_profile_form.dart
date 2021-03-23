@@ -138,18 +138,14 @@ class _SelectImage extends StatelessWidget {
           switch (state.storageStatus) {
             case ImageStorageStatus.unknown:
               return _unknown(context);
-              break;
             case ImageStorageStatus.loading:
               return _loading();
-              break;
             case ImageStorageStatus.success:
-              return _success(state.imageUrl.value);
-              break;
+              return _success(state.imageUrl.value!);
             case ImageStorageStatus.failed:
               return _failed();
             default:
               return _unknown(context);
-              break;
           }
         }
     );
@@ -204,7 +200,7 @@ class _SubmitButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : RaisedButton(
+            : MaterialButton(
           key: const Key('signUpForm_continue_raisedButton'),
           child: const Text('Kirim'),
           shape: RoundedRectangleBorder(

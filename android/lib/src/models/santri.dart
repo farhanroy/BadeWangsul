@@ -1,11 +1,11 @@
 class Santri{
-  final String id;
-  final String name;
-  final String age;
-  final String address;
-  final String dormitory;
-  final String imageUrl;
-  final DateTime birthDate;
+  final String? id;
+  final String? name;
+  final String? age;
+  final String? address;
+  final String? dormitory;
+  final String? imageUrl;
+  final DateTime? birthDate;
 
   Santri({this.id, this.name, this.age, this.address, this.dormitory, this.imageUrl, this.birthDate});
 

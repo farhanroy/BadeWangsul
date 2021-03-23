@@ -93,11 +93,11 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
     ));
   }
 
-  Future<void> createIzin(String idPembina) async {
+  Future<void> createIzin(String? idPembina) async {
     final id = Uuid().v1();
     await izinRepository.createIzin(Izin(
       id: id,
-      idSantri: state.santri.id,
+      idSantri: state.santri!.id,
       idPembina: idPembina,
       title: state.title.value,
       information: state.information.value,

@@ -13,8 +13,8 @@ class ForgotPasswordState extends Equatable {
   List<Object> get props => [email, status];
   
   ForgotPasswordState copyWith({
-    Email email,
-    FormzStatus status
+    Email? email,
+    FormzStatus? status
   }) => ForgotPasswordState(
     email: email ?? this.email,
     status: status ?? this.status

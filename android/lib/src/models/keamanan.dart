@@ -1,10 +1,10 @@
 class Keamanan {
-  final String id;
-  final String name;
-  final String address;
-  final String age;
-  final String imageUrl;
-  final String phoneNumber;
+  final String? id;
+  final String? name;
+  final String? address;
+  final String? age;
+  final String? imageUrl;
+  final String? phoneNumber;
 
   Keamanan({
     this.id,

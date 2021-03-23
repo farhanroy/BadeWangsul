@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/verval_izin_cubit.dart';
 
 class DetailIzinView extends StatelessWidget {
-  const DetailIzinView({Key key, this.isPulang}) : super(key: key);
+  const DetailIzinView({Key? key, this.isPulang}) : super(key: key);
 
-  final bool isPulang;
+  final bool? isPulang;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class DetailIzinView extends StatelessWidget {
 
 
 class _VervalIzinCard extends StatelessWidget {
-  const _VervalIzinCard({Key key, this.isPulang}) : super(key: key);
+  const _VervalIzinCard({Key? key, this.isPulang}) : super(key: key);
 
-  final bool isPulang;
+  final bool? isPulang;
 
   @override
   Widget build(BuildContext context) {
@@ -54,27 +54,27 @@ class _VervalIzinCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Nama"),
-                              Text(state.santri.name),
+                              Text(state.santri!.name!),
                               SizedBox(height: 8.0,),
 
                               Text("Alamat"),
-                              Text(state.santri.address),
+                              Text(state.santri!.address!),
                               SizedBox(height: 8.0,),
 
                               Text("Tujuan pulang"),
-                              Text(state.izin.title),
+                              Text(state.izin!.title!),
                               SizedBox(height: 8.0,),
 
                               Text("Detail kepulangan"),
-                              Text(state.izin.information),
+                              Text(state.izin!.information!),
                               SizedBox(height: 8.0,),
 
                               Text("Dari tanggal"),
-                              Text(state.izin.fromDate.toString()),
+                              Text(state.izin!.fromDate.toString()),
                               SizedBox(height: 8.0,),
 
                               Text("Sampai tanggal"),
-                              Text(state.izin.toDate.toString()),
+                              Text(state.izin!.toDate.toString()),
                               SizedBox(height: 8.0,),
                             ],
                           ),
@@ -93,9 +93,9 @@ class _VervalIzinCard extends StatelessWidget {
 }
 
 class _ButtonVerification extends StatelessWidget {
-  const _ButtonVerification({Key key, this.isPulang}) : super(key: key);
+  const _ButtonVerification({Key? key, this.isPulang}) : super(key: key);
 
-  final bool isPulang;
+  final bool? isPulang;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      if (isPulang) {
+                      if (isPulang!) {
                         context.read<VervalIzinCubit>().setKepulanganSantri();
                       } else {
                         context.read<VervalIzinCubit>().setKedatanganSantri();

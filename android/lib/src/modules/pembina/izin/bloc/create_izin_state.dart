@@ -4,7 +4,7 @@ class CreateIzinState extends Equatable {
 
   final String idSantri;
   final int currentStep;
-  final Santri santri;
+  final Santri? santri;
 
   final Default title;
   final Default information;
@@ -24,17 +24,17 @@ class CreateIzinState extends Equatable {
   });
 
   @override
-  List<Object> get props => [idSantri, currentStep, santri, title, information, fromDate, toDate, status];
+  List<Object?> get props => [idSantri, currentStep, santri, title, information, fromDate, toDate, status];
 
   CreateIzinState copyWith({
-    String idSantri,
-    int currentStep,
-    Santri santri,
-    Default title,
-    Default information,
-    Date fromDate,
-    Date toDate,
-    FormzStatus status
+    String? idSantri,
+    int? currentStep,
+    Santri? santri,
+    Default? title,
+    Default? information,
+    Date? fromDate,
+    Date? toDate,
+    FormzStatus? status
   }){
     return CreateIzinState(
       idSantri: idSantri ?? this.idSantri,
