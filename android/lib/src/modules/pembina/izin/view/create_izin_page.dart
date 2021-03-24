@@ -1,8 +1,8 @@
-import 'package:cool_stepper/cool_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../widgets/coolstepper/cool_stepper.dart';
 import '../../../../services/repository/izin_repository/izin_repository.dart';
 import '../../../../services/repository/santri_repository/santri_repository.dart';
 import '../bloc/create_izin_cubit.dart';

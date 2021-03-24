@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../widgets/appdialog.dart';
 import '../../../../utils/usertype_manager.dart';
 import '../../../../bloc/authentication.dart';
 import '../../../../models/models.dart';
@@ -100,13 +101,23 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
           SizedBox(height: 16,),
 
           Center(
-            child: MaterialButton(
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                  primary: Theme.of(context).errorColor
+              ),
               onPressed: (){
-                context.read<AuthenticationBloc>()
-                    .add(AuthenticationLogoutRequested());
-                UsertypeManager.delete();
-                deleteUser();
-                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                showConfirmationDialog(
+                    context: context,
+                    title: "Logout",
+                    content: "Apakah anda akan logout ?",
+                    onAccept: () async {
+                      context.read<AuthenticationBloc>()
+                          .add(AuthenticationLogoutRequested());
+                      UsertypeManager.delete();
+                      deleteUser();
+                      Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                    }
+                );
               },
               child: Text("Logout"),
             ),

@@ -146,19 +146,4 @@ class UserRepository {
 
     await usersDao.updateOrInsertKeamanan();
   }
-
-  Future<void> createOrangtua(Orangtua orangtua) async {
-    var user = FirebaseAuth.instance.currentUser!;
-    await FirebaseFirestore.instance.collection(Constants.USER_COLLECTION).doc(user.uid)
-        .set({
-      "id":user.uid,
-      "idSantri": orangtua.idSantri,
-      "name": orangtua.name,
-      "address": orangtua.address,
-      "age": orangtua.age,
-      "imageUrl": orangtua.imageUrl,
-      "phoneNumber": orangtua.phoneNumber,
-      "usertype": "orangtua"
-    });
-  }
 }

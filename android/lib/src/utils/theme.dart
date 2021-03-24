@@ -7,10 +7,11 @@ final theme = ThemeData(
   primaryColorLight: const Color(0xFF5F5B9E),
   primaryColor: const Color(0xFF31326F),
   accentColor: const Color(0xFF28527A),
+  errorColor: Colors.red,
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      primary: Colors.white,
+      primary: Color(0xFF31326F),
     ),
   ),
   buttonTheme: ButtonThemeData(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../widgets/appdialog.dart';
 import '../../../../bloc/authentication.dart';
 import '../../../../models/security.dart';
 import '../../../../services/database/dao/users_dao.dart';
@@ -98,12 +99,23 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
           SizedBox(height: 16,),
 
           Center(
-            child: MaterialButton(
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                  primary: Theme.of(context).errorColor
+              ),
               onPressed: (){
-                context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested());
-                UsertypeManager.delete();
-                deleteUser();
-                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                showConfirmationDialog(
+                    context: context,
+                    title: "Logout",
+                    content: "Apakah anda akan logout ?",
+                    onAccept: () async {
+                      context.read<AuthenticationBloc>()
+                          .add(AuthenticationLogoutRequested());
+                      UsertypeManager.delete();
+                      deleteUser();
+                      Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                    }
+                );
               },
               child: Text("Logout"),
             ),

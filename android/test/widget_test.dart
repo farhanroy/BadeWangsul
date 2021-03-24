@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:bade_wangsul/src/app.dart';
+import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,7 +15,7 @@ import 'package:bade_wangsul/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(App());
+    await tester.pumpWidget(App(authenticationRepository: AuthenticationRepository(),));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 void showConfirmationDialog({
   required BuildContext context,
-  String? title,
-  String? content,
-  VoidCallback? onAccept,
+  required String? title,
+  required String? content,
+  required VoidCallback? onAccept,
 }) {
   showDialog(
       context: context,
@@ -12,13 +12,17 @@ void showConfirmationDialog({
         title: Text(title!),
         content: Text(content!),
         actions: <Widget>[
-          FlatButton(
-            textColor: Theme.of(context).primaryColor,
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
             onPressed: () => Navigator.of(context).pop(),
             child: Text('Kembali'),
           ),
-          FlatButton(
-            textColor: Theme.of(context).primaryColor,
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
             onPressed: onAccept,
             child: Text('Setuju'),
           ),
