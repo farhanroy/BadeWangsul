@@ -1,10 +1,10 @@
-import 'package:bade_wangsul/src/modules/signup/signup.dart';
-import 'package:bade_wangsul/src/utils/usertype_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 
+import '../../signup/signup.dart';
+import '../../../utils/usertype_manager.dart';
 import '../login.dart';
 
 class LoginForm extends StatelessWidget {
@@ -104,13 +104,13 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : RaisedButton(
+            : ElevatedButton(
           key: const Key('loginForm_continue_raisedButton'),
           child: const Text('LOGIN'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+          style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(fontSize: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12)
           ),
-          color: const Color(0xFFFFD600),
           onPressed: state.status.isValidated
               ? () => context.read<LoginCubit>().logInWithCredentials()
               : null,
@@ -123,7 +123,7 @@ class _LoginButton extends StatelessWidget {
 class _ForgotPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Text(
         'Forgot password',
         style: TextStyle(color: Theme.of(context).primaryColor),
@@ -138,7 +138,7 @@ class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return FlatButton(
+    return TextButton(
       child: Text(
         'CREATE ACCOUNT',
         style: TextStyle(color: theme.primaryColor),

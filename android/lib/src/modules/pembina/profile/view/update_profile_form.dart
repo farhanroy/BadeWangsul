@@ -203,10 +203,10 @@ class _SelectImage extends StatelessWidget {
               return _loading();
               
             case ImageStorageStatus.success:
-              return _success(state.imageUrl.value!);
+              return _success(context, state.imageUrl.value!);
               
             case ImageStorageStatus.failed:
-              return _failed();
+              return _failed(context);
             default:
               return _unknown(context);
               
@@ -230,19 +230,28 @@ class _SelectImage extends StatelessWidget {
     );
   }
 
-  Widget _success(String url) {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Image.network(url)
+  Widget _success(BuildContext context, String? url) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
+      child: Center(
+        child: url != null ? CircleAvatar(
+          radius: 60,
+          backgroundImage: NetworkImage(url),
+        ) : CircleAvatar(
+            radius: 60,
+            backgroundImage: AssetImage('assets/img/default-profile.png')),
+      ),
     );
   }
 
-  Widget _failed() {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Icon(Icons.warning_sharp)
+  Widget _failed(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
+      child: Container(
+          width: 100,
+          height: 100,
+          child: Icon(Icons.warning_sharp)
+      ),
     );
   }
 

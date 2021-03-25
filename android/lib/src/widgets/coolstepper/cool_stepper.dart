@@ -79,7 +79,8 @@ class _CoolStepperState extends State<CoolStepper> {
 
   onStepNext() {
     String? validation = widget.steps[currentStep].validation();
-    if (validation != null) {
+    print(validation);
+    if (validation == null) {
       if (!_isLast(currentStep)) {
         setState(() {
           currentStep++;

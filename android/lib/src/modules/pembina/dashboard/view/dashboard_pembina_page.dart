@@ -26,8 +26,9 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
       body:  SafeArea(
         child: FutureBuilder(
           future: _dao.readPembina(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+          builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot){
             if (snapshot.hasError) {
+              print(snapshot.error);
               return Center(child: Text("Something went wrong"));
             }
 

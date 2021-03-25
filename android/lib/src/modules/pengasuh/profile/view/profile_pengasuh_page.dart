@@ -47,7 +47,7 @@ class _ProfilePengasuhPageState extends State<ProfilePengasuhPage> {
         ),
         body: FutureBuilder(
           future: _dao.readPembina(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+          builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
 
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));

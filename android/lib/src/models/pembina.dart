@@ -12,8 +12,8 @@ class Pembina {
     this.id, this.name, this.address, this.age, this.imageUrl, this.dormitory, this.phoneNumber,
   });
 
-  factory Pembina.fromJson(Map<String, dynamic> json) => Pembina(
-    id: json["id"],
+  factory Pembina.fromJson(Map<String, dynamic?>? json) => Pembina(
+    id: json!["id"],
     name: json["name"],
     address: json["address"],
     age: json["age"],
@@ -22,7 +22,7 @@ class Pembina {
     phoneNumber: json["phoneNumber"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toJson() => {
     "id": id,
     "name": name,
     "address": address,

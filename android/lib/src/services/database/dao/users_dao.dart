@@ -22,8 +22,8 @@ class UsersDao{
     print('Student Inserted successfully !!');
   }
 
-  Future<Map<String, dynamic>> readPembina() async {
-    return _userFolder.record(0).get(await _db) as FutureOr<Map<String, dynamic>>;
+  Future<Map<String, Object?>?> readPembina() async {
+    return _userFolder.record(0).get(await _db);
   }
 
   Future updateOrInsertPengasuh() async{

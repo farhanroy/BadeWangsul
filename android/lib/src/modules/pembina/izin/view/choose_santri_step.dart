@@ -65,13 +65,13 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
             children: querySnapshot!.docs.map((DocumentSnapshot document) {
               return new ListTile(
                 onTap: () {
-                  if (state.santri!.id != document.id) {
+                  if (state.santri?.id != document.id) {
                     context.read<CreateIzinCubit>().santriChanged(Santri.fromJson(document.data()!));
                   } else {
                     context.read<CreateIzinCubit>().santriChanged(Santri(id: ''));
                   }
                 },
-                selected: state.santri!.id == document.id,
+                selected: state.santri?.id == document.id,
                 selectedTileColor: Theme.of(context).primaryColor,
                 leading: CircleAvatar(
                   backgroundImage:

@@ -45,7 +45,7 @@ class _ProfilePembinaPageState extends State<ProfilePembinaPage> {
         ),
         body: FutureBuilder(
           future: _dao.readPembina(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+          builder: (context, AsyncSnapshot<Map<String, Object?>?> snapshot) {
 
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));

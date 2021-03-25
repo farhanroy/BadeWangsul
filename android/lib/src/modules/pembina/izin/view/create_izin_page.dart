@@ -44,7 +44,7 @@ class CreateIzinStepper extends StatelessWidget {
             height: height,
             child: CoolStepper(
                 onCompleted: () {
-                  context.read<CreateIzinCubit>().createIzin(pembina!.id).then((value) {
+                  context.read<CreateIzinCubit>().createIzin(pembina?.id).then((value) {
                     Navigator.pop(context);
                   }).catchError((e) {
                     print(e.toString());
@@ -64,7 +64,7 @@ class CreateIzinStepper extends StatelessWidget {
                     title: "Pilih santri",
                     subtitle: "",
                     validation: (){
-                      if (state.santri!.id == null || state.santri!.id == '') {
+                      if (state.santri?.id == null || state.santri?.id == '') {
                         return "Santri belum dipilih";
                       }
                       return null;
@@ -85,7 +85,7 @@ class CreateIzinStepper extends StatelessWidget {
                   CoolStep(
                     title: "Final",
                     subtitle: "",
-                    validation: (){} as String Function(),
+                    validation: (){},
                     content: FinalIzinStep(),
                   ),
               ],
