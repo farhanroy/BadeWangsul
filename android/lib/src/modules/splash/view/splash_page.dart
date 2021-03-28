@@ -16,23 +16,30 @@ class SplashPage extends StatelessWidget {
         switch (state.status) {
           case AuthenticationStatus.authenticated:
             UsertypeManager.get().then((usertype) {
-              Navigator.pushNamedAndRemoveUntil(context, "/$usertype", (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/$usertype", (route) => false);
             });
             break;
           case AuthenticationStatus.unauthenticated:
-            Navigator.pushAndRemoveUntil(context, LoginPage.route(), (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context, LoginPage.route(), (route) => false);
             break;
           default:
             break;
         }
       },
       child: Scaffold(
-        body: Center(
-          child: Text("Bade Wangsul"),
-        )
-      ),
+          body: Center(
+        child: Column(
+          children: [
+            Image.asset('assets/img/app_logo.png'),
+            const SizedBox(
+              height: 10,
+            ),
+            Text("Bade Wangsul")
+          ],
+        ),
+      )),
     );
   }
 }
-
-
