@@ -28,21 +28,46 @@ class SignUpForm extends StatelessWidget {
           );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _EmailInput(),
-            const SizedBox(height: 8.0),
-            _PasswordInput(),
-            const SizedBox(height: 8.0),
-            _UsertypeInput(),
-            const SizedBox(height: 8.0),
-            _SignUpButton(),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 56.0),
+          _HeaderContent(),
+          const SizedBox(height: 8.0),
+          _EmailInput(),
+          const SizedBox(height: 8.0),
+          _PasswordInput(),
+          const SizedBox(height: 8.0),
+          _UsertypeInput(),
+          const SizedBox(height: 8.0),
+          _SignUpButton(),
+        ],
       ),
+    );
+  }
+}
+
+class _HeaderContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Sign Up',
+          style: theme.textTheme.headline4!.copyWith(
+              color: theme.primaryColorLight
+          ),
+        ),
+        const SizedBox(height: 8,),
+        Text(
+            'Buat akun anda sendriri, untuk dapat mengakses fitur - fitur yang telah tersedia',
+            style: theme.textTheme.subtitle1!.copyWith(
+                color: Colors.grey
+            )
+        ),
+      ],
     );
   }
 }
@@ -60,6 +85,7 @@ class _EmailInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'email',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.email.invalid ? 'invalid email' : null,
           ),
         );
@@ -82,6 +108,7 @@ class _PasswordInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'password',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.password.invalid ? 'invalid password' : null,
           ),
         );
@@ -121,18 +148,26 @@ class _SignUpButton extends StatelessWidget {
     return BlocBuilder<SignUpCubit, SignUpState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
+        final theme = Theme.of(context);
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : MaterialButton(
-          key: const Key('signUpForm_continue_raisedButton'),
-          child: const Text('SIGN UP'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            : Container(
+          width: double.infinity,
+          child: ElevatedButton(
+            child: const Text('SIGN UP'),
+            style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10.0),
+                ),
+                textStyle: TextStyle(fontSize: 16),
+                primary: theme.primaryColor,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24, vertical: 12)
+            ),
+            onPressed: state.status.isValidated
+                ? () => context.read<SignUpCubit>().signUpFormSubmitted()
+                : null,
           ),
-          color: Colors.orangeAccent,
-          onPressed: state.status.isValidated
-              ? () => context.read<SignUpCubit>().signUpFormSubmitted()
-              : null,
         );
       },
     );
