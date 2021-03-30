@@ -1,4 +1,5 @@
 import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
+import 'package:bade_wangsul/src/utils/usertype_manager.dart';
 import 'package:bade_wangsul/src/utils/validator/validator.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -58,6 +59,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         email: state.email.value,
         password: state.password.value,
       );
+      await UsertypeManager.setIsComplete(false);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

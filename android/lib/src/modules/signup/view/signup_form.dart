@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../login/view/login_page.dart';
 import '../cubit/signup_cubit.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/usertype_manager.dart';
@@ -28,20 +29,27 @@ class SignUpForm extends StatelessWidget {
           );
         }
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 56.0),
-          _HeaderContent(),
-          const SizedBox(height: 8.0),
-          _EmailInput(),
-          const SizedBox(height: 8.0),
-          _PasswordInput(),
-          const SizedBox(height: 8.0),
-          _UsertypeInput(),
-          const SizedBox(height: 8.0),
-          _SignUpButton(),
-        ],
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 56.0),
+              _HeaderContent(),
+              const SizedBox(height: 32.0),
+              _EmailInput(),
+              const SizedBox(height: 8.0),
+              _PasswordInput(),
+              const SizedBox(height: 8.0),
+              _UsertypeInput(),
+              const SizedBox(height: 32.0),
+              _SignUpButton(),
+              const SizedBox(height: 64,),
+              _LoginButton()
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -128,7 +136,8 @@ class _UsertypeInput extends StatelessWidget {
           value: state.usertype.value!.isEmpty ? "pengasuh" : state.usertype.value ,
           onChanged: (dynamic value) => context.read<SignUpCubit>().usertypeChanged(value),
           decoration: InputDecoration(
-            border: OutlineInputBorder()
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           ),
           items: Constants.USERTYPE.map((item) {
             return DropdownMenuItem(
@@ -170,6 +179,31 @@ class _SignUpButton extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Sudah punya akun ?',
+          style: TextStyle(
+              color: theme.primaryColor, fontWeight: FontWeight.w300),
+        ),
+        TextButton(
+          child: Text(
+            'Masuk akun',
+            style: TextStyle(
+                color: theme.primaryColor, fontWeight: FontWeight.bold),
+          ),
+          onPressed: () => Navigator.of(context).push<void>(LoginPage.route()),
+        ),
+      ],
     );
   }
 }

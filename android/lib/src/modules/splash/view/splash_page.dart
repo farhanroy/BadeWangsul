@@ -15,14 +15,10 @@ class SplashPage extends StatelessWidget {
       listener: (context, state) {
         switch (state.status) {
           case AuthenticationStatus.authenticated:
-            UsertypeManager.get().then((usertype) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/$usertype", (route) => false);
-            });
+            loggedIn(context);
             break;
           case AuthenticationStatus.unauthenticated:
-            Navigator.pushAndRemoveUntil(
-                context, LoginPage.route(), (route) => false);
+            logIn(context);
             break;
           default:
             break;
@@ -41,5 +37,26 @@ class SplashPage extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  Future loggedIn(BuildContext context) async {
+    await Future.delayed(Duration(seconds: 2));
+    await UsertypeManager.get().then((usertype) {
+      UsertypeManager.getIsComplete().then((isComplete) {
+        if (isComplete == true) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/$usertype", (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/$usertype/profile/complete", (route) => false);
+        }
+      });
+    });
+
+  }
+  Future logIn(BuildContext context) async {
+    await Future.delayed(Duration(seconds: 2));
+    Navigator.pushAndRemoveUntil(
+        context, LoginPage.route(), (route) => false);
   }
 }

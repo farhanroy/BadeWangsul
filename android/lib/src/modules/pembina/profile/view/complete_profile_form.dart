@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../../utils/constants.dart';
 import '../bloc/complete_profile_cubit.dart';
 
 class CompleteProfileForm extends StatelessWidget {
@@ -30,19 +31,19 @@ class CompleteProfileForm extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 _SelectImage(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _UsernameInput(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _AddressInput(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _AgeInput(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _DormitoryInput(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _PhoneNumberInput(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 _SubmitButton()
               ],
             ),
@@ -119,14 +120,18 @@ class _DormitoryInput extends StatelessWidget {
     return BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
       buildWhen: (previous, current) => previous.dormitory != current.dormitory,
       builder: (context, state) {
-        return TextField(
-          onChanged: (dormitory) => context.read<CompleteProfileCubit>().dormitoryChanged(dormitory),
-          keyboardType: TextInputType.name,
+        return DropdownButtonFormField(
+          value: state.dormitory.value!.isEmpty ? "Asrama Al-Faraby Cordova" : state.dormitory.value ,
+          onChanged: (dynamic value) => context.read<CompleteProfileCubit>().dormitoryChanged(value),
           decoration: InputDecoration(
-            labelText: 'Asrama',
-            helperText: '',
-            errorText: state.address.invalid ? 'asrama tidak boleh kosong' : null,
+            border: OutlineInputBorder(),
           ),
+          items: Constants.DORMITORIES.map((item) {
+            return DropdownMenuItem(
+              value: item,
+              child: Row(children: <Widget>[Text(item),]),
+            );
+          }).toList(),
         );
       },
     );

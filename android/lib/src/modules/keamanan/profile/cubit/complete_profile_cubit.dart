@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../utils/usertype_manager.dart';
 import '../../../../models/keamanan.dart';
 import '../../../../services/repository/user_repository/user_repository.dart';
 import '../../../../utils/validator/default_validator.dart';
@@ -100,6 +101,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState>{
           imageUrl: state.imageUrl.value,
           phoneNumber: state.phoneNumber.value
       ));
+      await UsertypeManager.setIsComplete(true);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
       print(e);
