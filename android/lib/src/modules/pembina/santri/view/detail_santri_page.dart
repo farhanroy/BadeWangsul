@@ -1,7 +1,10 @@
-import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../models/santri.dart';
+import '../../../../utils/constants.dart';
 
 class DetailSantriPage extends StatelessWidget {
 
@@ -52,7 +55,7 @@ class DetailSantriPage extends StatelessWidget {
   }
 
   Widget _content(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data()!;
+    Santri? santri = Santri.fromJson(snapshot.data()!);
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(
@@ -62,33 +65,39 @@ class DetailSantriPage extends StatelessWidget {
           Center(
             child: CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage("${data["imageUrl"]}"),
+              backgroundImage: NetworkImage("${santri.imageUrl}"),
             ),
           ),
           SizedBox(height: 32,),
 
           Text("Name"),
-          Text(data['name']),
+          Text(santri.name ?? ""),
           SizedBox(height: 16,),
 
           Text("Umur"),
-          Text(data['age']),
+          Text(santri.age ?? ""),
           SizedBox(height: 16,),
 
           Text("Alamat"),
-          Text(data['address']),
+          Text(santri.age ?? ""),
           SizedBox(height: 16,),
 
           Text("Asrama"),
-          Text(data['dormitory']),
+          Text(santri.dormitory ?? ""),
           SizedBox(height: 16,),
 
           Text("Tanggal lahir"),
-          Text(data['birthDate'].toString()),
+          Text(formatDate(santri.birthDate!)),
           SizedBox(height: 16,),
         ],
       ),
     );
+  }
+
+  String formatDate(DateTime birthDate) {
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formattedDate = formatter.format(birthDate);
+    return formattedDate;
   }
 
   Future<void> deleteSantri(CollectionReference santri) {
