@@ -66,6 +66,7 @@ class _AppViewState extends State<AppView> {
         '/pembina/santri/create': (context) => pembina.CreateSantriPage(),
         '/pembina/santri/manage': (context) => pembina.ManageSantriPage(),
         '/pembina/santri/detail': (context) => pembina.DetailSantriPage(),
+        '/pembina/santri/update': (context) => pembina.UpdateSantriPage(),
         '/pembina/profile': (context) => pembina.ProfilePembinaPage(),
         '/pembina/profile/update': (context) => pembina.UpdateProfilePage(),
 
@@ -78,7 +79,7 @@ class _AppViewState extends State<AppView> {
         '/security': (context) => security.DashboardSecurityPage(),
         '/security/profile': (context) => security.ProfileSecurityPage(),
         '/security/profile/complete': (context) => security.CompleteProfilePage(),
-        '/security/profile/update': (context) => security.UpdateSecurityPage(),
+        '/security/profile/update': (context) => security.UpdateProfilePage(),
         '/security/verval/kepulangan': (context) => security.VervalKepulanganPage(),
         '/security/verval/kedatangan': (context) => security.VervalKedatanganPage(),
 

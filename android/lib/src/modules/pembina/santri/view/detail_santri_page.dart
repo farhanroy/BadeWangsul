@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
+import 'update_santri_page.dart';
+import '../../../../widgets/appdialog.dart';
 import '../../../../models/santri.dart';
 import '../../../../utils/constants.dart';
 
@@ -16,24 +18,35 @@ class DetailSantriPage extends StatelessWidget {
   Widget build(BuildContext context) {
     CollectionReference santri = FirebaseFirestore
         .instance.collection(Constants.SANTRI_COLLECTION);
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: theme.scaffoldBackgroundColor,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.arrowLeft),
+          icon: Icon(FontAwesomeIcons.arrowLeft, color: theme.primaryColor),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: Icon(FontAwesomeIcons.edit),
-            onPressed: () => Navigator.pop(context),
+            icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => UpdateSantriPage(idSantri: documentID,)
+              ));
+            },
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: Icon(Icons.delete, color: theme.scaffoldBackgroundColor,),
         backgroundColor: Theme.of(context).errorColor,
-        onPressed: () => deleteSantri(santri),
+        onPressed: () => showConfirmationDialog(
+            context: context,
+            title: "Hapus santri",
+            content: "Apakah anda ingin menghapus data santri ?",
+            onAccept: () => deleteSantri(santri)
+        ),
       ),
       body: SafeArea(
         child: FutureBuilder<DocumentSnapshot>(
@@ -44,7 +57,7 @@ class DetailSantriPage extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              return _content(snapshot.data!);
+              return _content(snapshot.data!, theme);
             }
 
             return Center(child: CircularProgressIndicator(),);
@@ -54,14 +67,13 @@ class DetailSantriPage extends StatelessWidget {
     );
   }
 
-  Widget _content(DocumentSnapshot snapshot) {
+  Widget _content(DocumentSnapshot snapshot, ThemeData theme) {
     Santri? santri = Santri.fromJson(snapshot.data()!);
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 42,),
           Center(
             child: CircleAvatar(
               radius: 70,
@@ -70,24 +82,24 @@ class DetailSantriPage extends StatelessWidget {
           ),
           SizedBox(height: 32,),
 
-          Text("Name"),
-          Text(santri.name ?? ""),
+          Text("Name", style: theme.textTheme.subtitle2,),
+          Text(santri.name ?? "", style: theme.textTheme.subtitle1,),
           SizedBox(height: 16,),
 
-          Text("Umur"),
-          Text(santri.age ?? ""),
+          Text("Umur", style: theme.textTheme.subtitle2,),
+          Text(santri.age ?? "", style: theme.textTheme.subtitle1,),
           SizedBox(height: 16,),
 
-          Text("Alamat"),
-          Text(santri.age ?? ""),
+          Text("Alamat", style: theme.textTheme.subtitle2,),
+          Text(santri.age ?? "", style: theme.textTheme.subtitle1,),
           SizedBox(height: 16,),
 
-          Text("Asrama"),
-          Text(santri.dormitory ?? ""),
+          Text("Asrama", style: theme.textTheme.subtitle2,),
+          Text(santri.dormitory ?? "", style: theme.textTheme.subtitle1,),
           SizedBox(height: 16,),
 
-          Text("Tanggal lahir"),
-          Text(formatDate(santri.birthDate!)),
+          Text("Tanggal lahir", style: theme.textTheme.subtitle2,),
+          Text(formatDate(santri.birthDate!), style: theme.textTheme.subtitle1,),
           SizedBox(height: 16,),
         ],
       ),

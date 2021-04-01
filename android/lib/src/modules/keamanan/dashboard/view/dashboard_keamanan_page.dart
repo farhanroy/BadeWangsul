@@ -26,7 +26,7 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
       body:  SafeArea(
         child: FutureBuilder(
           future: _dao.readKeamanan(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+          builder: (context, AsyncSnapshot<Map<String, Object?>?> snapshot){
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));
             }

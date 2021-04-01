@@ -33,8 +33,8 @@ class UsersDao{
     print('Student Inserted successfully !!');
   }
 
-  Future<Map<String, dynamic>> readPengasuh() async {
-    return _userFolder.record(0).get(await _db) as FutureOr<Map<String, dynamic>>;
+  Future<Map<String, Object?>?> readPengasuh() async {
+    return _userFolder.record(0).get(await _db);
   }
 
   Future updateOrInsertSecurity() async{
@@ -44,8 +44,8 @@ class UsersDao{
     print('Student Inserted successfully !!');
   }
 
-  Future<Map<String, dynamic>> readSecurity() async {
-    return _userFolder.record(0).get(await _db) as FutureOr<Map<String, dynamic>>;
+  Future<Map<String, Object?>?> readSecurity() async {
+    return _userFolder.record(0).get(await _db);
   }
 
   Future updateOrInsertKeamanan() async{
@@ -55,19 +55,8 @@ class UsersDao{
     print('Student Inserted successfully !!');
   }
 
-  Future<Map<String, dynamic>> readKeamanan() async {
-    return _userFolder.record(0).get(await _db) as FutureOr<Map<String, dynamic>>;
-  }
-
-  Future updateOrInsertOrangtua() async{
-    final _userId = FirebaseAuth.instance.currentUser!;
-    final snapshot = await _collection.doc(_userId.uid).get();
-    await _userFolder.record(0).put(await _db, snapshot.data()! );
-    print('Student Inserted successfully !!');
-  }
-
-  Future<Map<String, dynamic>> readOrangtua() async {
-    return _userFolder.record(0).get(await _db) as FutureOr<Map<String, dynamic>>;
+  Future<Map<String, Object?>?> readKeamanan() async {
+    return _userFolder.record(0).get(await _db);
   }
 
   Future deleteUsers() async{

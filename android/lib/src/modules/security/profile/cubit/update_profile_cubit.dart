@@ -113,12 +113,11 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   // Create new fire store user data
   Future<void> updateData() async {
-    if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _userRepository.updateSecurity(Security(
           name: state.username.value,
-          age: state.age.value as int?,
+          age: int.parse(state.age.value!),
           address: state.address.value,
           pos: state.pos.value,
           imageUrl: state.imageUrl.value,
@@ -126,6 +125,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
+      print(e);
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }

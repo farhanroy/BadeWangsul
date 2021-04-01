@@ -1,6 +1,6 @@
-import 'package:bade_wangsul/src/models/models.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../models/models.dart';
 import '../../../../services/database/dao/users_dao.dart';
 import '../../../../widgets/griddashboard.dart';
 
@@ -26,8 +26,9 @@ class _DashboardPengasuhPageState extends State<DashboardPengasuhPage> {
       body:  SafeArea(
         child: FutureBuilder(
           future: _dao.readPengasuh(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+          builder: (context, AsyncSnapshot<Map<String, Object?>?> snapshot){
             if (snapshot.hasError) {
+              print(snapshot.error);
               return Center(child: Text("Something went wrong"));
             }
 

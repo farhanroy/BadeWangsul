@@ -23,104 +23,104 @@ class _ProfileSecurityPageState extends State<ProfileSecurityPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(FontAwesomeIcons.arrowLeft, color: theme.primaryColor,),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          actions: [
-            IconButton(
-                icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
-                onPressed: (){
-                  Navigator.pushNamed(context, "/security/profile/update");
-                }
-            )
-          ],
-        ),
-        body: FutureBuilder(
-          future: _dao.readPembina(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-
-            if (snapshot.hasError) {
-              return Center(child: Text("Something went wrong"));
-            }
-
-            if (snapshot.connectionState == ConnectionState.done){
-              return _content(Security.fromJson(snapshot.data!));
-            }
-
-            return Center(child: CircularProgressIndicator(),);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(FontAwesomeIcons.arrowLeft, color: theme.primaryColor,),
+          onPressed: () {
+            Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+              icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
+              onPressed: (){
+                Navigator.pushNamed(context, "/security/profile/update");
+              }
+          )
+        ],
+      ),
+      body: FutureBuilder(
+        future: _dao.readPembina(),
+        builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+
+          if (snapshot.hasError) {
+            return Center(child: Text("Something went wrong"));
+          }
+
+          if (snapshot.connectionState == ConnectionState.done){
+            return _content(Security.fromJson(snapshot.data!), theme);
+          }
+
+          return Center(child: CircularProgressIndicator(),);
+        },
       ),
     );
   }
 
-  Widget _content(Security security) {
+  Widget _content(Security security, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.all(32.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: security.imageUrl != null ? CircleAvatar(
-              radius: 70,
-              backgroundImage: NetworkImage(security.imageUrl!),
-            ) : CircleAvatar(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: security.imageUrl != null ? CircleAvatar(
                 radius: 70,
-                backgroundImage: AssetImage('assets/img/default-profile.png')),
-          ),
-          SizedBox(height: 32,),
-
-          Text("Name"),
-          Text(security.name!),
-          SizedBox(height: 16,),
-
-          Text("Umur"),
-          Text(security.age.toString()),
-          SizedBox(height: 16,),
-
-          Text("Alamat"),
-          Text(security.address!),
-          SizedBox(height: 16,),
-
-          Text("Pos"),
-          Text(security.pos.toString()),
-          SizedBox(height: 16,),
-
-          Text("Nomor Telepon"),
-          Text(security.phoneNumber ?? ""),
-          SizedBox(height: 16,),
-
-          Center(
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                  primary: Theme.of(context).errorColor
-              ),
-              onPressed: (){
-                showConfirmationDialog(
-                    context: context,
-                    title: "Logout",
-                    content: "Apakah anda akan logout ?",
-                    onAccept: () async {
-                      context.read<AuthenticationBloc>()
-                          .add(AuthenticationLogoutRequested());
-                      UsertypeManager.delete();
-                      deleteUser();
-                      Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
-                    }
-                );
-              },
-              child: Text("Logout"),
+                backgroundImage: NetworkImage(security.imageUrl!),
+              ) : CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage('assets/img/default-profile.png')),
             ),
-          )
-        ],
+            SizedBox(height: 32,),
+
+            Text("Name", style: theme.textTheme.subtitle2,),
+            Text(security.name!, style: theme.textTheme.subtitle1),
+            SizedBox(height: 16,),
+
+            Text("Umur", style: theme.textTheme.subtitle2),
+            Text(security.age.toString(), style: theme.textTheme.subtitle1),
+            SizedBox(height: 16,),
+
+            Text("Alamat", style: theme.textTheme.subtitle2),
+            Text(security.address!, style: theme.textTheme.subtitle1),
+            SizedBox(height: 16,),
+
+            Text("Pos", style: theme.textTheme.subtitle2),
+            Text(security.pos.toString(), style: theme.textTheme.subtitle1),
+            SizedBox(height: 16,),
+
+            Text("Nomor Telepon", style: theme.textTheme.subtitle2),
+            Text(security.phoneNumber ?? "", style: theme.textTheme.subtitle1),
+            SizedBox(height: 32,),
+
+            Center(
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    primary: Theme.of(context).errorColor
+                ),
+                onPressed: (){
+                  showConfirmationDialog(
+                      context: context,
+                      title: "Logout",
+                      content: "Apakah anda akan logout ?",
+                      onAccept: () async {
+                        context.read<AuthenticationBloc>()
+                            .add(AuthenticationLogoutRequested());
+                        UsertypeManager.delete();
+                        deleteUser();
+                        Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                      }
+                  );
+                },
+                child: Text("Logout"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

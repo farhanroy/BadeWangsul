@@ -34,9 +34,8 @@ class UpdateProfileForm extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20,),
                 _SelectImage(),
-                SizedBox(height: 10,),
+                SizedBox(height: 30,),
                 _UsernameInput(inputName: _inputName,),
                 SizedBox(height: 10,),
                 _AddressInput(inputAddress: _inputAddress,),
@@ -56,7 +55,7 @@ class UpdateProfileForm extends StatelessWidget {
 
   void setInitialValue(BuildContext context) async {
     final snapshot = await _usersDao.readKeamanan();
-    final keamanan = Keamanan.fromJson(snapshot);
+    final keamanan = Keamanan.fromJson(snapshot!);
 
     _inputName.text = keamanan.name!;
     _inputAge.text = keamanan.age.toString();
@@ -82,6 +81,7 @@ class _UsernameInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Nama',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.username.invalid ? 'nama tidak boleh kosong' : null,
           ),
         );
@@ -106,6 +106,7 @@ class _AddressInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Alamat',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.address.invalid ? 'alamat tidak boleh kosong' : null,
           ),
         );
@@ -130,6 +131,7 @@ class _AgeInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Umur',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.age.invalid ? 'umur tidak boleh kosong' : null,
           ),
         );
@@ -154,6 +156,7 @@ class _PhoneNumberInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Nomor telpon',
             helperText: '',
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             errorText: state.phoneNumber.invalid ? 'nomor telp tidak boleh kosong' : null,
           ),
         );
@@ -173,9 +176,9 @@ class _SelectImage extends StatelessWidget {
             case ImageStorageStatus.loading:
               return _loading();
             case ImageStorageStatus.success:
-              return _success(state.imageUrl.value!);
+              return _success(context, state.imageUrl.value!);
             case ImageStorageStatus.failed:
-              return _failed();
+              return _failed(context,);
             default:
               return _unknown(context);
           }
@@ -198,19 +201,28 @@ class _SelectImage extends StatelessWidget {
     );
   }
 
-  Widget _success(String url) {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Image.network(url)
+  Widget _success(BuildContext context, String? url) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
+      child: Center(
+        child: url != null ? CircleAvatar(
+          radius: 60,
+          backgroundImage: NetworkImage(url),
+        ) : CircleAvatar(
+            radius: 60,
+            backgroundImage: AssetImage('assets/img/default-profile.png')),
+      ),
     );
   }
 
-  Widget _failed() {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Icon(Icons.warning_sharp)
+  Widget _failed(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
+      child: Container(
+          width: 100,
+          height: 100,
+          child: Icon(Icons.warning_sharp)
+      ),
     );
   }
 
@@ -227,21 +239,25 @@ class _SelectImage extends StatelessWidget {
 class _UpdateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : MaterialButton(
+            : ElevatedButton(
           key: const Key('signUpForm_continue_raisedButton'),
-          child: const Text('Update'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+          child: const Text('UPDATE'),
+          style: ElevatedButton.styleFrom(
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(10.0),
+              ),
+              textStyle: TextStyle(fontSize: 16),
+              primary: theme.accentColor,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 24, vertical: 12)
           ),
-          color: Colors.orangeAccent,
-          onPressed: state.status.isValidated
-              ? () => context.read<UpdateProfileCubit>().updateData()
-              : null,
+          onPressed: () => context.read<UpdateProfileCubit>().updateData(),
         );
       },
     );

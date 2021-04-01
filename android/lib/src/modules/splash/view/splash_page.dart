@@ -43,7 +43,8 @@ class SplashPage extends StatelessWidget {
     await Future.delayed(Duration(seconds: 2));
     await UsertypeManager.get().then((usertype) {
       UsertypeManager.getIsComplete().then((isComplete) {
-        if (isComplete == true) {
+        print(isComplete);
+        if (isComplete == true || isComplete == null) {
           Navigator.pushNamedAndRemoveUntil(
               context, "/$usertype", (route) => false);
         } else {

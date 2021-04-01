@@ -31,9 +31,19 @@ final theme = ThemeData(
   primaryColorDark: const Color(0xFF000D43),
   primaryColorLight: const Color(0xFF5F5B9E),
   primaryColor: const Color(0xFF31326F),
-  accentColor: const Color(0xFF28527A),
+  accentColor: Colors.orangeAccent,
   errorColor: Colors.red,
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+  appBarTheme: AppBarTheme(
+    color: const Color(0xFFFFFFFF),
+    elevation: 0,
+    iconTheme: IconThemeData(
+      color: Color(0xFF000000)
+    ),
+    titleTextStyle: TextStyle(
+        color: Color(0xFF000000)
+    )
+  ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       primary: Color(0xFF31326F),

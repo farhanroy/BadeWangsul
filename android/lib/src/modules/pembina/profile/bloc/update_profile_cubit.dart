@@ -113,7 +113,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   // Create new fire store user data
   Future<void> updateData() async {
-    if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _userRepository.updatePembina(Pembina(
