@@ -45,7 +45,10 @@ class DetailSantriPage extends StatelessWidget {
             context: context,
             title: "Hapus santri",
             content: "Apakah anda ingin menghapus data santri ?",
-            onAccept: () => deleteSantri(santri)
+            onAccept: () {
+              Navigator.of(context).pop();
+              deleteSantri(santri, context);
+            }
         ),
       ),
       body: SafeArea(
@@ -112,11 +115,15 @@ class DetailSantriPage extends StatelessWidget {
     return formattedDate;
   }
 
-  Future<void> deleteSantri(CollectionReference santri) {
+  Future<void> deleteSantri(CollectionReference santri, BuildContext context) {
     return santri
         .doc(documentID)
         .delete()
-        .then((value) => print("User Deleted"))
-        .catchError((error) => print("Failed to delete user: $error"));
+        .then((value) => {
+          Navigator.of(context).pop()
+        })
+        .catchError((error) => {
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text(error.toString())))
+        });
   }
 }
