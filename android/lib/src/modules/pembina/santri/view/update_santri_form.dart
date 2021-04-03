@@ -27,7 +27,7 @@ class UpdateSantriForm extends StatelessWidget {
           Scaffold.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign Up Failure')),
+              const SnackBar(content: Text('Update Failure')),
             );
         }
         if (state.status.isSubmissionSuccess) {
@@ -70,6 +70,11 @@ class UpdateSantriForm extends StatelessWidget {
     _inputAge.text = santri.age!;
     _inputAddress.text = santri.address!;
     _inputDormitory.text = santri.dormitory!;
+
+    context.read<UpdateSantriCubit>().nameChanged(santri.name!);
+    context.read<UpdateSantriCubit>().ageChanged(santri.age!);
+    context.read<UpdateSantriCubit>().addressChanged(santri.address!);
+    context.read<UpdateSantriCubit>().dormitoryChanged(santri.dormitory!);
     context.read<UpdateSantriCubit>().birthDateChanged(santri.birthDate);
     context.read<UpdateSantriCubit>().setInitialImage(santri.imageUrl);
   }

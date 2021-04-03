@@ -34,26 +34,31 @@ class _ListIzinSantri extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: _ref.snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.hasData) {
+          return SingleChildScrollView(
+            child: Column(
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => DetailIzinPage(idIzin: document.id,)
+                      ));
+                    },
+                    child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
+                );
+              }).toList(),
+            ),
+          );
+        }
+        if (snapshot.hasError ) {
           return Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        return SingleChildScrollView(
-          child: Column(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => DetailIzinPage(idIzin: document.id,)
-                    ));
-                  },
-                  child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
-              );
-            }).toList(),
-          ),
-        );
+        else {
+          return Center(child: Text('Data Kosong'));
+        }
       }
     );
   }
@@ -68,10 +73,10 @@ class _ItemIzinSantri extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
+    return FutureBuilder<DocumentSnapshot?>(
       future: ref.doc(idSantri).get(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
+        builder: (context, AsyncSnapshot<DocumentSnapshot?>? snapshot) {
+          if (snapshot!.hasError) {
             return Text('Something went wrong');
           }
 
@@ -79,15 +84,18 @@ class _ItemIzinSantri extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
 
-          return new ListTile(
-            leading: CircleAvatar(
-              backgroundImage:
-              NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
-              backgroundColor: Colors.transparent,
-            ),
-            title: new Text(snapshot.data!.data()!['name']),
-            subtitle: new Text(snapshot.data!.data()!['dormitory']),
-          );
+          if (snapshot.hasData) {
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage:
+                NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
+                backgroundColor: Colors.transparent,
+              ),
+              title: new Text(snapshot.data!.data()!['name']),
+              subtitle: new Text(snapshot.data!.data()!['dormitory']),
+            );
+          }
+          return Container();
         },
     );
   }

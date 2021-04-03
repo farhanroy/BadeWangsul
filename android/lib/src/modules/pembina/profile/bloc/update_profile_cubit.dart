@@ -139,8 +139,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
       await storageRef.putFile(_file);
       await storageRef.getDownloadURL().then((url) {
-        print(url);
-        print(url);
         imageUrlChanged(url);
         emit(state.copyWith(storageStatus: ImageStorageStatus.success));
       });

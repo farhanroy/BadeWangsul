@@ -10,6 +10,7 @@ class DetailIzinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(isPulang);
     return BlocBuilder<VervalIzinCubit, VervalIzinState>(
       builder: (context, state){
         if(state.izinStatus == IzinStatus.success) {
@@ -81,9 +82,10 @@ class _VervalIzinCard extends StatelessWidget {
                         )
                     ),
                   ),
+
+                  _ButtonVerification(isPulang: isPulang,)
                 ],
               ),
-              _ButtonVerification(isPulang: isPulang,)
             ],
           ),
         );
@@ -107,13 +109,13 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      if (isPulang!) {
+                      if (isPulang! == false) {
                         context.read<VervalIzinCubit>().setKepulanganSantri();
                       } else {
                         context.read<VervalIzinCubit>().setKedatanganSantri();
                       }
                     },
-                    child: Text("Verval Keluar"),
+                    child: Text(isPulang! ? "Verval Keluar" : "Verval Datang") ,
                   )
                 ],
               )

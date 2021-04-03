@@ -38,6 +38,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
 
   Future<void> getSantri() async {
     await _santriRepository.getSantriById(state.idSantri.value).then((value){
+      print(value.data());
       emit(state.copyWith(santri: Santri.fromJson(value.data()!)));
     });
   }
@@ -53,7 +54,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
       toDate: state.izin!.toDate,
       isPermissioned: state.izin!.isPermissioned,
       isPulang: true,
-      isKembali: false
+      isKembali: true
     ), state.izin!.id);
   }
 

@@ -1,8 +1,8 @@
-import 'package:bade_wangsul/src/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../models/models.dart';
 import '../bloc/create_izin_cubit.dart';
 import '../../../../utils/constants.dart';
 
@@ -23,7 +23,7 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
   @override
   void initState() {
     super.initState();
-
+    print(widget.dormitory);
     streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
         .where('dormitory', isEqualTo: widget.dormitory)
         .snapshots();

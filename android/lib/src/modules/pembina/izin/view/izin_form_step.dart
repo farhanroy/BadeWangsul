@@ -20,8 +20,6 @@ class IzinFormStep extends StatelessWidget {
               const SizedBox(height: 16.0),
               _TitleInput(),
               const SizedBox(height: 8.0),
-              _SantriNameInput(),
-              const SizedBox(height: 8.0),
               _InformationInput(),
               const SizedBox(height: 8.0),
               _FromDateInput(),
@@ -50,25 +48,6 @@ class _TitleInput extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _SantriNameInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<CreateIzinCubit, CreateIzinState>(
-        builder: (context, state){
-          return TextField(
-            enabled: true,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              labelText: 'Nama santri',
-              helperText: '',
-              //hintText: state.santri.name
-            ),
-          );
-        },
     );
   }
 }

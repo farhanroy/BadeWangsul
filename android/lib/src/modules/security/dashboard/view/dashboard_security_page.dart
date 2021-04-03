@@ -113,7 +113,7 @@ class DashboardSecurityGrid extends StatelessWidget {
             title: "Verval Santri",
             subtitle: "Verifikasi kedatangan santri",
             img: "",
-            onTap: () => Navigator.pushNamed(context, "/pembina/verval/kedatangan"),
+            onTap: () => Navigator.pushNamed(context, "/security/verval/kedatangan"),
           ),
         ],
       ),

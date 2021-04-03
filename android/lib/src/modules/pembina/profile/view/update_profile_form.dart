@@ -63,6 +63,12 @@ class UpdateProfileForm extends StatelessWidget {
     _inputAddress.text = pembina.address!;
     _inputDormitory.text = pembina.dormitory!;
     _inputPhoneNumber.text = pembina.phoneNumber!;
+
+    context.read<UpdateProfileCubit>().usernameChanged(pembina.name!);
+    context.read<UpdateProfileCubit>().ageChanged(pembina.age!);
+    context.read<UpdateProfileCubit>().addressChanged(pembina.address!);
+    context.read<UpdateProfileCubit>().dormitoryChanged(pembina.dormitory!);
+    context.read<UpdateProfileCubit>().phoneNumberChanged(pembina.phoneNumber!);
     context.read<UpdateProfileCubit>().setInitialImage(pembina.imageUrl);
   }
 }
