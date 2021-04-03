@@ -175,6 +175,7 @@ class _BirthDateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
+      buildWhen: (previous, current) => previous.birthDate != current.birthDate,
         builder: (context, state) {
           return DateTextField(
             labelText: "Tanggal lahir",
@@ -182,7 +183,7 @@ class _BirthDateInput extends StatelessWidget {
             suffixIcon: Icon(Icons.arrow_drop_down),
             lastDate: DateTime.now().add(Duration(days: 366)),
             firstDate: DateTime.now(),
-            initialDate: state.birthDate.value!,
+            initialDate: DateTime.now(),
             onDateChanged: (selectedDate) =>
                 context.read<UpdateSantriCubit>().birthDateChanged(selectedDate),
           );

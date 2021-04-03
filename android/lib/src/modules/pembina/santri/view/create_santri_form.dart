@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -168,14 +169,18 @@ class _DormitorySantriInput extends StatelessWidget {
     return BlocBuilder<CreateSantriCubit, CreateSantriState>(
       buildWhen: (previous, current) => previous.dormitory != current.dormitory,
       builder: (context, state) {
-        return TextField(
-          onChanged: (dormitory) => context.read<CreateSantriCubit>().dormitoryChanged(dormitory),
-          keyboardType: TextInputType.name,
+        return DropdownButtonFormField(
+          value: state.dormitory.value!.isEmpty ? "Asrama Al-Faraby Cordova" : state.dormitory.value ,
+          onChanged: (dynamic value) => context.read<CreateSantriCubit>().dormitoryChanged(value),
           decoration: InputDecoration(
-            labelText: 'asrama',
-            helperText: '',
-            errorText: state.dormitory.invalid ? 'asrama tidak boleh kosong' : null,
+            border: OutlineInputBorder(),
           ),
+          items: Constants.DORMITORIES.map((item) {
+            return DropdownMenuItem(
+              value: item,
+              child: Row(children: <Widget>[Text(item),]),
+            );
+          }).toList(),
         );
       },
     );
