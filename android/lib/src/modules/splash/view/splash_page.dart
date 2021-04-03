@@ -11,6 +11,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         switch (state.status) {
@@ -25,17 +26,18 @@ class SplashPage extends StatelessWidget {
         }
       },
       child: Scaffold(
+          backgroundColor: theme.primaryColor,
           body: Center(
-        child: Column(
-          children: [
-            Image.asset('assets/img/app_logo.png'),
-            const SizedBox(
-              height: 10,
+            child: Container(
+              width: 108,
+              height: 108,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img/app_logo.png')
+                )
+              ),
             ),
-            Text("Bade Wangsul")
-          ],
-        ),
-      )),
+          )),
     );
   }
 
@@ -53,11 +55,10 @@ class SplashPage extends StatelessWidget {
         }
       });
     });
-
   }
+
   Future logIn(BuildContext context) async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushAndRemoveUntil(
-        context, LoginPage.route(), (route) => false);
+    Navigator.pushAndRemoveUntil(context, LoginPage.route(), (route) => false);
   }
 }
