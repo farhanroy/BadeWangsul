@@ -109,13 +109,6 @@ class DashboardPengasuhGrid extends StatelessWidget {
             img: "",
             onTap: () => Navigator.pushNamed(context, "/pengasuh/izin/manage"),
           ),
-
-          GridDashboard(
-            title: "Daftar pembina",
-            subtitle: "List pembina asrama",
-            img: "",
-            onTap: () => Navigator.pushNamed(context, "/pengasuh/pembina/"),
-          ),
         ],
       ),
     );
