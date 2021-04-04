@@ -9,18 +9,20 @@ class UpdateSantriPage extends StatelessWidget {
   final String? idSantri;
 
   const UpdateSantriPage({Key? key, this.idSantri}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: BlocProvider<UpdateSantriCubit>(
-            create: (_) => UpdateSantriCubit(
-              SantriRepository(),
-              idSantri,
-            ),
-            child: UpdateSantriForm(idSantri: idSantri,),
-          )
-      ),
+        create: (_) => UpdateSantriCubit(
+          SantriRepository(),
+          idSantri,
+        ),
+        child: UpdateSantriForm(
+          idSantri: idSantri,
+        ),
+      )),
     );
   }
 }

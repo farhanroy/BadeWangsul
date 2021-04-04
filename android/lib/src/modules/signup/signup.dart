@@ -1,2 +1,2 @@
-export 'view/view.dart';
 export 'cubit/signup_cubit.dart';
+export 'view/view.dart';

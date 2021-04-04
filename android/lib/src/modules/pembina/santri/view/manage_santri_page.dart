@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../izin/izin.dart';
 import '../../../../utils/constants.dart';
+import '../../izin/izin.dart';
 
 class ManageSantriPage extends StatefulWidget {
   @override
@@ -10,7 +10,6 @@ class ManageSantriPage extends StatefulWidget {
 }
 
 class _ManageSantriPageState extends State<ManageSantriPage> {
-
   String? searchKey;
   Stream? streamQuery;
   TextEditingController? searchController;
@@ -18,8 +17,9 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
   @override
   void initState() {
     super.initState();
-    streamQuery =
-        FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION).snapshots();
+    streamQuery = FirebaseFirestore.instance
+        .collection(Constants.SANTRI_COLLECTION)
+        .snapshots();
     searchController = TextEditingController();
   }
 
@@ -35,12 +35,17 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             _searchInput(searchController),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             StreamBuilder<QuerySnapshot>(
               stream: streamQuery as Stream<QuerySnapshot>?,
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return Text('Something went wrong');
                 }
@@ -65,13 +70,15 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
           print(document.data()!["name"]);
           return new ListTile(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DetailSantriPage(documentID: document.id,)
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailSantriPage(
+                            documentID: document.id,
+                          )));
             },
             leading: CircleAvatar(
-              backgroundImage:
-              NetworkImage("${document.data()!["imageUrl"]}"),
+              backgroundImage: NetworkImage("${document.data()!["imageUrl"]}"),
               backgroundColor: Colors.transparent,
             ),
             title: new Text(document.data()!['name']),
@@ -89,9 +96,10 @@ class _ManageSantriPageState extends State<ManageSantriPage> {
         onChanged: (value) {
           setState(() {
             searchKey = value;
-            streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
+            streamQuery = FirebaseFirestore.instance
+                .collection(Constants.SANTRI_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey! +'z')
+                .where('name', isLessThan: searchKey! + 'z')
                 .snapshots();
           });
         },

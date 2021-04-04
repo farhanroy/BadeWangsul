@@ -9,7 +9,9 @@ class EmailSentView extends StatelessWidget {
         child: Column(
           children: [
             _HeaderContent(),
-            const SizedBox(height: 32,),
+            const SizedBox(
+              height: 32,
+            ),
             _LoginButton()
           ],
         ),
@@ -25,26 +27,25 @@ class _HeaderContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 108,),
+        const SizedBox(
+          height: 108,
+        ),
         Text(
           'Well done!',
-          style: theme.textTheme.headline4!.copyWith(
-              color: theme.primaryColorLight
-          ),
+          style: theme.textTheme.headline4!
+              .copyWith(color: theme.primaryColorLight),
         ),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         Text(
             'Silahkan cek email anda, kami telah mengirimkan kepada anda untuk mengubah password',
             textAlign: TextAlign.center,
-            style: theme.textTheme.subtitle1!.copyWith(
-                color: Colors.grey
-            )
-        ),
+            style: theme.textTheme.subtitle1!.copyWith(color: Colors.grey)),
       ],
     );
   }
 }
-
 
 class _LoginButton extends StatelessWidget {
   @override
@@ -60,14 +61,11 @@ class _LoginButton extends StatelessWidget {
             ),
             textStyle: TextStyle(fontSize: 16),
             primary: theme.primaryColor,
-            padding: const EdgeInsets.symmetric(
-                horizontal: 24, vertical: 12)
-        ),
-        onPressed: (){
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12)),
+        onPressed: () {
           Navigator.of(context).pushNamed("/login");
         },
       ),
     );
   }
 }
-

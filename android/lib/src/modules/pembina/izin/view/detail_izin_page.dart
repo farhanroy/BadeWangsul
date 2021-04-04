@@ -6,12 +6,13 @@ import '../../../../utils/constants.dart';
 
 class DetailIzinPage extends StatelessWidget {
   const DetailIzinPage({Key? key, this.idIzin}) : super(key: key);
-  
+
   final String? idIzin;
-  
+
   @override
   Widget build(BuildContext context) {
-    final ref = FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION);
+    final ref =
+        FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION);
     return Scaffold(
       body: FutureBuilder<DocumentSnapshot>(
           future: ref.doc(idIzin).get(),
@@ -25,9 +26,10 @@ class DetailIzinPage extends StatelessWidget {
               return _DetailIzinCard(snapshot: snapshot.data);
             }
 
-            return Center(child: CircularProgressIndicator(),);
-          }
-      ),
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 }
@@ -35,6 +37,7 @@ class DetailIzinPage extends StatelessWidget {
 class _DetailIzinCard extends StatelessWidget {
   const _DetailIzinCard({Key? key, this.snapshot}) : super(key: key);
   final DocumentSnapshot? snapshot;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -45,31 +48,34 @@ class _DetailIzinCard extends StatelessWidget {
         width: width,
         child: Card(
             child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Tujuan pulang"),
-                  Text(izin.title!),
-                  SizedBox(height: 8.0,),
-
-                  Text("Detail kepulangan"),
-                  Text(izin.information!),
-                  SizedBox(height: 8.0,),
-
-                  Text("Dari tanggal"),
-                  Text(izin.fromDate.toString()),
-                  SizedBox(height: 8.0,),
-
-                  Text("Sampai tanggal"),
-                  Text(izin.toDate.toString()),
-                  SizedBox(height: 8.0,),
-                ],
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Tujuan pulang"),
+              Text(izin.title!),
+              SizedBox(
+                height: 8.0,
               ),
-            )
-        ),
+              Text("Detail kepulangan"),
+              Text(izin.information!),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text("Dari tanggal"),
+              Text(izin.fromDate.toString()),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text("Sampai tanggal"),
+              Text(izin.toDate.toString()),
+              SizedBox(
+                height: 8.0,
+              ),
+            ],
+          ),
+        )),
       ),
     );
   }
 }
-

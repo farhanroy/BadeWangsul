@@ -1,9 +1,8 @@
 part of 'complete_profile_cubit.dart';
 
-enum ImageStorageStatus {unknown, loading, success, failed}
+enum ImageStorageStatus { unknown, loading, success, failed }
 
 class CompleteProfileState extends Equatable {
-
   final Default username;
   final Default address;
   final Default age;
@@ -12,38 +11,34 @@ class CompleteProfileState extends Equatable {
   final FormzStatus status;
   final ImageStorageStatus storageStatus;
 
-  CompleteProfileState({
-    this.username = const Default.pure(),
-    this.address = const Default.pure(),
-    this.age = const Default.pure(),
-    this.imageUrl = const Default.pure(),
-    this.phoneNumber = const Default.pure(),
-    this.status = FormzStatus.pure,
-    this.storageStatus = ImageStorageStatus.unknown
-  });
+  CompleteProfileState(
+      {this.username = const Default.pure(),
+      this.address = const Default.pure(),
+      this.age = const Default.pure(),
+      this.imageUrl = const Default.pure(),
+      this.phoneNumber = const Default.pure(),
+      this.status = FormzStatus.pure,
+      this.storageStatus = ImageStorageStatus.unknown});
 
   @override
   List<Object> get props =>
       [username, address, age, imageUrl, phoneNumber, status, storageStatus];
 
-  CompleteProfileState copyWith ({
-    Default? username,
-    Default? address,
-    Default? age,
-    Default? imageUrl,
-    Default? phoneNumber,
-    FormzStatus? status,
-    ImageStorageStatus? storageStatus
-  }) {
+  CompleteProfileState copyWith(
+      {Default? username,
+      Default? address,
+      Default? age,
+      Default? imageUrl,
+      Default? phoneNumber,
+      FormzStatus? status,
+      ImageStorageStatus? storageStatus}) {
     return CompleteProfileState(
-      username:  username ?? this.username,
-      address: address ?? this.address,
-      age: age ?? this.age,
-      imageUrl: imageUrl ?? this.imageUrl,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      status: status ?? this.status,
-      storageStatus: storageStatus ?? this.storageStatus
-    );
+        username: username ?? this.username,
+        address: address ?? this.address,
+        age: age ?? this.age,
+        imageUrl: imageUrl ?? this.imageUrl,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        status: status ?? this.status,
+        storageStatus: storageStatus ?? this.storageStatus);
   }
-
 }

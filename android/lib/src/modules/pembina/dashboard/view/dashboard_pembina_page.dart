@@ -11,7 +11,6 @@ class DashboardPembinaPage extends StatefulWidget {
 }
 
 class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
-
   late UsersDao _dao;
 
   @override
@@ -24,21 +23,22 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  SafeArea(
+      body: SafeArea(
         child: FutureBuilder(
           future: _dao.readPembina(),
-          builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot){
+          builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
             if (snapshot.hasError) {
               print(snapshot.error);
               return Center(child: Text("Something went wrong"));
             }
 
-            if (snapshot.connectionState == ConnectionState.done){
-
+            if (snapshot.connectionState == ConnectionState.done) {
               return _content(Pembina.fromJson(snapshot.data!));
             }
 
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),
@@ -59,8 +59,7 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                      pembina.name!,
+                  Text(pembina.name!,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -79,7 +78,10 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
               ),
               IconButton(
                 alignment: Alignment.topCenter,
-                icon: Icon(Icons.person_outline_outlined, size: 32,),
+                icon: Icon(
+                  Icons.person_outline_outlined,
+                  size: 32,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, "/pembina/profile");
                 },
@@ -90,8 +92,9 @@ class _DashboardPembinaPageState extends State<DashboardPembinaPage> {
         SizedBox(
           height: 40,
         ),
-
-        DashboardPembinaGrid(pembina: pembina,)
+        DashboardPembinaGrid(
+          pembina: pembina,
+        )
       ],
     );
   }
@@ -101,6 +104,7 @@ class DashboardPembinaGrid extends StatelessWidget {
   final Pembina? pembina;
 
   const DashboardPembinaGrid({Key? key, this.pembina}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -113,10 +117,11 @@ class DashboardPembinaGrid extends StatelessWidget {
             img: "",
             onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => ManageIzinPage(pembina: pembina,))
-            ),
+                MaterialPageRoute(
+                    builder: (_) => ManageIzinPage(
+                          pembina: pembina,
+                        ))),
           ),
-
           GridDashboard(
             title: "Manage Santri",
             subtitle: "Manage data santri",

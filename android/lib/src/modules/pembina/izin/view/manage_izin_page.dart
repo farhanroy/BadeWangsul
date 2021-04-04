@@ -10,14 +10,18 @@ class ManageIzinPage extends StatelessWidget {
   final Pembina? pembina;
 
   const ManageIzinPage({Key? key, this.pembina}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) => CreateIzinPage(pembina: pembina,))
-        ),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CreateIzinPage(
+                      pembina: pembina,
+                    ))),
       ),
       body: SafeArea(
         child: _ListIzinSantri(),
@@ -28,39 +32,42 @@ class ManageIzinPage extends StatelessWidget {
 
 class _ListIzinSantri extends StatelessWidget {
   final CollectionReference _ref =
-  FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION);
+      FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _ref.snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasData) {
-          return SingleChildScrollView(
-            child: Column(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => DetailIzinPage(idIzin: document.id,)
+        stream: _ref.snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: Column(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailIzinPage(
+                                      idIzin: document.id,
+                                    )));
+                      },
+                      child: _ItemIzinSantri(
+                        idSantri: document.data()!['idSantri'],
                       ));
-                    },
-                    child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
-                );
-              }).toList(),
-            ),
-          );
-        }
-        if (snapshot.hasError ) {
-          return Text('Something went wrong');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        else {
-          return Center(child: Text('Data Kosong'));
-        }
-      }
-    );
+                }).toList(),
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Center(child: Text('Data Kosong'));
+          }
+        });
   }
 }
 
@@ -68,37 +75,35 @@ class _ItemIzinSantri extends StatelessWidget {
   _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
   final String? idSantri;
-  final CollectionReference ref = FirebaseFirestore.instance
-      .collection(Constants.SANTRI_COLLECTION);
+  final CollectionReference ref =
+      FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot?>(
       future: ref.doc(idSantri).get(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot?>? snapshot) {
-          if (snapshot!.hasError) {
-            return Text('Something went wrong');
-          }
+      builder: (context, AsyncSnapshot<DocumentSnapshot?>? snapshot) {
+        if (snapshot!.hasError) {
+          return Text('Something went wrong');
+        }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-          if (snapshot.hasData) {
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundImage:
-                NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
-                backgroundColor: Colors.transparent,
-              ),
-              title: new Text(snapshot.data!.data()!['name']),
-              subtitle: new Text(snapshot.data!.data()!['dormitory']),
-            );
-          }
-          return Container();
-        },
+        if (snapshot.hasData) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage:
+                  NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
+              backgroundColor: Colors.transparent,
+            ),
+            title: new Text(snapshot.data!.data()!['name']),
+            subtitle: new Text(snapshot.data!.data()!['dormitory']),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
-
-

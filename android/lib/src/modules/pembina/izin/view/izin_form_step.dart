@@ -8,7 +8,7 @@ class IzinFormStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateIzinCubit, CreateIzinState>(
-      listener: (context, state){
+      listener: (context, state) {
         //context.read<CreateIzinCubit>().santriChanged();
       },
       child: Align(
@@ -37,9 +37,10 @@ class _TitleInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
-      builder: (context, state){
+      builder: (context, state) {
         return TextField(
-          onChanged: (title) => context.read<CreateIzinCubit>().titleChanged(title),
+          onChanged: (title) =>
+              context.read<CreateIzinCubit>().titleChanged(title),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             labelText: 'Tujuan pulang',
@@ -56,7 +57,7 @@ class _InformationInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
-      builder: (context, state){
+      builder: (context, state) {
         return TextField(
           onChanged: (information) =>
               context.read<CreateIzinCubit>().informationChanged(information),
@@ -76,19 +77,18 @@ class _FromDateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
-        builder: (context, state){
-          return DateTextField(
-            labelText: "Dari tanggal",
-            prefixIcon: Icon(Icons.date_range),
-            suffixIcon: Icon(Icons.arrow_drop_down),
-            lastDate: DateTime.now().add(Duration(days: 366)),
-            firstDate: DateTime.now(),
-            initialDate: DateTime.now().add(Duration(days: 1)),
-            onDateChanged: (selectedDate) =>
-                context.read<CreateIzinCubit>().fromDateChanged(selectedDate!),
-          );
-        }
-    );
+        builder: (context, state) {
+      return DateTextField(
+        labelText: "Dari tanggal",
+        prefixIcon: Icon(Icons.date_range),
+        suffixIcon: Icon(Icons.arrow_drop_down),
+        lastDate: DateTime.now().add(Duration(days: 366)),
+        firstDate: DateTime.now(),
+        initialDate: DateTime.now().add(Duration(days: 1)),
+        onDateChanged: (selectedDate) =>
+            context.read<CreateIzinCubit>().fromDateChanged(selectedDate!),
+      );
+    });
   }
 }
 
@@ -97,21 +97,16 @@ class _ToDateInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
         builder: (context, state) {
-          return DateTextField(
-            labelText: "Sampai tanggal",
-            prefixIcon: Icon(Icons.date_range),
-            suffixIcon: Icon(Icons.arrow_drop_down),
-            lastDate: DateTime.now().add(Duration(days: 366)),
-            firstDate: DateTime.now(),
-            initialDate: DateTime.now().add(Duration(days: 1)),
-            onDateChanged: (selectedDate) =>
-                context.read<CreateIzinCubit>().toDateChanged(selectedDate!),
-          );
-        }
-    );
+      return DateTextField(
+        labelText: "Sampai tanggal",
+        prefixIcon: Icon(Icons.date_range),
+        suffixIcon: Icon(Icons.arrow_drop_down),
+        lastDate: DateTime.now().add(Duration(days: 366)),
+        firstDate: DateTime.now(),
+        initialDate: DateTime.now().add(Duration(days: 1)),
+        onDateChanged: (selectedDate) =>
+            context.read<CreateIzinCubit>().toDateChanged(selectedDate!),
+      );
+    });
   }
 }
-
-
-
-

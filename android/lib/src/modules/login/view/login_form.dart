@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 
-import '../../signup/signup.dart';
 import '../../../utils/usertype_manager.dart';
+import '../../signup/signup.dart';
 import '../login.dart';
 
 class LoginForm extends StatelessWidget {
@@ -58,22 +58,19 @@ class _HeaderContent extends StatelessWidget {
       children: [
         Text(
           'Sign in',
-          style: theme.textTheme.headline4!.copyWith(
-            color: theme.primaryColorLight
-          ),
+          style: theme.textTheme.headline4!
+              .copyWith(color: theme.primaryColorLight),
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(
+          height: 8,
+        ),
         Text(
-          'Masuk ke akun anda untuk dapat mengakses fitur - fitur yang telah tersedia',
-          style: theme.textTheme.subtitle1!.copyWith(
-            color: Colors.grey
-          )
-        ),
+            'Masuk ke akun anda untuk dapat mengakses fitur - fitur yang telah tersedia',
+            style: theme.textTheme.subtitle1!.copyWith(color: Colors.grey)),
       ],
     );
   }
 }
-
 
 class _EmailInput extends StatelessWidget {
   @override
@@ -132,24 +129,23 @@ class _LoginButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : Container(
-          width: double.infinity,
-          child: ElevatedButton(
-            key: const Key('loginForm_continue_raisedButton'),
-            child: const Text('LOGIN'),
-            style: ElevatedButton.styleFrom(
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                width: double.infinity,
+                child: ElevatedButton(
+                  key: const Key('loginForm_continue_raisedButton'),
+                  child: const Text('LOGIN'),
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      textStyle: TextStyle(fontSize: 16),
+                      primary: theme.primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12)),
+                  onPressed: state.status.isValidated
+                      ? () => context.read<LoginCubit>().logInWithCredentials()
+                      : null,
                 ),
-                textStyle: TextStyle(fontSize: 16),
-                primary: theme.primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 12)
-            ),
-            onPressed: state.status.isValidated
-                ? () => context.read<LoginCubit>().logInWithCredentials()
-                : null,
-          ),
-        );
+              );
       },
     );
   }
@@ -163,16 +159,13 @@ class _ForgotPasswordButton extends StatelessWidget {
       child: TextButton(
         child: Text(
           'Forgot password',
-          style: TextStyle(color: Theme
-              .of(context)
-              .primaryColor),
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         onPressed: () => Navigator.of(context).pushNamed('/forgot'),
       ),
     );
   }
 }
-
 
 class _SignUpButton extends StatelessWidget {
   @override
@@ -183,8 +176,8 @@ class _SignUpButton extends StatelessWidget {
       children: [
         Text(
           'Tidak punya akun ?',
-          style: TextStyle(
-              color: theme.primaryColor, fontWeight: FontWeight.w300),
+          style:
+              TextStyle(color: theme.primaryColor, fontWeight: FontWeight.w300),
         ),
         TextButton(
           child: Text(

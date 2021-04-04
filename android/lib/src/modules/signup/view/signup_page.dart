@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../services/repository/authentication_repository/authentication_repository.dart';
 import '../cubit/signup_cubit.dart';
 import 'signup_form.dart';
-import '../../../services/repository/authentication_repository/authentication_repository.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -18,9 +18,7 @@ class SignUpPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocProvider<SignUpCubit>(
-          create: (_) => SignUpCubit(
-              context.read<AuthenticationRepository>()
-          ),
+          create: (_) => SignUpCubit(context.read<AuthenticationRepository>()),
           child: SignUpForm(),
         ),
       ),

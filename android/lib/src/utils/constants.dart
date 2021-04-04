@@ -12,10 +12,7 @@ class Constants {
     "keamanan"
   ];
 
-  static const List<String> POS = [
-    "1",
-    "2"
-  ];
+  static const List<String> POS = ["1", "2"];
 
   static const List<String> DORMITORIES = [
     "Asrama Al-Faraby Cordova",

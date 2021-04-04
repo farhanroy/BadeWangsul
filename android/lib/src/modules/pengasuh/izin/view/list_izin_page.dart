@@ -10,7 +10,6 @@ class ListIzinPage extends StatefulWidget {
 }
 
 class _ListIzinPageState extends State<ListIzinPage> {
-
   String? searchKey;
   Stream? streamQuery;
   TextEditingController? searchController;
@@ -20,7 +19,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
     super.initState();
     streamQuery = FirebaseFirestore.instance
         .collection(Constants.IZIN_COLLECTION)
-        .where("isPermissioned",isEqualTo: false)
+        .where("isPermissioned", isEqualTo: false)
         .snapshots();
     searchController = TextEditingController();
   }
@@ -42,26 +41,30 @@ class _ListIzinPageState extends State<ListIzinPage> {
                 child: Column(
                   children: [
                     _searchInput(searchController),
-                    SizedBox(height: 8,),
+                    SizedBox(
+                      height: 8,
+                    ),
                     Column(
-                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
                         return GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (_) =>
-                                      DetailIzinPage(idIzin: document.id,))
-                              );
+                                  MaterialPageRoute(
+                                      builder: (_) => DetailIzinPage(
+                                            idIzin: document.id,
+                                          )));
                             },
-                            child: _ItemIzinSantri(idSantri: document.data()!['idSantri'],)
-                        );
+                            child: _ItemIzinSantri(
+                              idSantri: document.data()!['idSantri'],
+                            ));
                       }).toList(),
                     )
                   ],
                 ),
               );
-            }
-        ),
+            }),
       ),
     );
   }
@@ -73,10 +76,11 @@ class _ListIzinPageState extends State<ListIzinPage> {
         onChanged: (value) {
           setState(() {
             searchKey = value;
-            streamQuery = FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION)
+            streamQuery = FirebaseFirestore.instance
+                .collection(Constants.IZIN_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey! +'z')
-                .where("isPermissioned",isEqualTo: true)
+                .where('name', isLessThan: searchKey! + 'z')
+                .where("isPermissioned", isEqualTo: true)
                 .snapshots();
           });
         },
@@ -96,8 +100,8 @@ class _ItemIzinSantri extends StatelessWidget {
   _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
   final String? idSantri;
-  final CollectionReference ref = FirebaseFirestore.instance
-      .collection(Constants.SANTRI_COLLECTION);
+  final CollectionReference ref =
+      FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,7 @@ class _ItemIzinSantri extends StatelessWidget {
         return new ListTile(
           leading: CircleAvatar(
             backgroundImage:
-            NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
+                NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
             backgroundColor: Colors.transparent,
           ),
           title: new Text(snapshot.data!.data()!['name']),
@@ -125,4 +129,3 @@ class _ItemIzinSantri extends StatelessWidget {
     );
   }
 }
-

@@ -10,7 +10,6 @@ class DashboardKeamananPage extends StatefulWidget {
 }
 
 class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
-
   late UsersDao _dao;
 
   @override
@@ -23,20 +22,21 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  SafeArea(
+      body: SafeArea(
         child: FutureBuilder(
           future: _dao.readKeamanan(),
-          builder: (context, AsyncSnapshot<Map<String, Object?>?> snapshot){
+          builder: (context, AsyncSnapshot<Map<String, Object?>?> snapshot) {
             if (snapshot.hasError) {
               return Center(child: Text("Something went wrong"));
             }
 
-            if (snapshot.connectionState == ConnectionState.done){
-
+            if (snapshot.connectionState == ConnectionState.done) {
               return _content(Keamanan.fromJson(snapshot.data!));
             }
 
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),
@@ -57,8 +57,7 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                      keamanan.name!,
+                  Text(keamanan.name!,
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -77,7 +76,10 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
               ),
               IconButton(
                 alignment: Alignment.topCenter,
-                icon: Icon(Icons.person_outline_outlined, size: 32,),
+                icon: Icon(
+                  Icons.person_outline_outlined,
+                  size: 32,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, "/keamanan/profile");
                 },
@@ -88,7 +90,6 @@ class _DashboardKeamananPageState extends State<DashboardKeamananPage> {
         SizedBox(
           height: 40,
         ),
-
         DashboardKeamananGrid()
       ],
     );

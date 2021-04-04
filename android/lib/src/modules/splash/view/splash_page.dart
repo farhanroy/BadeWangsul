@@ -32,10 +32,8 @@ class SplashPage extends StatelessWidget {
               width: 108,
               height: 108,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/img/app_logo.png')
-                )
-              ),
+                  image: DecorationImage(
+                      image: AssetImage('assets/img/app_logo.png'))),
             ),
           )),
     );

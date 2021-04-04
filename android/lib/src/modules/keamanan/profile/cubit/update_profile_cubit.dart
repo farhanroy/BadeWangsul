@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../models/keamanan.dart';
-import '../../../../utils/validator/validator.dart';
 import '../../../../services/repository/user_repository/user_repository.dart';
+import '../../../../utils/validator/validator.dart';
 
 part 'update_profile_state.dart';
 
@@ -53,6 +53,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ]),
     ));
   }
+
   void ageChanged(String value) {
     final age = Default.dirty(value);
     emit(state.copyWith(
@@ -66,6 +67,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ]),
     ));
   }
+
   void imageUrlChanged(String? value) {
     final imageUrl = Default.dirty(value);
     emit(state.copyWith(
@@ -79,6 +81,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       ]),
     ));
   }
+
   void phoneNumberChanged(String value) {
     final phoneNumber = Default.dirty(value);
     emit(state.copyWith(
@@ -95,7 +98,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   // Create new fire store user data
   Future<void> updateData() async {
-
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _userRepository.updateKeamanan(Keamanan(
@@ -103,8 +105,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           age: state.age.value,
           address: state.address.value,
           imageUrl: state.imageUrl.value,
-          phoneNumber: state.phoneNumber.value
-      ));
+          phoneNumber: state.phoneNumber.value));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
@@ -115,8 +116,8 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   Future<void> uploadImage() async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     try {
-      var storageRef = firebase_storage
-          .FirebaseStorage.instance.ref('user/image/$userId');
+      var storageRef =
+          firebase_storage.FirebaseStorage.instance.ref('user/image/$userId');
 
       emit(state.copyWith(storageStatus: ImageStorageStatus.loading));
 
@@ -127,7 +128,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         imageUrlChanged(url);
         emit(state.copyWith(storageStatus: ImageStorageStatus.success));
       });
-
     } on firebase_core.FirebaseException catch (e) {
       emit(state.copyWith(storageStatus: ImageStorageStatus.failed));
       print(e.code);
@@ -137,10 +137,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   // Choose image file in device storage
   void chooseFile() async {
     var image = await ImagePicker().getImage(source: ImageSource.gallery);
-    if(image == null) return;
+    if (image == null) return;
     _file = File(image.path);
 
     uploadImage();
   }
-  
 }

@@ -1,20 +1,21 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../models/santri.dart';
-import '../../../../utils/validator/validator.dart';
 import '../../../../services/repository/santri_repository/santri_repository.dart';
+import '../../../../utils/validator/validator.dart';
 
 part 'update_santri_state.dart';
 
 class UpdateSantriCubit extends Cubit<UpdateSantriState> {
-  UpdateSantriCubit(this._santriRepository, this.idSantri) : super(UpdateSantriState());
+  UpdateSantriCubit(this._santriRepository, this.idSantri)
+      : super(UpdateSantriState());
 
   final SantriRepository _santriRepository;
   final String? idSantri;
@@ -120,8 +121,8 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
     String? imageUrl;
     File _file = File(state.imagePath.value!);
     try {
-      var storageRef = firebase_storage
-          .FirebaseStorage.instance.ref('santri/${state.name.value}');
+      var storageRef = firebase_storage.FirebaseStorage.instance
+          .ref('santri/${state.name.value}');
       await storageRef.putFile(_file);
       await storageRef.getDownloadURL().then((url) {
         imageUrl = url;
@@ -151,8 +152,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
           address: state.address.value,
           dormitory: state.dormitory.value,
           birthDate: state.birthDate.value,
-          imageUrl: imageUrl
-      ));
+          imageUrl: imageUrl));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
@@ -162,7 +162,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
   // Choose image file in device storage
   void chooseFile() async {
     var image = await ImagePicker().getImage(source: ImageSource.gallery);
-    if(image == null) return;
+    if (image == null) return;
     _file = File(image.path);
 
     uploadImage();

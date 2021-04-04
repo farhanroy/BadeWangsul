@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../login.dart';
+import '../../../services/database/dao/users_dao.dart';
 import '../../../services/repository/authentication_repository/authentication_repository.dart';
 import '../../../services/repository/user_repository/user_repository.dart';
-import '../../../services/database/dao/users_dao.dart';
+import '../login.dart';
 
 class LoginPage extends StatelessWidget {
   static Route route() {
@@ -17,11 +17,8 @@ class LoginPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocProvider(
-          create: (_) => LoginCubit(
-              context.read<AuthenticationRepository>(),
-              UserRepository(),
-              UsersDao()
-          ),
+          create: (_) => LoginCubit(context.read<AuthenticationRepository>(),
+              UserRepository(), UsersDao()),
           child: LoginForm(),
         ),
       ),

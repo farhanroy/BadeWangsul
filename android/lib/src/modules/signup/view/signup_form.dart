@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../login/view/login_page.dart';
-import '../cubit/signup_cubit.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/usertype_manager.dart';
+import '../../login/view/login_page.dart';
+import '../cubit/signup_cubit.dart';
 
 class SignUpForm extends StatelessWidget {
   @override
@@ -20,13 +20,10 @@ class SignUpForm extends StatelessWidget {
             );
         }
         if (state.status.isSubmissionSuccess) {
-
           UsertypeManager.set(state.usertype.value!);
 
-          Navigator.pushNamedAndRemoveUntil(
-              context,
-              "/${state.usertype.value}/profile/complete",(route) => false
-          );
+          Navigator.pushNamedAndRemoveUntil(context,
+              "/${state.usertype.value}/profile/complete", (route) => false);
         }
       },
       child: SingleChildScrollView(
@@ -45,7 +42,9 @@ class SignUpForm extends StatelessWidget {
               _UsertypeInput(),
               const SizedBox(height: 32.0),
               _SignUpButton(),
-              const SizedBox(height: 64,),
+              const SizedBox(
+                height: 64,
+              ),
               _LoginButton()
             ],
           ),
@@ -64,17 +63,15 @@ class _HeaderContent extends StatelessWidget {
       children: [
         Text(
           'Sign Up',
-          style: theme.textTheme.headline4!.copyWith(
-              color: theme.primaryColorLight
-          ),
+          style: theme.textTheme.headline4!
+              .copyWith(color: theme.primaryColorLight),
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(
+          height: 8,
+        ),
         Text(
             'Buat akun anda sendriri, untuk dapat mengakses fitur - fitur yang telah tersedia',
-            style: theme.textTheme.subtitle1!.copyWith(
-                color: Colors.grey
-            )
-        ),
+            style: theme.textTheme.subtitle1!.copyWith(color: Colors.grey)),
       ],
     );
   }
@@ -133,8 +130,10 @@ class _UsertypeInput extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField(
           key: const Key('signUpForm_userNameInput_textField'),
-          value: state.usertype.value!.isEmpty ? "pengasuh" : state.usertype.value ,
-          onChanged: (dynamic value) => context.read<SignUpCubit>().usertypeChanged(value),
+          value:
+              state.usertype.value!.isEmpty ? "pengasuh" : state.usertype.value,
+          onChanged: (dynamic value) =>
+              context.read<SignUpCubit>().usertypeChanged(value),
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -142,7 +141,9 @@ class _UsertypeInput extends StatelessWidget {
           items: Constants.USERTYPE.map((item) {
             return DropdownMenuItem(
               value: item,
-              child: Row(children: <Widget>[Text(item),]),
+              child: Row(children: <Widget>[
+                Text(item),
+              ]),
             );
           }).toList(),
         );
@@ -161,23 +162,22 @@ class _SignUpButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : Container(
-          width: double.infinity,
-          child: ElevatedButton(
-            child: const Text('SIGN UP'),
-            style: ElevatedButton.styleFrom(
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                width: double.infinity,
+                child: ElevatedButton(
+                  child: const Text('SIGN UP'),
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      textStyle: TextStyle(fontSize: 16),
+                      primary: theme.primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12)),
+                  onPressed: state.status.isValidated
+                      ? () => context.read<SignUpCubit>().signUpFormSubmitted()
+                      : null,
                 ),
-                textStyle: TextStyle(fontSize: 16),
-                primary: theme.primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 12)
-            ),
-            onPressed: state.status.isValidated
-                ? () => context.read<SignUpCubit>().signUpFormSubmitted()
-                : null,
-          ),
-        );
+              );
       },
     );
   }
@@ -192,8 +192,8 @@ class _LoginButton extends StatelessWidget {
       children: [
         Text(
           'Sudah punya akun ?',
-          style: TextStyle(
-              color: theme.primaryColor, fontWeight: FontWeight.w300),
+          style:
+              TextStyle(color: theme.primaryColor, fontWeight: FontWeight.w300),
         ),
         TextButton(
           child: Text(

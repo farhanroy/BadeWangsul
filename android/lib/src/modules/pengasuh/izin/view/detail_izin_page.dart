@@ -9,12 +9,12 @@ class DetailIzinPage extends StatelessWidget {
   final String? idIzin;
 
   const DetailIzinPage({Key? key, this.idIzin}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => DetailIzinCubit(IzinRepository(), idIzin: idIzin),
-      child: _DetailIzinComponent()
-    );
+        create: (_) => DetailIzinCubit(IzinRepository(), idIzin: idIzin),
+        child: _DetailIzinComponent());
   }
 }
 
@@ -22,29 +22,30 @@ class _DetailIzinComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DetailIzinCubit, DetailIzinState>(
-        builder: (context, state) {
-          return Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.black87,),
-                  onPressed: () => Navigator.pop(context),
+      builder: (context, state) {
+        return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black87,
                 ),
-                actions: [
-                  IconButton(
-                      icon: Icon(Icons.picture_as_pdf),
-                      onPressed: () => reportView(context, state.izin!, state.santri!)
-                  )
-                ],
-                backgroundColor: Colors.white,
+                onPressed: () => Navigator.pop(context),
               ),
-              body: _DetailIzinCard()
-          );
-        },
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.picture_as_pdf),
+                    onPressed: () =>
+                        reportView(context, state.izin!, state.santri!))
+              ],
+              backgroundColor: Colors.white,
+            ),
+            body: _DetailIzinCard());
+      },
     );
   }
 }
-
 
 class _DetailIzinCard extends StatelessWidget {
   @override
@@ -52,10 +53,11 @@ class _DetailIzinCard extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return BlocBuilder<DetailIzinCubit, DetailIzinState>(
       builder: (context, state) {
-        if(state.santri == null || state.izin == null) {
-          return Center(child: CircularProgressIndicator(),);
-        }
-        else {
+        if (state.santri == null || state.izin == null) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Stack(
@@ -67,37 +69,43 @@ class _DetailIzinCard extends StatelessWidget {
                       width: width,
                       child: Card(
                           child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Nama"),
-                                Text(state.santri!.name!),
-                                SizedBox(height: 8.0,),
-
-                                Text("Alamat"),
-                                Text(state.santri!.address!),
-                                SizedBox(height: 8.0,),
-
-                                Text("Tujuan pulang"),
-                                Text(state.izin!.title!),
-                                SizedBox(height: 8.0,),
-
-                                Text("Detail kepulangan"),
-                                Text(state.izin!.information!),
-                                SizedBox(height: 8.0,),
-
-                                Text("Dari tanggal"),
-                                Text(state.izin!.fromDate.toString()),
-                                SizedBox(height: 8.0,),
-
-                                Text("Sampai tanggal"),
-                                Text(state.izin!.toDate.toString()),
-                                SizedBox(height: 8.0,),
-                              ],
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Nama"),
+                            Text(state.santri!.name!),
+                            SizedBox(
+                              height: 8.0,
                             ),
-                          )
-                      ),
+                            Text("Alamat"),
+                            Text(state.santri!.address!),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            Text("Tujuan pulang"),
+                            Text(state.izin!.title!),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            Text("Detail kepulangan"),
+                            Text(state.izin!.information!),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            Text("Dari tanggal"),
+                            Text(state.izin!.fromDate.toString()),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            Text("Sampai tanggal"),
+                            Text(state.izin!.toDate.toString()),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                          ],
+                        ),
+                      )),
                     ),
                   ],
                 ),
@@ -116,22 +124,18 @@ class _ButtonVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DetailIzinCubit, DetailIzinState>(
         builder: (context, state) {
-          return Positioned(
-              bottom: 0,
-              child: Row(
-                children: [
-                  RaisedButton(
-                    onPressed: (){
-                      context.read<DetailIzinCubit>().verificationIzin();
-                    },
-                    child: Text("Izinkan"),
-                  )
-                ],
+      return Positioned(
+          bottom: 0,
+          child: Row(
+            children: [
+              RaisedButton(
+                onPressed: () {
+                  context.read<DetailIzinCubit>().verificationIzin();
+                },
+                child: Text("Izinkan"),
               )
-          );
-        }
-    );
+            ],
+          ));
+    });
   }
 }
-
-

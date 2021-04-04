@@ -10,12 +10,12 @@ class ChooseSantriStep extends StatefulWidget {
   final String? dormitory;
 
   const ChooseSantriStep({Key? key, this.dormitory}) : super(key: key);
+
   @override
   _ChooseSantriStepState createState() => _ChooseSantriStepState();
 }
 
 class _ChooseSantriStepState extends State<ChooseSantriStep> {
-
   String? searchKey;
   Stream? streamQuery;
   TextEditingController? searchController;
@@ -24,7 +24,8 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
   void initState() {
     super.initState();
     print(widget.dormitory);
-    streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
+    streamQuery = FirebaseFirestore.instance
+        .collection(Constants.SANTRI_COLLECTION)
         .where('dormitory', isEqualTo: widget.dormitory)
         .snapshots();
     searchController = TextEditingController();
@@ -37,10 +38,13 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
       child: Column(
         children: [
           _searchInput(searchController),
-          SizedBox(height: 8.0,),
+          SizedBox(
+            height: 8.0,
+          ),
           StreamBuilder<QuerySnapshot>(
             stream: streamQuery as Stream<QuerySnapshot>?,
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
               }
@@ -59,33 +63,34 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
 
   Widget _content(QuerySnapshot? querySnapshot) {
     return BlocBuilder<CreateIzinCubit, CreateIzinState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
-          child: Column(
-            children: querySnapshot!.docs.map((DocumentSnapshot document) {
-              return new ListTile(
-                onTap: () {
-                  if (state.santri?.id != document.id) {
-                    context.read<CreateIzinCubit>().santriChanged(Santri.fromJson(document.data()!));
-                  } else {
-                    context.read<CreateIzinCubit>().santriChanged(Santri(id: ''));
-                  }
-                },
-                selected: state.santri?.id == document.id,
-                selectedTileColor: Theme.of(context).primaryColor,
-                leading: CircleAvatar(
-                  backgroundImage:
-                  NetworkImage("${document.data()!["imageUrl"]}"),
-                  backgroundColor: Colors.transparent,
-                ),
-                title: new Text(document.data()!['name']),
-                subtitle: new Text(document.data()!['dormitory']),
-              );
-            }).toList(),
-          ),
-        );
-      }
-    );
+        builder: (context, state) {
+      return SingleChildScrollView(
+        child: Column(
+          children: querySnapshot!.docs.map((DocumentSnapshot document) {
+            return new ListTile(
+              onTap: () {
+                if (state.santri?.id != document.id) {
+                  context
+                      .read<CreateIzinCubit>()
+                      .santriChanged(Santri.fromJson(document.data()!));
+                } else {
+                  context.read<CreateIzinCubit>().santriChanged(Santri(id: ''));
+                }
+              },
+              selected: state.santri?.id == document.id,
+              selectedTileColor: Theme.of(context).primaryColor,
+              leading: CircleAvatar(
+                backgroundImage:
+                    NetworkImage("${document.data()!["imageUrl"]}"),
+                backgroundColor: Colors.transparent,
+              ),
+              title: new Text(document.data()!['name']),
+              subtitle: new Text(document.data()!['dormitory']),
+            );
+          }).toList(),
+        ),
+      );
+    });
   }
 
   Widget _searchInput(TextEditingController? controller) {
@@ -95,9 +100,10 @@ class _ChooseSantriStepState extends State<ChooseSantriStep> {
         onChanged: (value) {
           setState(() {
             searchKey = value;
-            streamQuery = FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION)
+            streamQuery = FirebaseFirestore.instance
+                .collection(Constants.SANTRI_COLLECTION)
                 .where('name', isGreaterThanOrEqualTo: searchKey)
-                .where('name', isLessThan: searchKey! +'z')
+                .where('name', isLessThan: searchKey! + 'z')
                 .where('dormitory', isEqualTo: widget.dormitory)
                 .snapshots();
           });

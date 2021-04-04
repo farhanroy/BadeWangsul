@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bade_wangsul/src/utils/make_id.dart';
 import 'package:bade_wangsul/src/utils/validator/date_validator.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -14,8 +14,8 @@ import '../../../../utils/validator/default_validator.dart';
 
 part 'create_santri_state.dart';
 
-class CreateSantriCubit extends Cubit<CreateSantriState>{
-  CreateSantriCubit(this._santriRepository ) : super(CreateSantriState());
+class CreateSantriCubit extends Cubit<CreateSantriState> {
+  CreateSantriCubit(this._santriRepository) : super(CreateSantriState());
 
   final SantriRepository _santriRepository;
 
@@ -113,8 +113,8 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
     String? imageUrl;
     File _file = File(state.imagePath.value!);
     try {
-      var storageRef = firebase_storage
-          .FirebaseStorage.instance.ref('santri/${state.name.value}');
+      var storageRef = firebase_storage.FirebaseStorage.instance
+          .ref('santri/${state.name.value}');
       await storageRef.putFile(_file);
       await storageRef.getDownloadURL().then((url) {
         imageUrl = url;
@@ -127,7 +127,7 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
   }
 
   Future<void> createSantri() async {
-    if (!state.status.isValidated) return;  
+    if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       String? imageUrl;
@@ -138,18 +138,17 @@ class CreateSantriCubit extends Cubit<CreateSantriState>{
       });
 
       await _santriRepository.createSantri(Santri(
-          id: makeIdSantri(name: state.name.value, birthDate: state.birthDate.value!),
+          id: makeIdSantri(
+              name: state.name.value, birthDate: state.birthDate.value!),
           name: state.name.value,
           age: state.age.value,
           address: state.address.value,
           dormitory: state.dormitory.value,
           birthDate: state.birthDate.value,
-          imageUrl: imageUrl
-      ));
+          imageUrl: imageUrl));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
-
 }

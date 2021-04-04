@@ -44,9 +44,7 @@ class LoginCubit extends Cubit<LoginState> {
       await _dao.updateOrInsertPembina();
       var _usertype = await _userRepository.getUsertype();
       emit(state.copyWith(
-          usertype: _usertype,
-          status: FormzStatus.submissionSuccess
-      ));
+          usertype: _usertype, status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }

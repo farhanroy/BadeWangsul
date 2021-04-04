@@ -13,9 +13,7 @@ class _MonitorSantriPageState extends State<MonitorSantriPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: _ListIzinSantri()
-      ),
+      body: SafeArea(child: _ListIzinSantri()),
     );
   }
 }
@@ -24,6 +22,7 @@ class _ListIzinSantri extends StatelessWidget {
   final ref = FirebaseFirestore.instance
       .collection(Constants.IZIN_COLLECTION)
       .where("isKembali", isEqualTo: true);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -38,12 +37,13 @@ class _ListIzinSantri extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                return _ItemIzinSantri(idSantri: document.data()!['idSantri'],);
+                return _ItemIzinSantri(
+                  idSantri: document.data()!['idSantri'],
+                );
               }).toList(),
             ),
           );
-        }
-    );
+        });
   }
 }
 
@@ -51,8 +51,8 @@ class _ItemIzinSantri extends StatelessWidget {
   _ItemIzinSantri({Key? key, this.idSantri}) : super(key: key);
 
   final String? idSantri;
-  final CollectionReference ref = FirebaseFirestore.instance
-      .collection(Constants.SANTRI_COLLECTION);
+  final CollectionReference ref =
+      FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION);
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +68,17 @@ class _ItemIzinSantri extends StatelessWidget {
         }
 
         return new ListTile(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context) => DetailSantriPage(idSantri: snapshot.data!.data()!["id"],)
-            ));
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailSantriPage(
+                          idSantri: snapshot.data!.data()!["id"],
+                        )));
           },
           leading: CircleAvatar(
             backgroundImage:
-            NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
+                NetworkImage("${snapshot.data!.data()!["imageUrl"]}"),
             backgroundColor: Colors.transparent,
           ),
           title: new Text(snapshot.data!.data()!['name']),

@@ -6,7 +6,6 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ReportIzinPage extends StatefulWidget {
-
   final String? path;
 
   const ReportIzinPage({Key? key, this.path}) : super(key: key);
@@ -16,7 +15,8 @@ class ReportIzinPage extends StatefulWidget {
 }
 
 class _ReportIzinPageState extends State<ReportIzinPage> {
-  final Completer<PDFViewController> _controller = Completer<PDFViewController>();
+  final Completer<PDFViewController> _controller =
+      Completer<PDFViewController>();
   int? pages = 0;
   int? currentPage = 0;
   bool isReady = false;
@@ -26,7 +26,10 @@ class _ReportIzinPageState extends State<ReportIzinPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Laporan", style: TextStyle(color: Colors.black87),),
+        title: Text(
+          "Laporan",
+          style: TextStyle(color: Colors.black87),
+        ),
         elevation: 5,
         leading: IconButton(
           icon: Icon(FontAwesomeIcons.arrowLeft),

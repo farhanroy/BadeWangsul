@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:bade_wangsul/src/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:formz/formz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../bloc/create_santri_cubit.dart';
 import '../../../../widgets/datetextfield.dart';
+import '../bloc/create_santri_cubit.dart';
 
 class CreateSantriForm extends StatelessWidget {
   @override
@@ -25,26 +25,42 @@ class CreateSantriForm extends StatelessWidget {
           Navigator.pop(context);
         }
         if (state.status.isSubmissionInProgress) {
-          Center(child: CircularProgressIndicator(),);
+          Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const SizedBox(height: 64,),
+            const SizedBox(
+              height: 64,
+            ),
             _SelectImage(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _NameSantriInput(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _AgeSantriInput(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _AddressSantriInput(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _DormitorySantriInput(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _BirthDateInput(),
-            const SizedBox(height: 8.0,),
+            const SizedBox(
+              height: 8.0,
+            ),
             _CreateSantriButton()
           ],
         ),
@@ -61,11 +77,12 @@ class _SelectImage extends StatefulWidget {
 class __SelectImageState extends State<_SelectImage> {
   File? _image;
   final picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
-    if(_image == null) {
+    if (_image == null) {
       return GestureDetector(
-        onTap: (){
+        onTap: () {
           _chooseFile();
         },
         child: Container(
@@ -74,34 +91,23 @@ class __SelectImageState extends State<_SelectImage> {
           child: Center(
             child: Icon(Icons.camera_alt),
           ),
-          decoration: BoxDecoration(
-              color: Colors.grey,
-              shape: BoxShape.circle
-          ),
+          decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
         ),
       );
     } else {
       context.read<CreateSantriCubit>().imagePathChanged(_image!.path);
-      return Container(
-        width: 100,
-        height: 100,
-        child: Image.file(
-          _image!
-        )
-      );
+      return Container(width: 100, height: 100, child: Image.file(_image!));
     }
   }
 
   void _chooseFile() async {
     var image = await ImagePicker().getImage(source: ImageSource.gallery);
-    if(image == null) return;
+    if (image == null) return;
     setState(() {
       _image = File(image.path);
     });
   }
 }
-
-
 
 class _NameSantriInput extends StatelessWidget {
   @override
@@ -110,7 +116,8 @@ class _NameSantriInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextField(
-          onChanged: (name) => context.read<CreateSantriCubit>().nameChanged(name),
+          onChanged: (name) =>
+              context.read<CreateSantriCubit>().nameChanged(name),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'nama',
@@ -150,12 +157,14 @@ class _AddressSantriInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.address != current.address,
       builder: (context, state) {
         return TextField(
-          onChanged: (address) => context.read<CreateSantriCubit>().addressChanged(address),
+          onChanged: (address) =>
+              context.read<CreateSantriCubit>().addressChanged(address),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'alamat',
             helperText: '',
-            errorText: state.address.invalid ? 'alamat tidak boleh kosong' : null,
+            errorText:
+                state.address.invalid ? 'alamat tidak boleh kosong' : null,
           ),
         );
       },
@@ -170,15 +179,20 @@ class _DormitorySantriInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.dormitory != current.dormitory,
       builder: (context, state) {
         return DropdownButtonFormField(
-          value: state.dormitory.value!.isEmpty ? "Asrama Al-Faraby Cordova" : state.dormitory.value ,
-          onChanged: (dynamic value) => context.read<CreateSantriCubit>().dormitoryChanged(value),
+          value: state.dormitory.value!.isEmpty
+              ? "Asrama Al-Faraby Cordova"
+              : state.dormitory.value,
+          onChanged: (dynamic value) =>
+              context.read<CreateSantriCubit>().dormitoryChanged(value),
           decoration: InputDecoration(
             border: OutlineInputBorder(),
           ),
           items: Constants.DORMITORIES.map((item) {
             return DropdownMenuItem(
               value: item,
-              child: Row(children: <Widget>[Text(item),]),
+              child: Row(children: <Widget>[
+                Text(item),
+              ]),
             );
           }).toList(),
         );
@@ -192,21 +206,19 @@ class _BirthDateInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CreateSantriCubit, CreateSantriState>(
         builder: (context, state) {
-          return DateTextField(
-            labelText: "Tanggal lahir",
-            prefixIcon: Icon(Icons.date_range),
-            suffixIcon: Icon(Icons.arrow_drop_down),
-            lastDate: DateTime.now().add(Duration(days: 366)),
-            firstDate: DateTime.now(),
-            initialDate: DateTime.now().add(Duration(days: 1)),
-            onDateChanged: (selectedDate) =>
-                context.read<CreateSantriCubit>().birthDateChanged(selectedDate!),
-          );
-        }
-    );
+      return DateTextField(
+        labelText: "Tanggal lahir",
+        prefixIcon: Icon(Icons.date_range),
+        suffixIcon: Icon(Icons.arrow_drop_down),
+        lastDate: DateTime.now().add(Duration(days: 366)),
+        firstDate: DateTime.now(),
+        initialDate: DateTime.now().add(Duration(days: 1)),
+        onDateChanged: (selectedDate) =>
+            context.read<CreateSantriCubit>().birthDateChanged(selectedDate!),
+      );
+    });
   }
 }
-
 
 class _CreateSantriButton extends StatelessWidget {
   @override
@@ -217,13 +229,12 @@ class _CreateSantriButton extends StatelessWidget {
           return Center(
             child: RaisedButton(
               child: Text("Tambah"),
-                onPressed: (){
+              onPressed: () {
                 context.read<CreateSantriCubit>().createSantri();
                 print(state.imagePath.value);
-                },
+              },
             ),
           );
-        }
-    );
+        });
   }
 }

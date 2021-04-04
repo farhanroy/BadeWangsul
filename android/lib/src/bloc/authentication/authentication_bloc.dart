@@ -4,7 +4,6 @@ import 'package:bade_wangsul/src/models/models.dart';
 import 'package:bade_wangsul/src/services/repository/authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 
 part 'authentication_event.dart';
@@ -14,11 +13,11 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
-  })  : assert(authenticationRepository != null),
+  })   : assert(authenticationRepository != null),
         _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _userSubscription = _authenticationRepository.user.listen(
-          (user) => add(AuthenticationUserChanged(user)),
+      (user) => add(AuthenticationUserChanged(user)),
     );
   }
 
@@ -27,8 +26,8 @@ class AuthenticationBloc
 
   @override
   Stream<AuthenticationState> mapEventToState(
-      AuthenticationEvent event,
-      ) async* {
+    AuthenticationEvent event,
+  ) async* {
     if (event is AuthenticationUserChanged) {
       yield _mapAuthenticationUserChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
@@ -43,8 +42,8 @@ class AuthenticationBloc
   }
 
   AuthenticationState _mapAuthenticationUserChangedToState(
-      AuthenticationUserChanged event,
-      ) {
+    AuthenticationUserChanged event,
+  ) {
     return event.user != User.empty
         ? AuthenticationState.authenticated(event.user)
         : const AuthenticationState.unauthenticated();

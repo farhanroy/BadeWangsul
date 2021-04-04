@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'update_santri_page.dart';
-import '../../../../widgets/appdialog.dart';
 import '../../../../models/santri.dart';
 import '../../../../utils/constants.dart';
+import '../../../../widgets/appdialog.dart';
+import 'update_santri_page.dart';
 
 class DetailSantriPage extends StatelessWidget {
-
   final String? documentID;
 
   const DetailSantriPage({Key? key, this.documentID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference santri = FirebaseFirestore
-        .instance.collection(Constants.SANTRI_COLLECTION);
+    CollectionReference santri =
+        FirebaseFirestore.instance.collection(Constants.SANTRI_COLLECTION);
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -31,15 +30,21 @@ class DetailSantriPage extends StatelessWidget {
           IconButton(
             icon: Icon(FontAwesomeIcons.edit, color: theme.primaryColor),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => UpdateSantriPage(idSantri: documentID,)
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UpdateSantriPage(
+                            idSantri: documentID,
+                          )));
             },
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete, color: theme.scaffoldBackgroundColor,),
+        child: Icon(
+          Icons.delete,
+          color: theme.scaffoldBackgroundColor,
+        ),
         backgroundColor: Theme.of(context).errorColor,
         onPressed: () => showConfirmationDialog(
             context: context,
@@ -48,24 +53,24 @@ class DetailSantriPage extends StatelessWidget {
             onAccept: () {
               Navigator.of(context).pop();
               deleteSantri(santri, context);
-            }
-        ),
+            }),
       ),
       body: SafeArea(
         child: FutureBuilder<DocumentSnapshot>(
-          future: santri.doc(documentID).get(),
-          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text("Something went wrong");
-            }
+            future: santri.doc(documentID).get(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong");
+              }
 
-            if (snapshot.connectionState == ConnectionState.done) {
-              return _content(snapshot.data!, theme);
-            }
+              if (snapshot.connectionState == ConnectionState.done) {
+                return _content(snapshot.data!, theme);
+              }
 
-            return Center(child: CircularProgressIndicator(),);
-          }
-        ),
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }),
       ),
     );
   }
@@ -83,27 +88,64 @@ class DetailSantriPage extends StatelessWidget {
               backgroundImage: NetworkImage("${santri.imageUrl}"),
             ),
           ),
-          SizedBox(height: 32,),
-
-          Text("Name", style: theme.textTheme.subtitle2,),
-          Text(santri.name ?? "", style: theme.textTheme.subtitle1,),
-          SizedBox(height: 16,),
-
-          Text("Umur", style: theme.textTheme.subtitle2,),
-          Text(santri.age ?? "", style: theme.textTheme.subtitle1,),
-          SizedBox(height: 16,),
-
-          Text("Alamat", style: theme.textTheme.subtitle2,),
-          Text(santri.age ?? "", style: theme.textTheme.subtitle1,),
-          SizedBox(height: 16,),
-
-          Text("Asrama", style: theme.textTheme.subtitle2,),
-          Text(santri.dormitory ?? "", style: theme.textTheme.subtitle1,),
-          SizedBox(height: 16,),
-
-          Text("Tanggal lahir", style: theme.textTheme.subtitle2,),
-          Text(formatDate(santri.birthDate!), style: theme.textTheme.subtitle1,),
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 32,
+          ),
+          Text(
+            "Name",
+            style: theme.textTheme.subtitle2,
+          ),
+          Text(
+            santri.name ?? "",
+            style: theme.textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Umur",
+            style: theme.textTheme.subtitle2,
+          ),
+          Text(
+            santri.age ?? "",
+            style: theme.textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Alamat",
+            style: theme.textTheme.subtitle2,
+          ),
+          Text(
+            santri.age ?? "",
+            style: theme.textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Asrama",
+            style: theme.textTheme.subtitle2,
+          ),
+          Text(
+            santri.dormitory ?? "",
+            style: theme.textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Tanggal lahir",
+            style: theme.textTheme.subtitle2,
+          ),
+          Text(
+            formatDate(santri.birthDate!),
+            style: theme.textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );
@@ -119,11 +161,10 @@ class DetailSantriPage extends StatelessWidget {
     return santri
         .doc(documentID)
         .delete()
-        .then((value) => {
-          Navigator.of(context).pop()
-        })
+        .then((value) => {Navigator.of(context).pop()})
         .catchError((error) => {
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text(error.toString())))
-        });
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text(error.toString())))
+            });
   }
 }

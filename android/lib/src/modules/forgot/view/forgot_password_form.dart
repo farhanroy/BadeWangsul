@@ -37,22 +37,19 @@ class _HeaderContent extends StatelessWidget {
       children: [
         Text(
           'Reset Password',
-          style: theme.textTheme.headline4!.copyWith(
-              color: theme.primaryColorLight
-          ),
+          style: theme.textTheme.headline4!
+              .copyWith(color: theme.primaryColorLight),
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(
+          height: 8,
+        ),
         Text(
             'Masukan email yang terhubung dengan akun anda untuk mengatur ulang sandi anda',
-            style: theme.textTheme.subtitle1!.copyWith(
-                color: Colors.grey
-            )
-        ),
+            style: theme.textTheme.subtitle1!.copyWith(color: Colors.grey)),
       ],
     );
   }
 }
-
 
 class _EmailInput extends StatelessWidget {
   @override
@@ -62,7 +59,8 @@ class _EmailInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_emailInput_textField'),
-          onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email),
+          onChanged: (email) =>
+              context.read<ForgotPasswordCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             labelText: 'email',
@@ -86,23 +84,23 @@ class _SendEmailButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : Container(
-          width: double.infinity,
-          child: ElevatedButton(
-          child: const Text('SEND EMAIL'),
-          style: ElevatedButton.styleFrom(
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                width: double.infinity,
+                child: ElevatedButton(
+                  child: const Text('SEND EMAIL'),
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      textStyle: TextStyle(fontSize: 16),
+                      primary: theme.primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12)),
+                  onPressed: state.status.isValidated
+                      ? () =>
+                          context.read<ForgotPasswordCubit>().resetPassword()
+                      : null,
                 ),
-                textStyle: TextStyle(fontSize: 16),
-                primary: theme.primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 12)
-          ),
-          onPressed: state.status.isValidated
-                ? () => context.read<ForgotPasswordCubit>().resetPassword()
-                : null,
-        ),
-            );
+              );
       },
     );
   }

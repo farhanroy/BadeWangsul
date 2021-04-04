@@ -9,15 +9,16 @@ import '../../../../widgets/datetextfield.dart';
 
 class UpdateSantriForm extends StatelessWidget {
   UpdateSantriForm({Key? key, this.idSantri}) : super(key: key);
-  
+
   final String? idSantri;
-  
+
   final TextEditingController _inputName = TextEditingController();
   final TextEditingController _inputAge = TextEditingController();
   final TextEditingController _inputAddress = TextEditingController();
   final TextEditingController _inputDormitory = TextEditingController();
-  
+
   final _santriRepository = SantriRepository();
+
   @override
   Widget build(BuildContext context) {
     setInitialValue(context);
@@ -40,19 +41,41 @@ class UpdateSantriForm extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 _SelectImage(),
-                SizedBox(height: 10,),
-                _NameInput(inputName: _inputName,),
-                SizedBox(height: 10,),
-                _AddressInput(inputAddress: _inputAddress,),
-                SizedBox(height: 10,),
-                _AgeInput(inputAge: _inputAge,),
-                SizedBox(height: 10,),
-                _DormitoryInput(inputDormitory: _inputDormitory,),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
+                _NameInput(
+                  inputName: _inputName,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                _AddressInput(
+                  inputAddress: _inputAddress,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                _AgeInput(
+                  inputAge: _inputAge,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                _DormitoryInput(
+                  inputDormitory: _inputDormitory,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 _BirthDateInput(),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 _UpdateButton()
               ],
             ),
@@ -84,6 +107,7 @@ class _NameInput extends StatelessWidget {
   final TextEditingController? inputName;
 
   _NameInput({Key? key, this.inputName}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -91,7 +115,8 @@ class _NameInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputName,
-          onChanged: (name) => context.read<UpdateSantriCubit>().nameChanged(name),
+          onChanged: (name) =>
+              context.read<UpdateSantriCubit>().nameChanged(name),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Nama',
@@ -108,6 +133,7 @@ class _AddressInput extends StatelessWidget {
   final TextEditingController? inputAddress;
 
   const _AddressInput({Key? key, this.inputAddress}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -115,12 +141,14 @@ class _AddressInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputAddress,
-          onChanged: (address) => context.read<UpdateSantriCubit>().addressChanged(address),
+          onChanged: (address) =>
+              context.read<UpdateSantriCubit>().addressChanged(address),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Alamat',
             helperText: '',
-            errorText: state.address.invalid ? 'alamat tidak boleh kosong' : null,
+            errorText:
+                state.address.invalid ? 'alamat tidak boleh kosong' : null,
           ),
         );
       },
@@ -132,6 +160,7 @@ class _AgeInput extends StatelessWidget {
   final TextEditingController? inputAge;
 
   const _AgeInput({Key? key, this.inputAge}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -156,6 +185,7 @@ class _DormitoryInput extends StatelessWidget {
   final TextEditingController? inputDormitory;
 
   const _DormitoryInput({Key? key, this.inputDormitory}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
@@ -163,12 +193,14 @@ class _DormitoryInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputDormitory,
-          onChanged: (dormitory) => context.read<UpdateSantriCubit>().dormitoryChanged(dormitory),
+          onChanged: (dormitory) =>
+              context.read<UpdateSantriCubit>().dormitoryChanged(dormitory),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Asrama',
             helperText: '',
-            errorText: state.address.invalid ? 'asrama tidak boleh kosong' : null,
+            errorText:
+                state.address.invalid ? 'asrama tidak boleh kosong' : null,
           ),
         );
       },
@@ -180,7 +212,8 @@ class _BirthDateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
-      buildWhen: (previous, current) => previous.birthDate != current.birthDate,
+        buildWhen: (previous, current) =>
+            previous.birthDate != current.birthDate,
         builder: (context, state) {
           return DateTextField(
             labelText: "Tanggal lahir",
@@ -189,11 +222,11 @@ class _BirthDateInput extends StatelessWidget {
             lastDate: DateTime.now().add(Duration(days: 366)),
             firstDate: DateTime.now(),
             initialDate: DateTime.now(),
-            onDateChanged: (selectedDate) =>
-                context.read<UpdateSantriCubit>().birthDateChanged(selectedDate),
+            onDateChanged: (selectedDate) => context
+                .read<UpdateSantriCubit>()
+                .birthDateChanged(selectedDate),
           );
-        }
-    );
+        });
   }
 }
 
@@ -202,24 +235,22 @@ class _SelectImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
         builder: (context, state) {
-          switch (state.storageStatus) {
-            case ImageStorageStatus.unknown:
-              return _unknown(context);
-              
-            case ImageStorageStatus.loading:
-              return _loading();
-              
-            case ImageStorageStatus.success:
-              return _success(state.imagePath.value!);
-              
-            case ImageStorageStatus.failed:
-              return _failed();
-            default:
-              return _unknown(context);
-              
-          }
-        }
-    );
+      switch (state.storageStatus) {
+        case ImageStorageStatus.unknown:
+          return _unknown(context);
+
+        case ImageStorageStatus.loading:
+          return _loading();
+
+        case ImageStorageStatus.success:
+          return _success(state.imagePath.value!);
+
+        case ImageStorageStatus.failed:
+          return _failed();
+        default:
+          return _unknown(context);
+      }
+    });
   }
 
   Widget _unknown(BuildContext context) {
@@ -228,29 +259,20 @@ class _SelectImage extends StatelessWidget {
       child: Container(
         width: 100,
         height: 100,
-        child: Center(child: Icon(Icons.camera_alt),),
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            shape: BoxShape.circle
+        child: Center(
+          child: Icon(Icons.camera_alt),
         ),
+        decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
       ),
     );
   }
 
   Widget _success(String url) {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Image.network(url)
-    );
+    return Container(width: 100, height: 100, child: Image.network(url));
   }
 
   Widget _failed() {
-    return Container(
-        width: 100,
-        height: 100,
-        child: Icon(Icons.warning_sharp)
-    );
+    return Container(width: 100, height: 100, child: Icon(Icons.warning_sharp));
   }
 
   Widget _loading() {
@@ -258,8 +280,9 @@ class _SelectImage extends StatelessWidget {
         width: 100,
         height: 100,
         color: Colors.grey,
-        child: Center(child: CircularProgressIndicator(),)
-    );
+        child: Center(
+          child: CircularProgressIndicator(),
+        ));
   }
 }
 
@@ -272,16 +295,16 @@ class _UpdateButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : RaisedButton(
-          key: const Key('signUpForm_continue_raisedButton'),
-          child: const Text('Update'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          color: Colors.orangeAccent,
-          onPressed: state.status.isValidated
-              ? () => context.read<UpdateSantriCubit>().updateSantri()
-              : null,
-        );
+                key: const Key('signUpForm_continue_raisedButton'),
+                child: const Text('Update'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                color: Colors.orangeAccent,
+                onPressed: state.status.isValidated
+                    ? () => context.read<UpdateSantriCubit>().updateSantri()
+                    : null,
+              );
       },
     );
   }

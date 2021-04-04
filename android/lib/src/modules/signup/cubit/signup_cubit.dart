@@ -18,11 +18,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     final email = Email.dirty(value);
     emit(state.copyWith(
       email: email,
-      status: Formz.validate([
-        email,
-        state.password,
-        state.usertype
-      ]),
+      status: Formz.validate([email, state.password, state.usertype]),
     ));
   }
 
@@ -30,11 +26,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     final password = Password.dirty(value);
     emit(state.copyWith(
       password: password,
-      status: Formz.validate([
-        state.email,
-        password,
-        state.usertype
-      ]),
+      status: Formz.validate([state.email, password, state.usertype]),
     ));
   }
 
@@ -42,14 +34,9 @@ class SignUpCubit extends Cubit<SignUpState> {
     final usertype = Default.dirty(value);
     emit(state.copyWith(
       usertype: usertype,
-      status: Formz.validate([
-        state.email,
-        state.password,
-        usertype
-      ]),
+      status: Formz.validate([state.email, state.password, usertype]),
     ));
   }
-
 
   Future<void> signUpFormSubmitted() async {
     if (!state.status.isValidated) return;

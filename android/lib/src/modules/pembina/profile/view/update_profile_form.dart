@@ -13,6 +13,7 @@ class UpdateProfileForm extends StatelessWidget {
   final TextEditingController _inputDormitory = TextEditingController();
   final TextEditingController _inputPhoneNumber = TextEditingController();
   final UsersDao _usersDao = UsersDao();
+
   @override
   Widget build(BuildContext context) {
     setInitialValue(context);
@@ -35,17 +36,39 @@ class UpdateProfileForm extends StatelessWidget {
           child: Column(
             children: [
               _SelectImage(),
-              SizedBox(height: 20,),
-              _UsernameInput(inputName: _inputName,),
-              SizedBox(height: 10,),
-              _AddressInput(inputAddress: _inputAddress,),
-              SizedBox(height: 10,),
-              _AgeInput(inputAge: _inputAge,),
-              SizedBox(height: 10,),
-              _DormitoryInput(inputDormitory: _inputDormitory,),
-              SizedBox(height: 10,),
-              _PhoneNumberInput(inputPhoneNumber: _inputPhoneNumber,),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 20,
+              ),
+              _UsernameInput(
+                inputName: _inputName,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _AddressInput(
+                inputAddress: _inputAddress,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _AgeInput(
+                inputAge: _inputAge,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _DormitoryInput(
+                inputDormitory: _inputDormitory,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _PhoneNumberInput(
+                inputPhoneNumber: _inputPhoneNumber,
+              ),
+              SizedBox(
+                height: 10,
+              ),
               _UpdateButton()
             ],
           ),
@@ -77,6 +100,7 @@ class _UsernameInput extends StatelessWidget {
   final TextEditingController? inputName;
 
   _UsernameInput({Key? key, this.inputName}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -84,13 +108,15 @@ class _UsernameInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputName,
-          onChanged: (username) => context.read<UpdateProfileCubit>().usernameChanged(username),
+          onChanged: (username) =>
+              context.read<UpdateProfileCubit>().usernameChanged(username),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Nama',
             helperText: '',
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            errorText: state.username.invalid ? 'nama tidak boleh kosong' : null,
+            errorText:
+                state.username.invalid ? 'nama tidak boleh kosong' : null,
           ),
         );
       },
@@ -102,6 +128,7 @@ class _AddressInput extends StatelessWidget {
   final TextEditingController? inputAddress;
 
   const _AddressInput({Key? key, this.inputAddress}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -109,13 +136,15 @@ class _AddressInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputAddress,
-          onChanged: (address) => context.read<UpdateProfileCubit>().addressChanged(address),
+          onChanged: (address) =>
+              context.read<UpdateProfileCubit>().addressChanged(address),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Alamat',
             helperText: '',
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            errorText: state.address.invalid ? 'alamat tidak boleh kosong' : null,
+            errorText:
+                state.address.invalid ? 'alamat tidak boleh kosong' : null,
           ),
         );
       },
@@ -127,6 +156,7 @@ class _AgeInput extends StatelessWidget {
   final TextEditingController? inputAge;
 
   const _AgeInput({Key? key, this.inputAge}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -134,7 +164,8 @@ class _AgeInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputAge,
-          onChanged: (age) => context.read<UpdateProfileCubit>().ageChanged(age),
+          onChanged: (age) =>
+              context.read<UpdateProfileCubit>().ageChanged(age),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Umur',
@@ -152,6 +183,7 @@ class _DormitoryInput extends StatelessWidget {
   final TextEditingController? inputDormitory;
 
   const _DormitoryInput({Key? key, this.inputDormitory}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -159,13 +191,15 @@ class _DormitoryInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputDormitory,
-          onChanged: (dormitory) => context.read<UpdateProfileCubit>().dormitoryChanged(dormitory),
+          onChanged: (dormitory) =>
+              context.read<UpdateProfileCubit>().dormitoryChanged(dormitory),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'Asrama',
             helperText: '',
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            errorText: state.address.invalid ? 'asrama tidak boleh kosong' : null,
+            errorText:
+                state.address.invalid ? 'asrama tidak boleh kosong' : null,
           ),
         );
       },
@@ -177,6 +211,7 @@ class _PhoneNumberInput extends StatelessWidget {
   final TextEditingController? inputPhoneNumber;
 
   const _PhoneNumberInput({Key? key, this.inputPhoneNumber}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
@@ -184,13 +219,17 @@ class _PhoneNumberInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           controller: inputPhoneNumber,
-          onChanged: (phoneNumber) => context.read<UpdateProfileCubit>().phoneNumberChanged(phoneNumber),
+          onChanged: (phoneNumber) => context
+              .read<UpdateProfileCubit>()
+              .phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             labelText: 'Nomor telpon',
             helperText: '',
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            errorText: state.phoneNumber.invalid ? 'nomor telp tidak boleh kosong' : null,
+            errorText: state.phoneNumber.invalid
+                ? 'nomor telp tidak boleh kosong'
+                : null,
           ),
         );
       },
@@ -203,24 +242,22 @@ class _SelectImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
         builder: (context, state) {
-          switch (state.storageStatus) {
-            case ImageStorageStatus.unknown:
-              return _unknown(context);
-              
-            case ImageStorageStatus.loading:
-              return _loading();
-              
-            case ImageStorageStatus.success:
-              return _success(context, state.imageUrl.value!);
-              
-            case ImageStorageStatus.failed:
-              return _failed(context);
-            default:
-              return _unknown(context);
-              
-          }
-        }
-    );
+      switch (state.storageStatus) {
+        case ImageStorageStatus.unknown:
+          return _unknown(context);
+
+        case ImageStorageStatus.loading:
+          return _loading();
+
+        case ImageStorageStatus.success:
+          return _success(context, state.imageUrl.value!);
+
+        case ImageStorageStatus.failed:
+          return _failed(context);
+        default:
+          return _unknown(context);
+      }
+    });
   }
 
   Widget _unknown(BuildContext context) {
@@ -229,11 +266,10 @@ class _SelectImage extends StatelessWidget {
       child: Container(
         width: 100,
         height: 100,
-        child: Center(child: Icon(Icons.camera_alt),),
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            shape: BoxShape.circle
+        child: Center(
+          child: Icon(Icons.camera_alt),
         ),
+        decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
       ),
     );
   }
@@ -242,12 +278,14 @@ class _SelectImage extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
       child: Center(
-        child: url != null ? CircleAvatar(
-          radius: 60,
-          backgroundImage: NetworkImage(url),
-        ) : CircleAvatar(
-            radius: 60,
-            backgroundImage: AssetImage('assets/img/default-profile.png')),
+        child: url != null
+            ? CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(url),
+              )
+            : CircleAvatar(
+                radius: 60,
+                backgroundImage: AssetImage('assets/img/default-profile.png')),
       ),
     );
   }
@@ -255,11 +293,8 @@ class _SelectImage extends StatelessWidget {
   Widget _failed(BuildContext context) {
     return GestureDetector(
       onTap: () => context.read<UpdateProfileCubit>().chooseFile(),
-      child: Container(
-          width: 100,
-          height: 100,
-          child: Icon(Icons.warning_sharp)
-      ),
+      child:
+          Container(width: 100, height: 100, child: Icon(Icons.warning_sharp)),
     );
   }
 
@@ -268,8 +303,9 @@ class _SelectImage extends StatelessWidget {
         width: 100,
         height: 100,
         color: Colors.grey,
-        child: Center(child: CircularProgressIndicator(),)
-    );
+        child: Center(
+          child: CircularProgressIndicator(),
+        ));
   }
 }
 
@@ -283,18 +319,18 @@ class _UpdateButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-          child: const Text('UPDATE'),
-          style: ElevatedButton.styleFrom(
-              shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0),
-              ),
-              textStyle: TextStyle(fontSize: 16),
-              primary: theme.accentColor,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 24, vertical: 12)
-          ),
-          onPressed: () => context.read<UpdateProfileCubit>().updateData(),
-        );
+                child: const Text('UPDATE'),
+                style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                    textStyle: TextStyle(fontSize: 16),
+                    primary: theme.accentColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12)),
+                onPressed: () =>
+                    context.read<UpdateProfileCubit>().updateData(),
+              );
       },
     );
   }
