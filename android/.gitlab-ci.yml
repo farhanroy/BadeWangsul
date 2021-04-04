@@ -24,7 +24,6 @@ before_script:
   - wget --output-document=flutter-sdk.tar.xz $FLUTTER_VERSION
   - tar -xf flutter-sdk.tar.xz
   - export PATH=$PATH:$PWD/flutter/bin
-  - cd android
   - echo flutter.sdk=$PWD/flutter > android/local.properties
   - chmod +x ./android/gradlew
 
