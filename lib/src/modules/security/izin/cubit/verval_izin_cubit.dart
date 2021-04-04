@@ -27,6 +27,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
   Future<void> searchIzinById() async {
     emit(state.copyWith(izinStatus: IzinStatus.loading));
     _izinRepository.getIzinByIdSantri(state.idSantri.value).then((value) {
+      print("AKHKDJHD ${value.docs.single.data()!}");
       emit(state.copyWith(izin: Izin.fromJson(value.docs.single.data()!)));
       getSantri();
       emit(state.copyWith(izinStatus: IzinStatus.success));
@@ -68,7 +69,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
         fromDate: state.izin!.fromDate,
         toDate: state.izin!.toDate,
         isPermissioned: state.izin!.isPermissioned,
-        isPulang: state.izin!.isPulang,
+        isPulang: true,
         isKembali: true
     ), state.izin!.id);
   }

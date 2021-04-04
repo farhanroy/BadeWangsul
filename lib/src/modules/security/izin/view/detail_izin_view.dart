@@ -109,7 +109,7 @@ class _ButtonVerification extends StatelessWidget {
                 children: [
                   RaisedButton(
                     onPressed: (){
-                      if (isPulang! == false) {
+                      if (isPulang! == true ) {
                         context.read<VervalIzinCubit>().setKepulanganSantri();
                       } else {
                         context.read<VervalIzinCubit>().setKedatanganSantri();

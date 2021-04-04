@@ -6,7 +6,7 @@ import '../../../utils/constants.dart';
 class IzinRepository {
   Future<void> createIzin(Izin izin) async {
     await FirebaseFirestore.instance.collection(Constants.IZIN_COLLECTION)
-        .doc()
+        .doc(izin.id)
         .set(Izin().toJson(izin));
   }
 

@@ -86,6 +86,8 @@ class CreateIzinCubit extends Cubit<CreateIzinState> {
         fromDate: state.fromDate.value,
         toDate: state.toDate.value,
         isPermissioned: false,
-        isPulang: false));
+        isPulang: false,
+        isKembali: false
+    ));
   }
 }
