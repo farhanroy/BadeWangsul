@@ -27,7 +27,7 @@ class UpdateProfileForm extends StatelessWidget {
             );
         }
         if (state.status.isSubmissionSuccess) {
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(context, '/pembina', (route) => false);
         }
       },
       child: Padding(

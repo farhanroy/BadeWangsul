@@ -26,7 +26,7 @@ class UpdateProfileForm extends StatelessWidget {
             );
         }
         if (state.status.isSubmissionSuccess) {
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(context, '/keamanan', (route) => false);
         }
       },
       child: SafeArea(

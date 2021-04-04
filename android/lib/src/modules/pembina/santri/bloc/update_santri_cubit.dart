@@ -20,7 +20,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
   final SantriRepository _santriRepository;
   final String? idSantri;
 
-  File? _file;
+  late File file;
 
   void setInitialImage(String? url) {
     imageUrlChanged(url);
@@ -119,13 +119,13 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
 
   Future<String?> uploadImage() async {
     String? imageUrl;
-    File _file = File(state.imagePath.value!);
     try {
       var storageRef = firebase_storage.FirebaseStorage.instance
           .ref('santri/${state.name.value}');
-      await storageRef.putFile(_file);
+      await storageRef.putFile(file);
       await storageRef.getDownloadURL().then((url) {
         imageUrl = url;
+        imageUrlChanged(url);
       });
     } on firebase_core.FirebaseException catch (e) {
       print(e.code);
@@ -135,7 +135,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
   }
 
   Future<void> updateSantri() async {
-    if (!state.status.isValidated) return;
+    //if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       String? imageUrl;
@@ -155,6 +155,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
           imageUrl: imageUrl));
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (e) {
+      print(e);
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
@@ -163,7 +164,7 @@ class UpdateSantriCubit extends Cubit<UpdateSantriState> {
   void chooseFile() async {
     var image = await ImagePicker().getImage(source: ImageSource.gallery);
     if (image == null) return;
-    _file = File(image.path);
+    file = File(image.path);
 
     uploadImage();
   }

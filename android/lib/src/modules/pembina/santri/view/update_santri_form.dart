@@ -235,22 +235,22 @@ class _SelectImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateSantriCubit, UpdateSantriState>(
         builder: (context, state) {
-      switch (state.storageStatus) {
-        case ImageStorageStatus.unknown:
-          return _unknown(context);
+          switch (state.storageStatus) {
+            case ImageStorageStatus.unknown:
+              return _unknown(context);
 
-        case ImageStorageStatus.loading:
-          return _loading();
+            case ImageStorageStatus.loading:
+              return _loading();
 
-        case ImageStorageStatus.success:
-          return _success(state.imagePath.value!);
+            case ImageStorageStatus.success:
+              return _success(context, state.imagePath.value!);
 
-        case ImageStorageStatus.failed:
-          return _failed();
-        default:
-          return _unknown(context);
-      }
-    });
+            case ImageStorageStatus.failed:
+              return _failed(context);
+            default:
+              return _unknown(context);
+          }
+        });
   }
 
   Widget _unknown(BuildContext context) {
@@ -267,12 +267,28 @@ class _SelectImage extends StatelessWidget {
     );
   }
 
-  Widget _success(String url) {
-    return Container(width: 100, height: 100, child: Image.network(url));
+  Widget _success(BuildContext context, String? url) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateSantriCubit>().chooseFile(),
+      child: Center(
+        child: url != null
+            ? CircleAvatar(
+          radius: 60,
+          backgroundImage: NetworkImage(url),
+        )
+            : CircleAvatar(
+            radius: 60,
+            backgroundImage: AssetImage('assets/img/default-profile.png')),
+      ),
+    );
   }
 
-  Widget _failed() {
-    return Container(width: 100, height: 100, child: Icon(Icons.warning_sharp));
+  Widget _failed(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.read<UpdateSantriCubit>().chooseFile(),
+      child:
+      Container(width: 100, height: 100, child: Icon(Icons.warning_sharp)),
+    );
   }
 
   Widget _loading() {
@@ -301,9 +317,7 @@ class _UpdateButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 color: Colors.orangeAccent,
-                onPressed: state.status.isValidated
-                    ? () => context.read<UpdateSantriCubit>().updateSantri()
-                    : null,
+                onPressed:  () => context.read<UpdateSantriCubit>().updateSantri(),
               );
       },
     );

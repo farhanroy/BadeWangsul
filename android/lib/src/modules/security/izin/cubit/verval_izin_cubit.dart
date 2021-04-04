@@ -54,7 +54,7 @@ class VervalIzinCubit extends Cubit<VervalIzinState>{
       toDate: state.izin!.toDate,
       isPermissioned: state.izin!.isPermissioned,
       isPulang: true,
-      isKembali: true
+      isKembali: false
     ), state.izin!.id);
   }
 
