@@ -1,7 +1,19 @@
 # Platform Bade Wangsul
+
 Aplikasi digital surat perizinan santri untuk pulang atau keluar lingkungan pondok pesantren.
 
+## What is this ?
+Aplikasi untuk perizinan santri
+## Why make it ?
+Untuk menyelesaikan tugas akhir SMK
+## What is stack ?
+- Flutter
+- Firebase
+- Bloc State Management
 
+## Author
+
+Farhanroy
 
 ## License
 
